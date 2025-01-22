@@ -1,0 +1,64 @@
+services:
+  app:
+    build: .
+    tty: true
+    stdin_open: true
+    environment:
+      RAILS_ENV: development
+      DB_USERNAME: 'root'
+      DB_PASSWORD: 'mdbroot'
+      DB_HOST: 'db'
+    working_dir: /app
+    volumes:
+      - ./src:/app
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+    command: >
+      bash -c "rm -f /app/tmp/pids/server.pid &&
+      rm -f /app/public/assets &&
+      gem cleanup &&
+      bundle install -j4 &&
+      rails s -b 0.0.0.0"
+
+  db:
+    image: mariadb:latest
+    tty: true
+    stdin_open: true
+    environment:
+      TZ: 'Asia/Tokyo'
+      MARIADB_ROOT_PASSWORD: 'mdbroot'
+    volumes:
+      - db-vol:/var/lib/mysql
+    ports:
+      - '3306:3306'
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    tty: true
+    stdin_open: true
+    environment:
+      PMA_HOSTS: 'db'
+    ports:
+      - '8080:80'
+    depends_on:
+      - db
+
+  minio:
+    image: minio/minio:latest
+    volumes:
+      - minio-vol:/data
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: 'minioroot'
+      MINIO_ROOT_PASSWORD: 'minioroot'
+    stdin_open: true
+    tty: true
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+
+volumes:
+  db-vol:
+  minio-vol:
