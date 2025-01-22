@@ -1,10 +1,9 @@
 Rails.application.routes.draw do
   root "pages#index"
   
-  get "pages/index"
-  get "pages/terms"
-  get "pages/privacy"
-  get "pages/contact"
+  get "terms" => "pages#terms"
+  get "privacy" => "pages#privacy"
+  get "contact" => "pages#contact"
   
   get "up" => "rails/health#show", as: :rails_health_check
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
