@@ -1,0 +1,26 @@
+<footer>
+  <div class="footer-logo-container">
+    <%= link_to(root_path) do %>
+      <div class="footer-logo">
+        ANYUR
+      </div>
+    <% end %>
+  </div>
+  <div class="footer-list-container">
+    <div class="footer-list">
+      <%= link_to(contact_path) do %>
+        お問い合わせ
+      <% end %>
+    </div>
+    <div class="footer-list">
+      <%= link_to(terms_path) do %>
+        利用規約
+      <% end %>
+    </div>
+    <div class="footer-list">
+        <%= link_to(privacy_path) do %>
+        プライバシーポリシー
+      <% end %>
+    </div>
+  </div>
+</footer>
