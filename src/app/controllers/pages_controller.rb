@@ -10,4 +10,10 @@ class PagesController < ApplicationController
 
   def contact
   end
+
+  def login
+  end
+
+  def post_login
+  end
 end

@@ -1,0 +1,12 @@
+<% if instead.errors.any? %>
+  <div style="color: red">
+    <div>
+      <%= instead.errors.count %>つの入力エラー
+    </div>
+    <ul>
+      <% instead.errors.each do |err| %>
+        <li><%= err.full_message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
