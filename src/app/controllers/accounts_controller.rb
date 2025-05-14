@@ -1,28 +1,11 @@
 class AccountsController < ApplicationController
-  before_action :set_account, only: %i[ show edit update destroy ]
-
-  def index
-    @accounts = Account.where(deleted: false)
-  end
+  before_action :set_account, only: %i[ show ]
+  before_action :set_current_account, only: %i[ edit update destroy ]
 
   def show
   end
 
-  def new
-    @account = Account.new
-  end
-
   def edit
-  end
-
-  def create
-    @account = Account.new(account_params)
-
-    if @account.save
-      redirect_to @account, notice: "Account was successfully created."
-    else
-      render :new, status: :unprocessable_entity
-    end
   end
 
   def update
@@ -34,16 +17,22 @@ class AccountsController < ApplicationController
   end
 
   def destroy
-    @account.destroy!
+    @account.update(deleted: true)
+    # signout
     redirect_to accounts_path, status: :see_other, notice: "Account was successfully destroyed."
   end
 
   private
-    def set_account
-      @account = Account.find(params.expect(:id))
-    end
 
-    def account_params
-      params.expect(account: [ :aid, :name, :password_digest, :deleted ])
-    end
+  def set_account
+    @account = Account.find(params.expect(:id))
+  end
+  
+  def set_current_account
+    @account = Account.find(params.expect(:id))
+  end
+
+  def account_params
+    params.expect(account: [ :name, :name_id, :password, :password_confirmation ])
+  end
 end

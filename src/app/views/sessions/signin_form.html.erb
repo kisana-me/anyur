@@ -1,0 +1,17 @@
+<h1>Sign in to ANYUR</h1>
+<p>ログインします。</p>
+
+<%= form_with url: signin_path, data: { turbo: false } do |f| %>
+  <%# render 'shared/error_messages', instead: nil %>
+  <%= f.label :name_id, 'ID', class: '' %>
+  <%= f.text_field :name_id, class: '' %>
+  <br />
+  <%= f.label :password, 'パスワード', class: '' %>
+  <%= f.password_field :password, class: '' %>
+  <br />
+  <%= f.label :remember_me, 'ログイン状態を保持する' %>
+  <%= f.check_box :remember_me %>
+  <br />
+  <%= f.submit 'ログイン' %>
+<% end %>
+<p>アカウントをお持ちでなければ、<%= link_to(signup_path) do %>Sign up<% end %>。</p>
