@@ -1,10 +1,31 @@
-<p style="color: green"><%= notice %></p>
-
-<%= render @account %>
+<h1>げんざいのあかうんと</h1>
 
 <div>
-  <%= link_to "Edit this account", edit_account_path(@account) %> |
-  <%= link_to "Back to accounts", accounts_path %>
+  <p>
+    <strong>固有ID:</strong>
+    <%= @current_account.id %>
+  </p>
 
-  <%= button_to "Destroy this account", @account, method: :delete %>
+  <p>
+    <strong>名前:</strong>
+    <%= @current_account.name %>
+  </p>
+
+  <p>
+    <strong>ID:</strong>
+    <%= @current_account.name_id %>
+  </p>
+
+  <p>
+    <strong>メール:</strong>
+    <%= @current_account.email %>
+  </p>
+</div>
+
+
+<div>
+  <%= link_to "変更", edit_account_path %> |
+  <%= link_to "サインイン中のアカウント一覧", accounts_path %>
+
+  <%= button_to "アカウントを削除", delete_account_path, method: :delete, data: {turbo: false} %>
 </div>

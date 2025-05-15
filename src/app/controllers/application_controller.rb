@@ -1,19 +1,17 @@
 class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
-
-  helper_method :current_account, :signed_in?
+  helper_method :get_tokens#kari
   before_action :current_account
 
-  def current_account
-    Rails.logger.info("aaaaaaaaa")
-    if session[:aid]
-      @current_account ||= Account.find(session[:aid])
-    elsif token = JSON.parse(cookies.signed[:anyur] || '[]').first
-      if account = Account.find_by_token(token)
-        sign_in(account)
-        @current_account = account
-      end
+  def current_account()
+    @current_account = nil
+    return unless token = get_tokens().first
+    if account = Account.find_by_token(token)
+      @current_account = account
+    else
+      refresh_token()
+      current_account()
     end
   end
 
@@ -22,33 +20,37 @@ class ApplicationController < ActionController::Base
   end
 
   def sign_in(account)
-    session[:aid] = account.id
-  end
-
-  def sign_out
-    forget(@current_account)
-    session.delete(:aid)
-    @current_account = nil
-  end
-
-  def remember(account)
-    account.remember
-    tokens = Array.wrap(JSON.parse(cookies.permanent.signed[:anyur] || '[]'))
-    tokens.unshift(account.remember_token)
+    token = SecureRandom.urlsafe_base64
+    account.remember(token)
+    tokens = get_tokens()
+    tokens.unshift(token)
     tokens.uniq!
     cookies.permanent.signed[:anyur] = tokens.to_json
   end
 
-  def forget(account)
-    current_token = JSON.parse(cookies.permanent.signed[:anyur] || '[]').first
-    account.forget(current_token)
-    tokens = Array.wrap(JSON.parse(cookies.permanent.signed[:anyur] || '[]'))
-    tokens.delete(account.remember_token)
+  def sign_out()
+    tokens = get_tokens()
+    @current_account.forget(tokens.first)
+    tokens.delete(tokens.first)
     if tokens.empty?
       cookies.delete(:anyur)
     else
       cookies.permanent.signed[:anyur] = tokens.to_json
     end
+    @current_account = nil
   end
 
+  def get_tokens()
+    Array.wrap(JSON.parse(cookies.permanent.signed[:anyur] || '[]'))
+  end
+
+  def refresh_token()
+    tokens = get_tokens()
+    valid_tokens = tokens.select { |token| Account.find_by_token(token).present? }
+    if valid_tokens.empty?
+      cookies.delete(:anyur)
+    else
+      cookies.permanent.signed[:anyur] = valid_tokens.to_json
+    end
+  end
 end

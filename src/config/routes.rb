@@ -14,7 +14,12 @@ Rails.application.routes.draw do
   delete 'signout' => 'sessions#signout', as: :signout
 
   # accounts
-  resources :accounts, except: %i[index]
+  get "accounts" => "accounts#index"
+  post "accounts/change" => "accounts#chage", as: :change_account
+  get "accounts/current" => "accounts#show", as: :current_account
+  get "accounts/current/edit" => "accounts#edit", as: :edit_account
+  patch "accounts/current/edit" => "accounts#update", as: :update_account
+  delete 'accounts/current/delete' => 'accounts#destroy', as: :delete_account
 
   # documents
   namespace :docs do

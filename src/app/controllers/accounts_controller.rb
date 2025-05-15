@@ -1,6 +1,10 @@
 class AccountsController < ApplicationController
-  before_action :set_account, only: %i[ show ]
-  before_action :set_current_account, only: %i[ edit update destroy ]
+  # before_action :set_account, only: %i[ show ]
+
+  def index
+    tokens = get_tokens()
+    @accounts = Account.signed_in_accounts(tokens)
+  end
 
   def show
   end
@@ -9,30 +13,26 @@ class AccountsController < ApplicationController
   end
 
   def update
-    if @account.update(account_params)
-      redirect_to @account, notice: "Account was successfully updated."
+    if @current_account.update(account_update_params)
+      redirect_to root_path, notice: "更新しました"
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @account.update(deleted: true)
-    # signout
-    redirect_to accounts_path, status: :see_other, notice: "Account was successfully destroyed."
+    @current_account.update(deleted: true)
+    sign_out()
+    redirect_to root_path, status: :see_other, notice: "アカウントを削除しました"
   end
 
   private
 
-  def set_account
-    @account = Account.find(params.expect(:id))
-  end
-  
-  def set_current_account
-    @account = Account.find(params.expect(:id))
+  def account_params
+    params.expect(account: [ :name, :name_id, :email, :password, :password_confirmation ])
   end
 
-  def account_params
-    params.expect(account: [ :name, :name_id, :password, :password_confirmation ])
+  def account_update_params
+    params.expect(account: [ :name, :name_id, :email ])
   end
 end
