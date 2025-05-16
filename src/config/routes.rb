@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   root "pages#index"
 
+  resources :services
+
+  resources :profiles
+
   # signup
   get "signup" => "signup#index", as: :signup
   get "signup/1" => "signup#form_1", as: :signup_form_1
@@ -34,4 +38,12 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
+
+  # errors
+  get '*path', to: 'errors#not_found'
+  post '*path', to: 'errors#not_found'
+  put '*path', to: 'errors#not_found'
+  patch '*path', to: 'errors#not_found'
+  delete '*path', to: 'errors#not_found'
+  match '*path', to: 'errors#not_found', via: :options
 end

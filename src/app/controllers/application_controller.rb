@@ -4,6 +4,18 @@ class ApplicationController < ActionController::Base
   helper_method :get_tokens#kari
   before_action :current_account
 
+  def render_400
+    render 'errors/400', status: :bad_request
+  end
+
+  def render_404
+    render 'errors/404', status: :not_found
+  end
+
+  def render_500
+    render 'errors/500', status: :internal_server_error
+  end
+
   def current_account()
     @current_account = nil
     return unless token = get_tokens().first
