@@ -19,8 +19,29 @@
   <body>
     <%= render 'layouts/header' %>
     <main>
+      <div>
+        <%= link_to 'アカウント', accounts_path %>
+        <% if @current_account %>
+        サインイン中<%= button_to 'Sign out', signout_path, method: :delete, data: { turbo: false } %>
+        <% else %>
+        サインインしていません
+        <% end %>
+        <%= @current_account&.name_id %>
+      </div>
       <%= yield %>
     </main>
+    <% flash.each do |message_type, message| %>
+      <div class="<%= message_type %>"
+        style="position: absolute;
+                bottom: 100px;
+                right: 80px;
+                padding: 4px 6px;
+                border-radius: 6px;
+                background: <%= message_type == 'notice' ? '#bbd4f9' : '#ff9eb6' %>;"
+      >
+        <%= message %>
+      </div>
+    <% end %>
     <%= render 'layouts/footer' %>
   </body>
 </html>

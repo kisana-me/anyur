@@ -1,0 +1,22 @@
+<h1>Sign up to ANYUR</h1>
+<p>アカウントを作成します。</p>
+
+<%= form_with model: @account, url: signup_check_confirm_path, data: { turbo: false } do |f| %>
+  <%= render 'shared/error_messages', instead: @account %>
+  <%= f.label :name, '名前', class: '' %>
+  <%= f.text_field :name, disabled: true, class: '' %>
+  <br />
+  <%= f.label :name_id, 'ID', class: '' %>
+  <%= f.text_field :name_id, disabled: true, class: '' %>
+  <br />
+  <%= f.label :email, 'メール', class: '' %>
+  <%= f.text_field :email, class: '' %>
+  <br />
+  <%= f.label :password_confirmation, 'パスワード(確認)', class: '' %>
+  <%= f.password_field :password_confirmation, class: '' %>
+  <br />
+  <%= f.submit '作成' %>
+<% end %>
+<br />
+<%= button_to('戻る', signup_form_1_path, method: :get, data: { turbo: false }) %>
+<p>アカウントをお持ちならば、<%= link_to(signin_path) do %>Sign in<% end %>。</p>

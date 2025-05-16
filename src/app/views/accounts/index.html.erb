@@ -1,0 +1,7 @@
+<h1>サインイン中のアカウント</h1>
+<% @accounts.each do |a| %>
+<% if a == @current_account %>●<% end %>
+<%= a.name %>/<%= a.name_id %>さん<br />
+<% end %>
+<%= get_tokens %>
+<%= link_to "使用中のアカウント", current_account_path %>

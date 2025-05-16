@@ -10,9 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 1) do
-  create_table "accounts", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
-    t.string "aid", default: "", null: false
+ActiveRecord::Schema[8.0].define(version: 5) do
+  create_table "accounts", id: { type: :string, limit: 14 }, charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "name_id", default: "", null: false
     t.string "email", default: "", null: false
@@ -21,14 +20,69 @@ ActiveRecord::Schema[8.0].define(version: 1) do
     t.text "meta", size: :long, default: "{}", null: false, collation: "utf8mb4_bin"
     t.text "settings", size: :long, default: "{}", null: false, collation: "utf8mb4_bin"
     t.string "password_digest", default: "", null: false
+    t.integer "usage_type", limit: 1, default: 0, null: false
     t.integer "status", limit: 1, default: 0, null: false
     t.boolean "deleted", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["aid"], name: "index_accounts_on_aid", unique: true
     t.index ["name_id"], name: "index_accounts_on_name_id", unique: true
     t.check_constraint "json_valid(`cache`)", name: "cache"
     t.check_constraint "json_valid(`meta`)", name: "meta"
     t.check_constraint "json_valid(`settings`)", name: "settings"
   end
+
+  create_table "documents", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.string "name_id", default: "", null: false
+    t.text "content", default: "", null: false
+    t.text "meta", size: :long, default: "{}", null: false, collation: "utf8mb4_bin"
+    t.integer "status", limit: 1, default: 0, null: false
+    t.boolean "deleted", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.check_constraint "json_valid(`meta`)", name: "meta"
+  end
+
+  create_table "profiles", id: { type: :string, limit: 24 }, charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.string "account_id", null: false
+    t.string "service_id", null: false
+    t.string "name"
+    t.text "settings", size: :long, collation: "utf8mb4_bin"
+    t.text "data", size: :long, collation: "utf8mb4_bin"
+    t.integer "status"
+    t.boolean "deleted"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_profiles_on_account_id"
+    t.index ["service_id"], name: "index_profiles_on_service_id"
+    t.check_constraint "json_valid(`data`)", name: "data"
+    t.check_constraint "json_valid(`settings`)", name: "settings"
+  end
+
+  create_table "services", id: { type: :string, limit: 24 }, charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "host"
+    t.string "callback"
+    t.integer "status"
+    t.boolean "deleted"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sessions", id: { type: :string, limit: 24 }, charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.string "account_id", null: false
+    t.string "name", default: "", null: false
+    t.string "user_agent", default: "", null: false
+    t.string "ip_address", default: "", null: false
+    t.string "token_digest", default: "", null: false
+    t.boolean "deleted", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_sessions_on_account_id"
+  end
+
+  add_foreign_key "profiles", "accounts"
+  add_foreign_key "profiles", "services"
+  add_foreign_key "sessions", "accounts"
 end

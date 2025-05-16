@@ -1,0 +1,24 @@
+ja:
+  activerecord:
+    models:
+      account: "アカウント"
+    attributes:
+      account:
+        id: "固有ID"
+        name: "名前"
+        name_id: "ID"
+        email: "メール"
+        password: "パスワード"
+        password_confirmation: "パスワード(確認)"
+    messages:
+      blank: "を入力してください"
+      too_short: "は%{count}文字以上で入力してください"
+      taken: "は使用できません"
+      confirmation: "が一致しません"
+      invalid: "は正しい形式で入力してください"
+      not_a_number: "は数値で入力してください"
+  errors:
+    messages:
+      invalid_email_format: "はメールの形式で入力してください"
+      invalid_name_id_format: "は数字、英字(大文字と小文字)、_、-、のみで入力してください"
+      invalid_singin: "IDまたはパスワードが正しくありません"
