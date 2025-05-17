@@ -2,18 +2,12 @@ class PagesController < ApplicationController
   def index
   end
 
-  def terms
+  def terms_of_service
   end
 
-  def privacy
+  def privacy_policy
   end
 
   def contact
-  end
-
-  def login
-  end
-
-  def post_login
   end
 end

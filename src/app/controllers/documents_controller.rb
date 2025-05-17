@@ -1,71 +1,53 @@
 class DocumentsController < ApplicationController
   before_action :admin_account, except: [:index, :show]
-  before_action :set_document, only: %i[ show edit update destroy ]
+  before_action :set_document, only: %i[ edit update destroy ]
 
-  # GET /documents or /documents.json
   def index
-    @documents = Document.all
+    @documents = Document.where(status: 0, deleted: false)
   end
 
-  # GET /documents/1 or /documents/1.json
   def show
+    @document = Document.find_by(name_id: params.expect(:name_id), status: 0, deleted: false)
   end
 
-  # GET /documents/new
+  # 以下はadminに移行予定
+
   def new
     @document = Document.new
   end
 
-  # GET /documents/1/edit
   def edit
   end
 
-  # POST /documents or /documents.json
   def create
     @document = Document.new(document_params)
-
-    respond_to do |format|
-      if @document.save
-        format.html { redirect_to @document, notice: "Document was successfully created." }
-        format.json { render :show, status: :created, location: @document }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @document.errors, status: :unprocessable_entity }
-      end
+    if @document.save
+      redirect_to @document, notice: "Document was successfully created."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /documents/1 or /documents/1.json
   def update
-    respond_to do |format|
-      if @document.update(document_params)
-        format.html { redirect_to @document, notice: "Document was successfully updated." }
-        format.json { render :show, status: :ok, location: @document }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @document.errors, status: :unprocessable_entity }
-      end
+    if @document.update(document_params)
+      redirect_to @document, notice: "Document was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
-  # DELETE /documents/1 or /documents/1.json
   def destroy
-    @document.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to documents_path, status: :see_other, notice: "Document was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    @document.update(deleted: true)
+    redirect_to documents_path, status: :see_other, notice: "文書を削除しました"
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_document
-      @document = Document.find(params.expect(:id))
-    end
 
-    # Only allow a list of trusted parameters through.
-    def document_params
-      params.expect(document: [ :name, :name_id, :content, :status, :deleted ])
-    end
+  def set_document
+    @document = Document.find(params.expect(:id))
+  end
+
+  def document_params
+    params.expect(document: [ :name, :name_id, :content, :meta, :status, :deleted ])
+  end
 end

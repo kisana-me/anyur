@@ -35,6 +35,7 @@ ActiveRecord::Schema[8.0].define(version: 5) do
     t.string "name", default: "", null: false
     t.string "name_id", default: "", null: false
     t.text "content", default: "", null: false
+    t.text "cache", default: "", null: false
     t.text "meta", size: :long, default: "{}", null: false, collation: "utf8mb4_bin"
     t.integer "status", limit: 1, default: 0, null: false
     t.boolean "deleted", default: false, null: false

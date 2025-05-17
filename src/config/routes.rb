@@ -20,10 +20,10 @@ Rails.application.routes.draw do
   # accounts
   get "accounts" => "accounts#index"
   post "accounts/change" => "accounts#change"
-  get "accounts/current" => "accounts#show", as: :current_account
-  get "accounts/current/edit" => "accounts#edit", as: :edit_account
-  patch "accounts/current/edit" => "accounts#update", as: :update_account
-  delete 'accounts/current/delete' => 'accounts#destroy', as: :delete_account
+  get "accounts/current" => "accounts#show"
+  get "accounts/current/edit" => "accounts#edit"
+  patch "accounts/current/edit" => "accounts#update"
+  delete 'accounts/current/delete' => 'accounts#destroy'
 
   # documents
   namespace :docs do

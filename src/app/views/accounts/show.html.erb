@@ -24,8 +24,8 @@
 
 
 <div>
-  <%= link_to "変更", edit_account_path %> |
+  <%= link_to "変更", accounts_current_edit_path %> |
   <%= link_to "サインイン中のアカウント一覧", accounts_path %>
 
-  <%= button_to "アカウントを削除", delete_account_path, method: :delete, data: {turbo: false} %>
+  <%= button_to "アカウントを削除", accounts_current_delete_path, method: :delete, data: {turbo: false} %>
 </div>
