@@ -19,8 +19,7 @@ class Account < ApplicationRecord
   validates :email, uniqueness: { case_sensitive: false },
                     length: { in: 5..120 },
                     format: { with: VALID_EMAIL_REGEX, message: :invalid_email_format },
-                    allow_blank: true,
-                    unless: :validate_level_1
+                    allow_blank: true
   has_secure_password
   validates :password, length: { in: 8..30 },
                         if: -> { password.present? }

@@ -5,21 +5,21 @@ Rails.application.routes.draw do
 
   resources :profiles
 
+  resources :documents
+
   # signup
-  get "signup" => "signup#index", as: :signup
-  get "signup/1" => "signup#form_1", as: :signup_form_1
-  post "signup/1" => "signup#check_1", as: :signup_check_1
-  get "signup/confirm" => "signup#form_confirm", as: :signup_form_confirm
-  post "signup/confirm" => "signup#check_confirm", as: :signup_check_confirm
+  get "signup" => "signup#index"
+  post "signup/1" => "signup#page_1"
+  post "signup/2" => "signup#page_2"
 
   # sessions
-  get "signin" => "sessions#signin_form", as: :signin_form
-  post "signin" => "sessions#signin", as: :signin
-  delete 'signout' => 'sessions#signout', as: :signout
+  get "signin" => "sessions#signin"
+  post "signin" => "sessions#post_signin"
+  delete 'signout' => 'sessions#signout'
 
   # accounts
   get "accounts" => "accounts#index"
-  post "accounts/change" => "accounts#chage", as: :change_account
+  post "accounts/change" => "accounts#change"
   get "accounts/current" => "accounts#show", as: :current_account
   get "accounts/current/edit" => "accounts#edit", as: :edit_account
   patch "accounts/current/edit" => "accounts#update", as: :update_account

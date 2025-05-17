@@ -1,9 +1,9 @@
 class SessionsController < ApplicationController
-  def signin_form
+  def signin
     @account = Account.new
   end
 
-  def signin
+  def post_signin
     account = Account.find_by(name_id: params[:session][:name_id], status: :normal, deleted: false)
     if account&.authenticate(params[:session][:password])
       sign_in(account)
@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
     else
       @account = Account.new(name_id: params[:session][:name_id])
       @account.errors.add(:base, :invalid_singin)
-      render :signin_form, status: :unprocessable_entity
+      render :signin, status: :unprocessable_entity
     end
   end
 

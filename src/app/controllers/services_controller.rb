@@ -1,5 +1,6 @@
 class ServicesController < ApplicationController
   before_action :set_service, only: %i[ show edit update destroy ]
+  before_action :admin_account
 
   # GET /services or /services.json
   def index

@@ -1,8 +1,19 @@
 class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
-  helper_method :get_tokens#kari
   before_action :current_account
+
+  def signedin_account
+    unless @current_account
+      redirect_to signin_path, alert: 'サインインしてください'
+    end
+  end
+
+  def admin_account
+    unless admin?
+      render_404
+    end
+  end
 
   def render_400
     render 'errors/400', status: :bad_request
@@ -28,7 +39,12 @@ class ApplicationController < ActionController::Base
   end
 
   def signed_in?
-    current_account.present?
+    #current_account
+    @current_account.present?
+  end
+
+  def admin?
+    signed_in? && @current_account.roles.include?('admin')
   end
 
   def sign_in(account)
@@ -50,6 +66,24 @@ class ApplicationController < ActionController::Base
       cookies.permanent.signed[:anyur] = tokens.to_json
     end
     @current_account = nil
+  end
+
+  def change_account(account_id)
+    tokens = get_tokens()
+    scope_token = ''
+    tokens.each do |t|
+      if account_id == Account.find_by_token(t)&.id
+        scope_token = t
+        break
+      end
+    end
+    if scope_token.present?
+      new_tokens = tokens.partition { |t| t == scope_token }.flatten
+      cookies.permanent.signed[:anyur] = new_tokens.to_json
+      return true
+    else
+      return false
+    end
   end
 
   def get_tokens()

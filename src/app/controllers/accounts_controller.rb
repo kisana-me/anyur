@@ -1,9 +1,18 @@
 class AccountsController < ApplicationController
-  # before_action :set_account, only: %i[ show ]
+  before_action :signedin_account
 
   def index
     tokens = get_tokens()
     @accounts = Account.signed_in_accounts(tokens)
+  end
+
+  def change
+    account_id = params[:selected_account_id]
+    if change_account(account_id)
+      redirect_to accounts_path, notice: "アカウントを切り替えました"
+    else
+      redirect_to accounts_path, alert: "アカウントを切り替えられませんでした"
+    end
   end
 
   def show
@@ -28,11 +37,11 @@ class AccountsController < ApplicationController
 
   private
 
-  def account_params
-    params.expect(account: [ :name, :name_id, :email, :password, :password_confirmation ])
-  end
-
   def account_update_params
     params.expect(account: [ :name, :name_id, :email ])
+  end
+
+  def account_update_password_params
+    params.expect(account: [ :password, :password_confirmation ])
   end
 end

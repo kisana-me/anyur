@@ -1,4 +1,5 @@
 class DocumentsController < ApplicationController
+  before_action :admin_account, except: [:index, :show]
   before_action :set_document, only: %i[ show edit update destroy ]
 
   # GET /documents or /documents.json

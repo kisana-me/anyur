@@ -16,6 +16,9 @@ header a {
   justify-content: center;
   align-items: center;
 }
+nav {
+  
+}
 .nav-list {
   height: 50px;
   display: flex;
