@@ -31,10 +31,11 @@ ActiveRecord::Schema[8.0].define(version: 5) do
     t.check_constraint "json_valid(`settings`)", name: "settings"
   end
 
-  create_table "documents", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+  create_table "documents", id: { type: :string, limit: 14 }, charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "name_id", default: "", null: false
     t.text "content", default: "", null: false
+    t.datetime "published_at"
     t.text "cache", default: "", null: false
     t.text "meta", size: :long, default: "{}", null: false, collation: "utf8mb4_bin"
     t.integer "status", limit: 1, default: 0, null: false
@@ -44,7 +45,7 @@ ActiveRecord::Schema[8.0].define(version: 5) do
     t.check_constraint "json_valid(`meta`)", name: "meta"
   end
 
-  create_table "profiles", id: { type: :string, limit: 24 }, charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+  create_table "profiles", id: { type: :string, limit: 14 }, charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "account_id", null: false
     t.string "service_id", null: false
     t.string "name", default: "", null: false
@@ -60,7 +61,7 @@ ActiveRecord::Schema[8.0].define(version: 5) do
     t.check_constraint "json_valid(`settings`)", name: "settings"
   end
 
-  create_table "services", id: { type: :string, limit: 24 }, charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+  create_table "services", id: { type: :string, limit: 14 }, charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.text "description", default: "", null: false
     t.string "host", default: "", null: false

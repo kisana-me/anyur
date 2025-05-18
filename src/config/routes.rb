@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   resources :profiles
 
-  resources :documents
+  resources :documents, param: :name_id, only: %i[ index show ]
 
   # signup
   get "signup" => "signup#index"
@@ -20,19 +20,23 @@ Rails.application.routes.draw do
   # accounts
   get "accounts" => "accounts#index"
   post "accounts/change" => "accounts#change"
-  get "accounts/current" => "accounts#show"
-  get "accounts/current/edit" => "accounts#edit"
-  patch "accounts/current/edit" => "accounts#update"
-  delete 'accounts/current/delete' => 'accounts#destroy'
+  get "account" => "accounts#show"
+  get "account/edit" => "accounts#edit"
+  patch "account/edit" => "accounts#update"
+  delete 'account/delete' => 'accounts#destroy'
 
-  # documents
-  namespace :docs do
-  end
+  get "account/verify-email" => "accounts#verify_email"
+  post "account/verify-email" => "accounts#post_verify_email"
 
   # pages
   get "terms-of-service" => "pages#terms_of_service"
   get "privacy-policy" => "pages#privacy_policy"
   get "contact" => "pages#contact"
+
+  # admin
+  namespace :admin do
+    resources :documents
+  end
 
   # others
   get "up" => "rails/health#show", as: :rails_health_check

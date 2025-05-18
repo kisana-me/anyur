@@ -5,7 +5,7 @@
 固有ID:<%= @current_account.id %><br />
 名前:<%= @current_account.name %><br />
 ID:<%= @current_account.name_id %><br />
-<%= link_to "詳しく", accounts_current_path %>
+<%= link_to "詳しく", account_path %>
 
 <h2>使用するアカウントを切り替える</h2>
 <%= form_with url: accounts_change_path, method: :post, data: { turbo: false } do %>

@@ -19,13 +19,21 @@
   <p>
     <strong>メール:</strong>
     <%= @current_account.email %>
+    <br />
+    <% if @current_account.email_verified %>
+      ✅メール認証済み
+    <% else %>
+      <%= link_to '❎メール認証する', account_verify_email_path(send_code: true) %>
+    <% end %>
   </p>
 </div>
 
 
 <div>
-  <%= link_to "変更", accounts_current_edit_path %> |
-  <%= link_to "サインイン中のアカウント一覧", accounts_path %>
-
-  <%= button_to "アカウントを削除", accounts_current_delete_path, method: :delete, data: {turbo: false} %>
+  <%= link_to "変更", account_edit_path %><br />
+  <%= link_to "サインイン中のアカウント一覧", accounts_path %><br />
+  <%= button_to "ログアウト", signout_path, method: :delete, data: {turbo: false} %>
+</div>
+<div>
+  <%= button_to "アカウントを削除", account_delete_path, method: :delete, data: {turbo: false} %>
 </div>

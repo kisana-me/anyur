@@ -10,13 +10,17 @@
   <%= f.label :name_id, 'ID', class: '' %>
   <%= f.text_field :name_id, disabled: true, class: '' %>
   <br />
-  <%= f.label :email, 'メール*任意', class: '' %>
+  <%= f.label :email, 'メール', class: '' %>
   <%= f.text_field :email, disabled: true, class: '' %>
   <br />
   <%= f.label :password_confirmation, 'パスワード(確認)', class: '' %>
   <%= f.password_field :password_confirmation, class: '' %>
   <br />
   <%= f.submit '作成' %>
+  <br />
+  <small>
+    アカウントを作成することで、ANYURの<%= link_to '利用規約', terms_of_service_path %>と<%= link_to 'プライバシーポリシー', privacy_policy_path %>に同意したことになります
+  </small>
 <% end %>
 <br />
 <%= button_to('戻る', signup_path, method: :get, data: { turbo: false }) %>

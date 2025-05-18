@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
   end
 
   def admin?
-    signed_in? && @current_account.roles.include?('admin')
+    signed_in? && @current_account.admin?
   end
 
   def sign_in(account)

@@ -7,16 +7,36 @@
   <%= f.label :name, '名前', class: '' %>
   <%= f.text_field :name, class: '' %>
   <br />
+  <small>
+    1~20字のすべての文字を使用できます
+  </small>
+  <br />
   <%= f.label :name_id, 'ID', class: '' %>
   <%= f.text_field :name_id, class: '' %>
   <br />
-  <%= f.label :email, 'メール*任意', class: '' %>
+  <small>
+    5~20字の英字(大文字小文字区別せず)・数字・_(アンダーバー)・-(ハイフン)を使用できます
+  </small>
+  <br />
+  <%= f.label :email, 'メール', class: '' %>
   <%= f.text_field :email, class: '' %>
   <br />
+  <small>
+    利用開始するにはメール認証が必須です
+  </small>
+  <br />
   <%= f.label :password, 'パスワード', class: '' %>
-  <%= f.password_field :password, class: '' %>
+  <%= f.password_field :password, value: @account.password, class: '' %>
+  <br />
+  <small>
+    8~30字のすべての文字を使用できます
+  </small>
   <br />
   <%= f.submit '進む' %>
+  <br />
+  <small>
+    アカウントを作成することで、ANYURの<%= link_to '利用規約', terms_of_service_path %>と<%= link_to 'プライバシーポリシー', privacy_policy_path %>に同意したことになります
+  </small>
 <% end %>
-
+<br />
 <p>アカウントをお持ちならば、<%= link_to(signin_path) do %>Sign in<% end %>。</p>

@@ -1,0 +1,9 @@
+
+<%= render @document %>
+
+<div>
+  <%= link_to "Edit this document", edit_admin_document_path(@document) %> |
+  <%= link_to "Back to documents", admin_documents_path %>
+
+  <%= button_to "Destroy this document", admin_document_path(@document), method: :delete %>
+</div>
