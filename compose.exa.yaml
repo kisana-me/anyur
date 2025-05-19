@@ -4,7 +4,7 @@ services:
     tty: true
     stdin_open: true
     env_file:
-      - environment.exa.env
+      - .exa.env
     working_dir: /app
     volumes:
       - ./src:/app
@@ -25,7 +25,7 @@ services:
     tty: true
     stdin_open: true
     env_file:
-      - environment.exa.env
+      - .exa.env
     volumes:
       - db-vol:/var/lib/mysql
     ports:
@@ -36,7 +36,7 @@ services:
     tty: true
     stdin_open: true
     env_file:
-      - environment.exa.env
+      - .exa.env
     ports:
       - '8080:80'
     depends_on:
