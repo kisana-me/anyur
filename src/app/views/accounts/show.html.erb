@@ -23,7 +23,9 @@
     <% if @current_account.email_verified %>
       ✅メール認証済み
     <% else %>
-      <%= link_to '❎メール認証する', account_verify_email_path(send_code: true) %>
+      ❎メール認証していません<br>
+      <%= link_to '📬認証コードを送信', account_verify_email_path(send_code: true) %><br>
+      <%= link_to '🔢認証コードを入力', account_verify_email_path %>
     <% end %>
   </p>
 </div>

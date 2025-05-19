@@ -86,15 +86,15 @@ class Account < ApplicationRecord
 
   # EVC = Email Verification by Code
 
-  def start_EVC
-    meta['use_email'] = meta['use_email'].to_i + 1
+  def start_EVC(send_email: true)
+    meta['use_email'] = meta['use_email'].to_i + 1 if send_email
     code = "%06d" % SecureRandom.random_number(1_000_000)
     meta['EVC'] = code
     meta['start_EVC_at'] = Time.current
     meta.delete('lock_EVC_at')
     meta.delete('failed_EVC')
     save
-    AccountMailer.authentication_code(self, code).deliver_now
+    AccountMailer.authentication_code(self, code).deliver_now if send_email
   end
 
   def fail_EVC

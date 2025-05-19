@@ -2,6 +2,7 @@ class Document < ApplicationRecord
   enum :status, { draft: 0, unlisted: 1, specific: 2, published: 3 }, prefix: true
 
   before_create :generate_custom_id
+  before_save :cache_rendered_content
 
   validates :name, presence: true
   validates :name, length: { in: 1..30 },
@@ -11,4 +12,12 @@ class Document < ApplicationRecord
                       length: { in: 5..30 },
                       format: { with: /\A[a-zA-Z0-9_-]+\z/, message: :invalid_name_id_format },
                       if: -> { name_id.present? }
+
+
+
+  private
+
+  def cache_rendered_content
+    self.content_cache = ::MarkdownRenderer.render(content)
+  end
 end

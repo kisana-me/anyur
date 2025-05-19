@@ -26,6 +26,7 @@ class SignupController < ApplicationController
     @account = Account.new(session[:new_account].to_h.merge(account_params))
     if @account.save
       session.delete(:new_account)
+      sign_in(@account)
       flash.now[:notice] = 'アカウントを作成しました'
     else
       render :page_1, status: :unprocessable_entity

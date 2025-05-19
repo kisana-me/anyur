@@ -9,6 +9,10 @@
     <%= document.name_id %>
   </p>
 
+<div class="markdown-body">
+  <%= raw @document.content_cache %>
+</div>
+
   <p>
     <strong>Content:</strong>
     <%= document.content %>

@@ -52,7 +52,8 @@ class ApplicationController < ActionController::Base
     tokens = get_tokens()
     tokens.unshift(token)
     tokens.uniq!
-    cookies.permanent.signed[:anyur] = tokens.to_json
+    write_tokens(tokens)
+    # cookies.permanent.signed[:anyur] = tokens.to_json
   end
 
   def sign_out()
@@ -62,7 +63,8 @@ class ApplicationController < ActionController::Base
     if tokens.empty?
       cookies.delete(:anyur)
     else
-      cookies.permanent.signed[:anyur] = tokens.to_json
+      write_tokens(tokens)
+      # cookies.permanent.signed[:anyur] = tokens.to_json
     end
     @current_account = nil
   end
@@ -78,7 +80,8 @@ class ApplicationController < ActionController::Base
     end
     if scope_token.present?
       new_tokens = tokens.partition { |t| t == scope_token }.flatten
-      cookies.permanent.signed[:anyur] = new_tokens.to_json
+      write_tokens(new_tokens)
+      # cookies.permanent.signed[:anyur] = new_tokens.to_json
       return true
     else
       return false
@@ -95,7 +98,20 @@ class ApplicationController < ActionController::Base
     if valid_tokens.empty?
       cookies.delete(:anyur)
     else
-      cookies.permanent.signed[:anyur] = valid_tokens.to_json
+      write_tokens(valid_tokens)
+      # cookies.permanent.signed[:anyur] = valid_tokens.to_json
     end
+  end
+
+  def write_tokens(tokens)
+    cookies.signed[:anyur] = {
+      value: tokens.to_json,
+      domain: :all,
+      tld_length: 3,
+      same_site: :strict,
+      expires: 1.year.from_now,
+      secure: Rails.env.production?,
+      httponly: true
+    }
   end
 end

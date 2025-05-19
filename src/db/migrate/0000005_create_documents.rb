@@ -7,7 +7,8 @@ class CreateDocuments < ActiveRecord::Migration[8.0]
       t.string :summary, null: false, default: ''
       t.text :content, null: false, default: ''
       t.datetime :published_at
-      t.text :cache, null: false, default: ''
+      t.text :content_cache, null: false, default: ''
+      t.json :cache, null: false, default: {}
       t.json :meta, null: false, default: {}
       t.integer :status, null: false, limit: 1, default: 0
       t.boolean :deleted, null: false, default: false
