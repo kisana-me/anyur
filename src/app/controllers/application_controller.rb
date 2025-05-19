@@ -49,7 +49,7 @@ class ApplicationController < ActionController::Base
 
   def sign_in(account)
     token = SecureRandom.urlsafe_base64
-    account.remember(token)
+    account.remember(token, request.remote_ip, request.user_agent)
     tokens = get_tokens()
     tokens.unshift(token)
     tokens.uniq!

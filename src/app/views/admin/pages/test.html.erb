@@ -1,0 +1,44 @@
+<h1>admin page/test</h1>
+
+<div style="overflow: auto;">
+  <div>
+    remote_ip:
+    <%= request.remote_ip %>
+  </div>
+  <div>
+    ip:
+    <%= request.ip %>
+  </div>
+  <div>
+    user_agent:
+    <%= request.user_agent %>
+  </div>
+  <div>
+    referer:
+    <%= request.referer %>
+  </div>
+  <div>
+    origin:
+    <%= request.origin %>
+  </div>
+  <div>
+    headers:
+    <% headers = request.headers.env.select { |k, _| k.start_with?("HTTP_", "CONTENT_", "REMOTE_", "REQUEST_") } %>
+    <table>
+      <thead>
+        <tr>
+          <th>Header</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% headers.each do |key, value| %>
+          <tr>
+            <td><%= key %></td>
+            <td><%= value %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

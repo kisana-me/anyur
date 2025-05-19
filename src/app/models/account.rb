@@ -48,9 +48,9 @@ class Account < ApplicationRecord
     BCrypt::Password.new(ses.remember_token).is_password?(token)
   end
 
-  def remember(token)
+  def remember(token, ip, ua)
     lookup = Digest::SHA256.hexdigest(token)[0...24]
-    Session.create(id: lookup, account: self, token_digest: Account.digest(token))
+    Session.create(id: lookup, account: self, token_digest: Account.digest(token), ip_address: ip, user_agent: ua)
   end
 
   def forget(token)
@@ -86,10 +86,11 @@ class Account < ApplicationRecord
 
   # EVC = Email Verification by Code
 
-  def start_EVC(send_email: true)
+  def start_EVC(send_email: true, evc_for: 'verify_email')
     meta['use_email'] = meta['use_email'].to_i + 1 if send_email
     code = "%06d" % SecureRandom.random_number(1_000_000)
     meta['EVC'] = code
+    meta['EVC_for'] = evc_for
     meta['start_EVC_at'] = Time.current
     meta.delete('lock_EVC_at')
     meta.delete('failed_EVC')
@@ -108,6 +109,7 @@ class Account < ApplicationRecord
 
   def end_EVC
     meta.delete('EVC')
+    meta.delete('EVC_for')
     meta.delete('start_EVC_at')
     meta.delete('lock_EVC_at')
     meta.delete('failed_EVC')

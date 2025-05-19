@@ -1,5 +1,5 @@
 class AccountsController < ApplicationController
-  before_action :signedin_account
+  before_action :signedin_account, except: :reset_password
 
   def index
     tokens = get_tokens()
@@ -29,6 +29,24 @@ class AccountsController < ApplicationController
     end
   end
 
+  def password_edit
+  end
+
+  def password_update
+    # パスワード認証
+    if @current_account.authenticate(params[:account][:current_password])
+      if params[:account][:password].present? && @current_account.update(account_update_password_params)
+        redirect_to root_path, notice: "パスワードを更新しました"
+      else
+        flash.now[:alert] = "パスワードを更新できません"
+        render :password_edit, status: :unprocessable_entity
+      end
+    else
+      flash.now[:alert] = "現在のパスワードが異なります"
+      render :password_edit, status: :unprocessable_entity
+    end
+  end
+
   def destroy
     @current_account.update(deleted: true)
     sign_out()
@@ -50,11 +68,24 @@ class AccountsController < ApplicationController
     end
   end
 
+  def request_reset_password
+  end
+
+  def post_request_reset_password
+  end
+
+  def reset_password
+  end
+
+  def post_reset_password
+  end
+
   def post_verify_email
-    if !@current_account.EVC_locked? && (@current_account.meta['EVC'].to_s == params[:verification_code].to_s)
+    flag = (@current_account.meta['EVC_for'].to_s == 'verify_email') && (@current_account.meta['EVC'].to_s == params[:verification_code].to_s)
+    if !@current_account.EVC_locked? && flag
       @current_account.email_verified = true
       @current_account.end_EVC
-    elsif @current_account.EVC_locked? && (@current_account.meta['EVC'].to_s == params[:verification_code].to_s)
+    elsif @current_account.EVC_locked? && flag
       flash.now[:alert] = "認証コードが無効です、再発行してください"
       render :verify_email
     else

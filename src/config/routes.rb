@@ -25,9 +25,10 @@ Rails.application.routes.draw do
   get "account/edit" => "accounts#edit"
   patch "account/edit" => "accounts#update"
   delete 'account/delete' => 'accounts#destroy'
-
   get "account/verify-email" => "accounts#verify_email"
   post "account/verify-email" => "accounts#post_verify_email"
+  get "account/edit-password" => "accounts#password_edit"
+  patch "account/edit-password" => "accounts#password_update"
 
   # pages
   get "terms-of-service" => "pages#terms_of_service"
@@ -36,6 +37,8 @@ Rails.application.routes.draw do
 
   # admin
   namespace :admin do
+    root "pages#index"
+    get "test" => "pages#test"
     resources :documents
   end
 
