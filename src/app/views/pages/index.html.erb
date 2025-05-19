@@ -193,16 +193,18 @@
   </div>
 </section>
 
-<section id="testimonials">
+<section id="testimonials" data-controller="carousel">
   <h2>利用いただいているサービス</h2>
   <div class="testimonial-carousel">
-    <div class="testimonial-track">
+    <div class="testimonial-track" data-carousel-target="track">
       <div class="testimonial">
         <div class="testimonial-content">
           <p>ANYURを利用することで、簡単なログイン、簡単な課金を実装できました！</p>
         </div>
         <div class="testimonial-author">
-          <div class="author-image"></div>
+          <div class="author-image">
+            <img src="https://kisana.me/images/amiverse/amiverse-logo.png" alt="amiverse logo" style="width: 80%; height: 80%; border-radius: 50px;">
+          </div>
           <div class="author-info">
             <div class="author-name">kisana</div>
             <div class="author-company">CEO, Amiverse.net</div>
@@ -215,7 +217,9 @@
           <p>記事へのコメント機能をより簡単に利用いただけるようになりました！最高です！</p>
         </div>
         <div class="testimonial-author">
-          <div class="author-image"></div>
+          <div class="author-image">
+            <img src="https://kisana.me/images/ivecolor/ivecolor-logo.png" alt="ivecolor logo" style="width: 80%; height: 80%; border-radius: 50px;">
+          </div>
           <div class="author-info">
             <div class="author-name">きさな🍭</div>
             <div class="author-company">Founder, IVECOLOR.com</div>
@@ -228,7 +232,9 @@
           <p>有料プラン実装に割いていたリソースをコンテンツ作成に充てることができて嬉しい！</p>
         </div>
         <div class="testimonial-author">
-          <div class="author-image"></div>
+          <div class="author-image">
+            <img src="https://kisana.me/images/kisana/kisana-logo.png" alt="kisana logo" style="width: 80%; height: 80%; border-radius: 50px;">
+          </div>
           <div class="author-info">
             <div class="author-name">KISANA:ME</div>
             <div class="author-company">Digital Nomad, kisana.me</div>
@@ -238,13 +244,13 @@
     </div>
     
     <div class="carousel-controls">
-      <button class="control prev"><span>&lt;</span></button>
-      <div class="carousel-dots">
-        <span class="dot active"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
+      <button class="control prev" data-action="click->carousel#prev"><span>&lt;</span></button>
+      <div class="carousel-dots" data-carousel-target="dots">
+        <span class="dot active" data-action="click->carousel#goTo" data-carousel-index-value="0"></span>
+        <span class="dot" data-action="click->carousel#goTo" data-carousel-index-value="1"></span>
+        <span class="dot" data-action="click->carousel#goTo" data-carousel-index-value="2"></span>
       </div>
-      <button class="control next"><span>&gt;</span></button>
+      <button class="control next" data-action="click->carousel#next"><span>&gt;</span></button>
     </div>
   </div>
 </section>
@@ -1154,6 +1160,9 @@ header.scrolled {
   border-radius: 50%;
   background-color: var(--neutral-300);
   margin-right: var(--space-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .author-name {
@@ -1446,63 +1455,3 @@ header.scrolled {
   gap: var(--space-3);
 }
 </style>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  // Testimonial carousel
-  const testimonialTrack = document.querySelector('.testimonial-track');
-  const testimonials = document.querySelectorAll('.testimonial');
-  const dotsContainer = document.querySelector('.carousel-dots');
-  const prevButton = document.querySelector('.control.prev');
-  const nextButton = document.querySelector('.control.next');
-  const dots = document.querySelectorAll('.dot');
-  
-  if (testimonialTrack && testimonials.length > 0) {
-    let currentIndex = 0;
-    
-    const updateCarousel = () => {
-      testimonialTrack.style.transform = `translateX(-${currentIndex * 100}%)`;
-      
-      // Update dots
-      document.querySelectorAll('.dot').forEach((dot, index) => {
-        if (index === currentIndex) {
-          dot.classList.add('active');
-        } else {
-          dot.classList.remove('active');
-        }
-      });
-    };
-    
-    // Click events for controls
-    if (prevButton) {
-      prevButton.addEventListener('click', () => {
-        currentIndex = (currentIndex === 0) ? testimonials.length - 1 : currentIndex - 1;
-        updateCarousel();
-      });
-    }
-    
-    if (nextButton) {
-      nextButton.addEventListener('click', () => {
-        currentIndex = (currentIndex === testimonials.length - 1) ? 0 : currentIndex + 1;
-        updateCarousel();
-      });
-    }
-    
-    // Click events for dots
-    if (dots) {
-      dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-          currentIndex = index;
-          updateCarousel();
-        });
-      });
-    }
-    
-    // Auto rotate testimonials
-    setInterval(() => {
-      currentIndex = (currentIndex === testimonials.length - 1) ? 0 : currentIndex + 1;
-      updateCarousel();
-    }, 8000);
-  }
-});
-</script>
