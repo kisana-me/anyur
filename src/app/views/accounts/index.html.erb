@@ -1,7 +1,22 @@
 <h1>サインイン中のアカウント</h1>
-<% @accounts.each do |a| %>
-<% if a == @current_account %>●<% end %>
-<%= a.name %>/<%= a.name_id %>さん<br />
+
+<h2>使用中のアカウント</h2>
+
+固有ID:<%= @current_account.id %><br />
+名前:<%= @current_account.name %><br />
+ID:<%= @current_account.name_id %><br />
+<%= link_to "詳しく", account_path %>
+
+<h2>使用するアカウントを切り替える</h2>
+<%= form_with url: accounts_change_path, method: :post, data: { turbo: false } do %>
+  <% @accounts.each do |account| %>
+    <div>
+      <%= radio_button_tag :selected_account_id, account.id, account.id == @current_account.id %>
+      <%= label_tag "selected_account_id_#{account.id}", "アカウント名: #{account.name}（ID: #{account.id}）" %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= submit_tag "使用アカウントを切り替え" %>
+  </div>
 <% end %>
-<%= get_tokens %>
-<%= link_to "使用中のアカウント", current_account_path %>

@@ -2,6 +2,7 @@ ja:
   activerecord:
     models:
       account: "アカウント"
+      document: "文書"
     attributes:
       account:
         id: "固有ID"
@@ -10,6 +11,20 @@ ja:
         email: "メール"
         password: "パスワード"
         password_confirmation: "パスワード(確認)"
+      document:
+        id: "固有ID"
+        name: "名前"
+        name_id: "ID"
+        content: "内容"
+        status: "状態"
+        deleted: "削除"
+    enums:
+      document:
+        status:
+          draft: "下書き"
+          unlisted: "限定公開"
+          specific: "特定用途"
+          published: "公開"
     messages:
       blank: "を入力してください"
       too_short: "は%{count}文字以上で入力してください"
@@ -20,5 +35,7 @@ ja:
   errors:
     messages:
       invalid_email_format: "はメールの形式で入力してください"
-      invalid_name_id_format: "は数字、英字(大文字と小文字)、_、-、のみで入力してください"
+      invalid_name_id_format: "は英字(大文字小文字区別せず)、数字、_(アンダーバー)、-(ハイフン)、のみで入力してください"
+      exists_email: "は使用できません"
       invalid_singin: "IDまたはパスワードが正しくありません"
+      singin_locked: "サインインがロックされています、お問い合わせください"

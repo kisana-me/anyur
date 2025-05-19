@@ -7,7 +7,7 @@
   <%= f.text_field :name_id, class: '' %>
   <br />
   <%= f.label :password, 'パスワード', class: '' %>
-  <%= f.password_field :password, class: '' %>
+  <%= f.password_field :password, value: @account.password, class: '' %>
   <br />
   <%= f.submit 'サインイン' %>
 <% end %>

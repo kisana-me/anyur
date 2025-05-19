@@ -1,10 +1,9 @@
-<p style="color: green"><%= notice %></p>
 
-<%= render @document %>
+<h1><%= @document.name %></h1>
+<div>
+  <%= raw @document.content_cache %>
+</div>
 
 <div>
-  <%= link_to "Edit this document", edit_document_path(@document) %> |
-  <%= link_to "Back to documents", documents_path %>
-
-  <%= button_to "Destroy this document", @document, method: :delete %>
+  <%= link_to "一覧へ", documents_path %>
 </div>

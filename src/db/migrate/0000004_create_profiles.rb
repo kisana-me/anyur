@@ -1,7 +1,7 @@
 class CreateProfiles < ActiveRecord::Migration[8.0]
   def change
     create_table :profiles, id: false do |t|
-      t.string :id, null: false, limit: 24, primary_key: true
+      t.string :id, null: false, limit: 14, primary_key: true
       t.string :account_id, null: false
       t.string :service_id, null: false
       t.string :name, null: false, default: ''

@@ -3,11 +3,8 @@ services:
     build: .
     tty: true
     stdin_open: true
-    environment:
-      RAILS_ENV: development
-      DB_USERNAME: 'root'
-      DB_PASSWORD: 'mdbroot'
-      DB_HOST: 'db'
+    env_file:
+      - environment.dev.env
     working_dir: /app
     volumes:
       - ./src:/app
@@ -26,9 +23,8 @@ services:
     image: mariadb:latest
     tty: true
     stdin_open: true
-    environment:
-      TZ: 'Asia/Tokyo'
-      MARIADB_ROOT_PASSWORD: 'mdbroot'
+    env_file:
+      - environment.dev.env
     volumes:
       - db-vol:/var/lib/mysql
     ports:
@@ -38,27 +34,12 @@ services:
     image: phpmyadmin:latest
     tty: true
     stdin_open: true
-    environment:
-      PMA_HOSTS: 'db'
+    env_file:
+      - environment.dev.env
     ports:
       - '8080:80'
     depends_on:
       - db
 
-  # minio:
-  #   image: minio/minio:latest
-  #   volumes:
-  #     - minio-vol:/data
-  #   command: server /data --console-address ":9001"
-  #   environment:
-  #     MINIO_ROOT_USER: 'minioroot'
-  #     MINIO_ROOT_PASSWORD: 'minioroot'
-  #   stdin_open: true
-  #   tty: true
-  #   ports:
-  #     - '9000:9000'
-  #     - '9001:9001'
-
 volumes:
   db-vol:
-  minio-vol:

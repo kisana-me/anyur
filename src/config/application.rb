@@ -14,5 +14,12 @@ module App
     config.action_view.field_error_proc = Proc.new do |html_tag, _instance|
       html_tag.html_safe
     end
+    config.session_store :cookie_store,
+      key: '_anyur',
+      domain: :all,
+      tld_length: 3,
+      same_site: :strict,
+      secure: Rails.env.production?,
+      httponly: true
   end
 end

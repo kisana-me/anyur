@@ -1,4 +1,3 @@
-<p style="color: green"><%= notice %></p>
 
 <% content_for :title, "Documents" %>
 
@@ -6,11 +5,9 @@
 
 <div id="documents">
   <% @documents.each do |document| %>
-    <%= render document %>
+    <%= document.name %>
     <p>
-      <%= link_to "Show this document", document %>
+      <%= link_to "詳細へ", document_path(document.name_id) %>
     </p>
   <% end %>
 </div>
-
-<%= link_to "New document", new_document_path %>

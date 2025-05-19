@@ -1,3 +1,1508 @@
-<h1>ANYUR</h1>
-<p>アニュー</p>
-<p>全てのアプリをこのアカウントひとつで。</p>
+<section id="hero">
+  <div class="gradient-background"></div>
+  <div class="hero-content">
+    <h1 class="title">ANYUR<br>1つのアカウントで<br>すべてにログイン</h1>
+    <p class="subtitle">ANYURアカウントを使って、他のサービスにログインできます。プレミアムプランは、連携先サービスでも利用できます。</p>
+    <div class="cta-group">
+      <% if @current_account %>
+        <a href="/home" class="btn btn-outline btn-large">ホームへ</a>
+      <% else %>
+        <a href="/signup" class="btn btn-primary btn-large">サインアップ</a>
+        <a href="/signin" class="btn btn-outline btn-large">サインイン</a>
+      <% end %>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-number">5+</span>
+        <span class="stat-label">連携サービス</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">1+</span>
+        <span class="stat-label">ユーザー数</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">99.9%</span>
+        <span class="stat-label">可用性</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-image">
+    <div class="device-mockup">
+      <div class="screen">
+        <div class="oauth-animation">
+          <div class="app-icon">
+            <img src="/icon.png" alt="anyur logo" style="width: 80%; height: 80%;">
+          </div>
+          <div class="app-name">ANYURで続ける</div>
+          <div class="loading-bar"></div>
+          <div class="checkmark"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <h2>革命的なアカウントシステム</h2>
+  <p class="section-subtitle">すべての連携サービスにシンプルにアクセス</p>
+  
+  <div class="features-grid">
+    <div class="feature-card" data-aos="fade-up">
+      <div class="feature-icon login-icon"></div>
+      <h3>ボタン1つでログイン</h3>
+      <p>簡単かつ高度なセキュリティで、連携するサービスにすばやくアクセスできます。</p>
+    </div>
+    
+    <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+      <div class="feature-icon billing-icon"></div>
+      <h3>統合的な課金プラン</h3>
+      <p>1つの課金プランで連携サービスすべての有料プランにアクセスできます。</p>
+    </div>
+    
+    <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+      <div class="feature-icon dashboard-icon"></div>
+      <h3>連携を1つの画面で管理</h3>
+      <p>連携の解除やサブスクリプションの停止は、明解で簡潔なフォームから行えます。</p>
+    </div>
+    
+    <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+      <div class="feature-icon security-icon"></div>
+      <h3>簡単で高度なセキュリティ</h3>
+      <p>メール認証など高度なセキュリティを使用しています。</p>
+    </div>
+  </div>
+</section>
+
+<section id="how-it-works">
+  <div class="section-content">
+    <h2>始め方は簡単</h2>
+    <p class="section-subtitle">入力する情報は最低限</p>
+    
+    <div class="steps">
+      <div class="step" data-aos="fade-right">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3>アカウントを作成</h3>
+          <p>ANYURにサインアップしましょう。名前とIDを決め、メールを認証、パスワードを設定して完了です。</p>
+        </div>
+      </div>
+      
+      <div class="step" data-aos="fade-right" data-aos-delay="100">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3>利用するサービスで「ANYURでログイン」</h3>
+          <p>連携するサービスのログイン画面で「ANYURでログイン」のボタンを押せばOAuthで簡単にログイン。</p>
+        </div>
+      </div>
+      
+      <div class="step" data-aos="fade-right" data-aos-delay="200">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3>課金プランは、連携先サービスにも反映</h3>
+          <p>ANYURで課金プランに入ると、連携するサービスにも反映されます。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+         <div class="integration-showcase">
+          <div class="orbit">
+            <div class="partner-app app1">
+              <img src="https://kisana.me/images/amiverse/amiverse-logo.png" alt="amiverse logo" style="width: 80%; height: 80%; border-radius: 4px;"></div>
+            <div class="partner-app app2">
+              <img src="https://kisana.me/images/ivecolor/ivecolor-logo.png" alt="ivecolor logo" style="width: 80%; height: 80%; border-radius: 4px;"></div>
+            <div class="partner-app app3">
+              <img src="https://kisana.me/images/kisana/kisana-logo.png" alt="kisana logo" style="width: 80%; height: 80%; border-radius: 4px;"></div>
+            <div class="partner-app app4">
+              <img src="https://kisana.me/images/bealive/bealive-logo.png" alt="bealive logo" style="width: 80%; height: 80%; border-radius: 4px;"></div>
+            <div class="partner-app app5">
+              <img src="https://kisana.me/images/x/x-logo.png" alt="x logo" style="width: 80%; height: 80%; border-radius: 4px;"></div>
+            <div class="partner-app app6">
+              <img src="https://kisana.me/images/anyur/anyur-logo.png" alt="anyur logo" style="width: 80%; height: 80%; border-radius: 4px;"></div>
+            <div class="center-app">
+              <img src="/icon.png" alt="anyur logo" style="width: 80%; height: 80%;">
+            </div>
+          </div>
+        </div>
+      </section>
+
+<section id="pricing">
+  <h2>単純な課金プラン</h2>
+  <p class="section-subtitle">1つの最高なプランを用意しました</p>
+  
+  <div class="pricing-cards">
+    <div class="pricing-card" data-aos="zoom-in">
+      <div class="card-header">
+        <h3>無課金プラン</h3>
+        <div class="price">
+          <span class="currency">￥</span>
+          <span class="amount">0</span>
+          <span class="period">/月</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <ul class="features-list">
+          <li>サービスにつき1つの連携プロファイル</li>
+          <li>通常サポート</li>
+          <li>プレミアム機能は利用できません</li>
+        </ul>
+        <a href="/signup" class="btn btn-secondary btn-block">利用開始</a>
+      </div>
+    </div>
+    
+    <div class="pricing-card featured" data-aos="zoom-in" data-aos-delay="100">
+      <div class="card-badge">店長イチオシ</div>
+      <div class="card-header">
+        <h3>課金プラン</h3>
+        <div class="price">
+          <span class="currency">￥</span>
+          <span class="amount">500</span>
+          <span class="period">/月</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <ul class="features-list">
+          <li>無課金プランのすべての機能</li>
+          <li>サービスにつき3つの連携プロファイル</li>
+          <li>優先的なサポート</li>
+          <li>プレミアム機能が利用できます</li>
+          <li>プレミアムなバッジ配布</li>
+        </ul>
+        <a href="/signup" class="btn btn-primary btn-block">利用開始</a>
+      </div>
+    </div>
+    
+    <div class="pricing-card" data-aos="zoom-in" data-aos-delay="200">
+      <div class="card-header">
+        <h3>最強プラン</h3>
+        <div class="price">
+          <span class="custom-price">要相談</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <ul class="features-list">
+          <li>課金プランのすべての機能</li>
+          <li>サービスにつき5+つの連携プロファイル</li>
+          <li>最優先的なサポート</li>
+          <li>ラグジュアリー機能が利用できます</li>
+          <li>ラグジュアリーなバッジ配布</li>
+          <li>特別なコミュニティ</li>
+        </ul>
+        <a href="/contact" class="btn btn-outline btn-block">お問い合わせください</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <h2>利用いただいているサービス</h2>
+  <div class="testimonial-carousel">
+    <div class="testimonial-track">
+      <div class="testimonial">
+        <div class="testimonial-content">
+          <p>ANYURを利用することで、簡単なログイン、簡単な課金を実装できました！</p>
+        </div>
+        <div class="testimonial-author">
+          <div class="author-image"></div>
+          <div class="author-info">
+            <div class="author-name">kisana</div>
+            <div class="author-company">CEO, Amiverse.net</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="testimonial">
+        <div class="testimonial-content">
+          <p>記事へのコメント機能をより簡単に利用いただけるようになりました！最高です！</p>
+        </div>
+        <div class="testimonial-author">
+          <div class="author-image"></div>
+          <div class="author-info">
+            <div class="author-name">きさな🍭</div>
+            <div class="author-company">Founder, IVECOLOR.com</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="testimonial">
+        <div class="testimonial-content">
+          <p>有料プラン実装に割いていたリソースをコンテンツ作成に充てることができて嬉しい！</p>
+        </div>
+        <div class="testimonial-author">
+          <div class="author-image"></div>
+          <div class="author-info">
+            <div class="author-name">KISANA:ME</div>
+            <div class="author-company">Digital Nomad, kisana.me</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="carousel-controls">
+      <button class="control prev"><span>&lt;</span></button>
+      <div class="carousel-dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+      <button class="control next"><span>&gt;</span></button>
+    </div>
+  </div>
+</section>
+
+<section id="cta">
+  <div class="cta-content">
+    <h2>あなたの参加をお待ちしております</h2>
+    <p>革命的なこのサービスに登録だけでもしていってください。</p>
+    <a href="/signup" class="btn btn-primary btn-large">はじめる</a>
+  </div>
+</section>
+
+
+<style>
+:root {
+  /* Color system */
+  --primary-100: #e0f2fe;
+  --primary-200: #bae6fd;
+  --primary-300: #7dd3fc;
+  --primary-400: #38bdf8;
+  --primary-500: #0ea5e9;
+  --primary-600: #0284c7;
+  --primary-700: #0369a1;
+  --primary-800: #075985;
+  --primary-900: #0c4a6e;
+  
+  --secondary-100: #f3e8ff;
+  --secondary-200: #e9d5ff;
+  --secondary-300: #d8b4fe;
+  --secondary-400: #c084fc;
+  --secondary-500: #a855f7;
+  --secondary-600: #9333ea;
+  --secondary-700: #7e22ce;
+  --secondary-800: #6b21a8;
+  --secondary-900: #581c87;
+  
+  --accent-100: #ccfbf1;
+  --accent-200: #99f6e4;
+  --accent-300: #5eead4;
+  --accent-400: #2dd4bf;
+  --accent-500: #14b8a6;
+  --accent-600: #0d9488;
+  --accent-700: #0f766e;
+  --accent-800: #115e59;
+  --accent-900: #134e4a;
+  
+  --success-500: #22c55e;
+  --warning-500: #f59e0b;
+  --error-500: #ef4444;
+  
+  --neutral-50: #f8fafc;
+  --neutral-100: #f1f5f9;
+  --neutral-200: #e2e8f0;
+  --neutral-300: #cbd5e1;
+  --neutral-400: #94a3b8;
+  --neutral-500: #64748b;
+  --neutral-600: #475569;
+  --neutral-700: #334155;
+  --neutral-800: #1e293b;
+  --neutral-900: #0f172a;
+  --neutral-950: #020617;
+  
+  /* Spacing system (8px) */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-5: 40px;
+  --space-6: 48px;
+  --space-7: 56px;
+  --space-8: 64px;
+  --space-9: 72px;
+  --space-10: 80px;
+  
+  /* Typography */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 600;
+  --font-weight-bold: 700;
+  
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  /* Z-index */
+  --z-negative: -1;
+  --z-elevate: 1;
+  --z-dropdown: 10;
+  --z-sticky: 100;
+  --z-fixed: 200;
+  --z-modal: 300;
+  --z-popover: 400;
+  --z-tooltip: 500;
+  
+  /* Animation */
+  --transition-fast: 150ms;
+  --transition-normal: 300ms;
+  --transition-slow: 500ms;
+  --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-accelerate: cubic-bezier(0.4, 0, 1, 1);
+  --easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* Base Styles */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family);
+  line-height: 1.5;
+  font-weight: var(--font-weight-regular);
+  color: var(--neutral-800);
+  background-color: var(--neutral-50);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+.container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-600);
+  transition: color var(--transition-fast) var(--easing-standard);
+}
+
+a:hover {
+  /* color: var(--primary-700); */
+  text-decoration: underline;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: var(--space-4);
+  line-height: 1.2;
+  font-weight: var(--font-weight-bold);
+  color: var(--neutral-900);
+}
+
+h1 {
+  font-size: 3.5rem;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: var(--space-3);
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin-bottom: var(--space-2);
+}
+
+p {
+  margin-bottom: var(--space-3);
+}
+
+main {
+  padding: 0;
+}
+
+.section-subtitle {
+  text-align: center;
+  color: var(--neutral-600);
+  font-size: 1.125rem;
+  margin-bottom: var(--space-6);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Header & Navigation */
+header {
+  transition: background-color var(--transition-normal) var(--easing-standard);
+}
+
+header.scrolled {
+  background-color: white;
+  box-shadow: var(--shadow-md);
+}
+
+/* nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  max-width: 1440px;
+  margin: 0 auto;
+} */
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--primary-700);
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  margin: 0 var(--space-2);
+}
+
+.nav-links a {
+  color: var(--neutral-700);
+  font-weight: var(--font-weight-medium);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast) var(--easing-standard);
+}
+
+.nav-links a:hover {
+  color: var(--primary-600);
+  background-color: var(--primary-100);
+}
+
+.cta-buttons {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: var(--neutral-800);
+  transition: all var(--transition-fast) var(--easing-standard);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-medium);
+  font-size: 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-fast) var(--easing-standard);
+  border: none;
+  outline: none;
+}
+
+.btn-primary {
+  background-color: var(--primary-600);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-700);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background-color: var(--neutral-100);
+  color: var(--neutral-800);
+}
+
+.btn-secondary:hover {
+  background-color: var(--neutral-200);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--primary-600);
+  border: 1px solid var(--primary-600);
+}
+
+.btn-outline:hover {
+  background-color: var(--primary-50);
+  color: var(--primary-700);
+  border-color: var(--primary-700);
+}
+
+.btn-large {
+  padding: var(--space-2) var(--space-4);
+  font-size: 1.125rem;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* Hero Section */
+#hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: var(--space-9) var(--space-4);
+  overflow: hidden;
+}
+
+.gradient-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--primary-700), var(--secondary-700), var(--accent-700));
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  opacity: 0.05;
+  z-index: var(--z-negative);
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.hero-content {
+  width: 50%;
+  z-index: var(--z-elevate);
+}
+
+.title {
+  margin-bottom: var(--space-4);
+  animation: fadeInUp 1s var(--easing-decelerate);
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  margin-bottom: var(--space-6);
+  color: var(--neutral-700);
+  max-width: 90%;
+  animation: fadeInUp 1s var(--easing-decelerate) 0.2s backwards;
+}
+
+.cta-group {
+  display: flex;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+  animation: fadeInUp 1s var(--easing-decelerate) 0.4s backwards;
+}
+
+.hero-stats {
+  display: flex;
+  gap: var(--space-6);
+  animation: fadeInUp 1s var(--easing-decelerate) 0.6s backwards;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--primary-600);
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: var(--neutral-600);
+}
+
+.hero-image {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 1s var(--easing-decelerate) 0.5s backwards;
+}
+
+.device-mockup {
+  width: 300px;
+  height: 600px;
+  background-color: var(--neutral-900);
+  border-radius: 36px;
+  padding: 8px;
+  box-shadow: var(--shadow-xl), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  position: relative;
+}
+
+.screen {
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  border-radius: 30px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.oauth-animation {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.app-icon {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, var(--primary-500), var(--secondary-500));
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  animation: pulse 2s var(--easing-standard) infinite;
+}
+
+.app-name {
+  color: var(--neutral-700);
+}
+
+.loading-bar {
+  width: 100%;
+  height: 6px;
+  background-color: var(--neutral-200);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+.loading-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 30%;
+  background-color: var(--primary-500);
+  border-radius: var(--radius-full);
+  animation: loading 2s var(--easing-standard) infinite;
+}
+
+.checkmark {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--success-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  opacity: 0;
+  transform: scale(0);
+  animation: checkmarkAppear 2s var(--easing-decelerate) 1.5s infinite;
+}
+
+.checkmark::before {
+  content: '';
+  width: 24px;
+  height: 12px;
+  border-bottom: 3px solid white;
+  border-left: 3px solid white;
+  transform: rotate(-45deg) translate(2px, -5px);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes loading {
+  0% {
+    left: -30%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes checkmarkAppear {
+  0%, 50% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  80% {
+    transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Features Section */
+#features {
+  padding: var(--space-10) var(--space-4);
+  background-color: white;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+
+.feature-card {
+  background-color: white;
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal) var(--easing-standard);
+  border: 1px solid var(--neutral-200);
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-300);
+}
+
+.feature-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--primary-100), var(--primary-200));
+}
+
+.login-icon::before {
+  content: '🔐';
+  font-size: 24px;
+}
+
+.billing-icon::before {
+  content: '💳';
+  font-size: 24px;
+}
+
+.dashboard-icon::before {
+  content: '📊';
+  font-size: 24px;
+}
+
+.security-icon::before {
+  content: '🛡️';
+  font-size: 24px;
+}
+
+/* How it Works Section */
+#how-it-works {
+  padding: var(--space-10) var(--space-4);
+  background-color: var(--neutral-50);
+  display: flex;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.section-content {
+  flex: 1;
+  min-width: 300px;
+}
+
+.steps {
+  margin-top: var(--space-6);
+}
+
+.step {
+  display: flex;
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.step-number {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-500), var(--secondary-500));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-weight-bold);
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.step-content {
+  padding-top: var(--space-1);
+}
+
+.integration-showcase {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.orbit {
+  position: relative;
+  width: 300px;
+  height: 300px;
+}
+
+.center-app {
+  position: absolute;
+  top: calc(50% - 30px);
+  left: calc(50% - 30px);
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--primary-500), var(--secondary-500));
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: var(--font-weight-bold);
+  animation: pulse 3s var(--easing-standard) infinite;
+}
+
+.partner-app {
+  position: absolute;
+  top: 130px;
+  left: 130px;
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.app1 {
+  animation: orbit 20s linear infinite;
+}
+
+.app2 {
+  animation: orbit 20s linear 3.3s infinite;
+}
+
+.app3 {
+  animation: orbit 20s linear 6.6s infinite;
+}
+
+.app4 {
+  animation: orbit 20s linear 10s infinite;
+}
+
+.app5 {
+  animation: orbit 20s linear 13.3s infinite;
+}
+
+.app6 {
+  animation: orbit 20s linear 16.6s infinite;
+}
+
+@keyframes orbit {
+  0% {
+    transform: rotate(0deg) translateX(120px) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translateX(120px) rotate(-360deg);
+  }
+}
+
+/* Pricing Section */
+#pricing {
+  padding: var(--space-10) var(--space-4);
+  background-color: white;
+}
+
+.pricing-cards {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.pricing-card {
+  background-color: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--neutral-200);
+  overflow: hidden;
+  transition: all var(--transition-normal) var(--easing-standard);
+  width: 100%;
+  max-width: 350px;
+  position: relative;
+}
+
+.pricing-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.pricing-card.featured {
+  transform: scale(1.05);
+  border-color: var(--primary-300);
+  box-shadow: var(--shadow-lg), 0 0 0 3px var(--primary-100);
+}
+
+.pricing-card.featured:hover {
+  transform: scale(1.05) translateY(-5px);
+}
+
+.card-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: linear-gradient(135deg, var(--primary-500), var(--secondary-500));
+  color: white;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-medium);
+}
+
+.card-header {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--neutral-200);
+  text-align: center;
+}
+
+.price {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  margin-top: var(--space-2);
+}
+
+.currency {
+  font-size: 1.5rem;
+  font-weight: var(--font-weight-medium);
+  color: var(--neutral-700);
+}
+
+.amount {
+  font-size: 3rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--neutral-900);
+  line-height: 1;
+}
+
+.period {
+  font-size: 1rem;
+  color: var(--neutral-600);
+  margin-left: 4px;
+}
+
+.custom-price {
+  font-size: 1.5rem;
+  font-weight: var(--font-weight-medium);
+  color: var(--neutral-700);
+}
+
+.card-body {
+  padding: var(--space-4);
+}
+
+.features-list {
+  list-style: none;
+  margin-bottom: var(--space-4);
+}
+
+.features-list li {
+  padding: var(--space-1) 0;
+  position: relative;
+  padding-left: 28px;
+}
+
+.features-list li::before {
+  content: '✓';
+  color: var(--success-500);
+  position: absolute;
+  left: 0;
+  top: 8px;
+  font-weight: var(--font-weight-bold);
+}
+
+/* Testimonials Section */
+#testimonials {
+  padding: var(--space-10) var(--space-4);
+  background-color: var(--neutral-50);
+}
+
+.testimonial-carousel {
+  max-width: 900px;
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+}
+
+.testimonial-track {
+  display: flex;
+  transition: transform var(--transition-normal) var(--easing-standard);
+}
+
+.testimonial {
+  min-width: 100%;
+  padding: var(--space-2);
+}
+
+.testimonial-content {
+  background-color: white;
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  margin-bottom: var(--space-4);
+  position: relative;
+}
+
+.testimonial-content::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 30px;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  transform: rotate(45deg);
+  box-shadow: var(--shadow-sm);
+}
+
+.testimonial-content p {
+  font-size: 1.125rem;
+  color: var(--neutral-700);
+  font-style: italic;
+  margin: 0;
+}
+
+.testimonial-content p::before,
+.testimonial-content p::after {
+  content: '"';
+  color: var(--primary-500);
+  font-size: 1.5rem;
+  font-weight: var(--font-weight-bold);
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  padding-left: var(--space-4);
+}
+
+.author-image {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--neutral-300);
+  margin-right: var(--space-2);
+}
+
+.author-name {
+  font-weight: var(--font-weight-medium);
+  color: var(--neutral-800);
+}
+
+.author-company {
+  font-size: 0.875rem;
+  color: var(--neutral-600);
+}
+
+.carousel-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: var(--space-4);
+}
+
+.control {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: white;
+  border: 1px solid var(--neutral-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast) var(--easing-standard);
+  margin: 0 var(--space-2);
+}
+
+.control:hover {
+  background-color: var(--primary-100);
+  border-color: var(--primary-300);
+  color: var(--primary-600);
+}
+
+.carousel-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--neutral-300);
+  cursor: pointer;
+  transition: all var(--transition-fast) var(--easing-standard);
+}
+
+.dot.active {
+  background-color: var(--primary-500);
+  transform: scale(1.2);
+}
+
+/* CTA Section */
+#cta {
+  padding: var(--space-10) var(--space-4);
+  background: linear-gradient(135deg, var(--primary-700), var(--secondary-700));
+  text-align: center;
+  color: white;
+}
+
+.cta-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+#cta h2 {
+  color: white;
+  margin-bottom: var(--space-3);
+}
+
+#cta p {
+  margin-bottom: var(--space-5);
+  font-size: 1.25rem;
+  opacity: 0.9;
+}
+
+#cta .btn-primary {
+  background-color: white;
+  color: var(--primary-700);
+}
+
+#cta .btn-primary:hover {
+  background-color: var(--neutral-100);
+  color: var(--primary-800);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  h1 {
+    font-size: 3rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  .hero-content {
+    width: 100%;
+    text-align: center;
+    padding: 0 var(--space-4);
+  }
+  
+  .subtitle {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .cta-group {
+    justify-content: center;
+  }
+  
+  .hero-stats {
+    justify-content: center;
+  }
+  
+  .hero-image {
+    position: relative;
+    width: 100%;
+    right: auto;
+    top: auto;
+    transform: none;
+    margin-top: var(--space-6);
+  }
+  
+  #how-it-works {
+    flex-direction: column;
+  }
+  
+  .integration-showcase {
+    margin-top: var(--space-6);
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+  
+  h2 {
+    font-size: 1.75rem;
+  }
+  
+  .nav-links, .cta-buttons {
+    display: none;
+  }
+  
+  .menu-toggle {
+    display: flex;
+  }
+  
+  #hero {
+    flex-direction: column;
+  }
+
+  .hero-stats {
+    flex-direction: column;
+    gap: var(--space-3);
+    align-items: center;
+  }
+  
+  .stat {
+    align-items: center;
+  }
+  
+  .pricing-card.featured {
+    transform: none;
+  }
+  
+  .pricing-card.featured:hover {
+    transform: translateY(-5px);
+  }
+  
+  .footer-bottom {
+    flex-direction: column;
+    gap: var(--space-3);
+    text-align: center;
+  }
+  
+  .legal-links {
+    flex-direction: column;
+    gap: var(--space-2);
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .cta-group {
+    flex-direction: column;
+  }
+}
+
+/* Mobile Menu */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: white;
+  z-index: var(--z-modal);
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-6) var(--space-4);
+  transform: translateX(100%);
+  transition: transform var(--transition-normal) var(--easing-standard);
+}
+
+.mobile-menu.active {
+  transform: translateX(0);
+}
+
+.mobile-menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-6);
+}
+
+.close-menu {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--neutral-100);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.mobile-nav-links {
+  list-style: none;
+}
+
+.mobile-nav-links li {
+  margin-bottom: var(--space-3);
+}
+
+.mobile-nav-links a {
+  font-size: 1.25rem;
+  font-weight: var(--font-weight-medium);
+  color: var(--neutral-800);
+  display: block;
+  padding: var(--space-2) 0;
+}
+
+.mobile-cta-buttons {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Testimonial carousel
+  const testimonialTrack = document.querySelector('.testimonial-track');
+  const testimonials = document.querySelectorAll('.testimonial');
+  const dotsContainer = document.querySelector('.carousel-dots');
+  const prevButton = document.querySelector('.control.prev');
+  const nextButton = document.querySelector('.control.next');
+  const dots = document.querySelectorAll('.dot');
+  
+  if (testimonialTrack && testimonials.length > 0) {
+    let currentIndex = 0;
+    
+    const updateCarousel = () => {
+      testimonialTrack.style.transform = `translateX(-${currentIndex * 100}%)`;
+      
+      // Update dots
+      document.querySelectorAll('.dot').forEach((dot, index) => {
+        if (index === currentIndex) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+    };
+    
+    // Click events for controls
+    if (prevButton) {
+      prevButton.addEventListener('click', () => {
+        currentIndex = (currentIndex === 0) ? testimonials.length - 1 : currentIndex - 1;
+        updateCarousel();
+      });
+    }
+    
+    if (nextButton) {
+      nextButton.addEventListener('click', () => {
+        currentIndex = (currentIndex === testimonials.length - 1) ? 0 : currentIndex + 1;
+        updateCarousel();
+      });
+    }
+    
+    // Click events for dots
+    if (dots) {
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+          currentIndex = index;
+          updateCarousel();
+        });
+      });
+    }
+    
+    // Auto rotate testimonials
+    setInterval(() => {
+      currentIndex = (currentIndex === testimonials.length - 1) ? 0 : currentIndex + 1;
+      updateCarousel();
+    }, 8000);
+  }
+});
+</script>

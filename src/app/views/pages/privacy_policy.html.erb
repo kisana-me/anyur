@@ -1,4 +1,9 @@
-<% content_for :title, "プライバシー" %>
+<% content_for :title, "プライバシーポリシー" %>
 
-<h1>プライバシー</h1>
+
+<% if @document %>
+<%= @document.content %>
+<% else %>
+<h1>プライバシーポリシー</h1>
 <p>プライバシーポリシー</p>
+<% end %>

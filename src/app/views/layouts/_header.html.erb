@@ -5,10 +5,18 @@
     </div>
   <% end %>
   <nav>
-    <%= link_to(signin_path) do %>
-      <div class="nav-list">
-        アカウント
-      </div>
+    <% if @current_account %>
+      <%= link_to(accounts_path) do %>
+        <div class="nav-list">
+          アカウント
+        </div>
+      <% end %>
+    <% else %>
+      <%= link_to(signin_path) do %>
+        <div class="nav-list">
+          サインイン
+        </div>
+      <% end %>
     <% end %>
   </nav>
 </header>

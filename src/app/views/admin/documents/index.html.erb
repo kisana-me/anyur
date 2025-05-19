@@ -1,0 +1,15 @@
+
+<% content_for :title, "Documents" %>
+
+<h1>Documents</h1>
+
+<div id="documents">
+  <% @documents.each do |document| %>
+    <%= render document %>
+    <p>
+      <%= link_to "Show this document", admin_document_path(document) %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New document", new_admin_document_path %>
