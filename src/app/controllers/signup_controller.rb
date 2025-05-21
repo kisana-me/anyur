@@ -8,6 +8,10 @@ class SignupController < ApplicationController
 
   def page_1
     @account = Account.new(account_params)
+    unless verify_turnstile(params["cf-turnstile-response"])
+      @account.errors.add(:base, :failed_captcha)
+      return render :index, status: :unprocessable_entity
+    end
     @account.validate_level_1 = true
     if @account.valid?(:level1)
       session[:new_account] ||= {}
@@ -24,6 +28,10 @@ class SignupController < ApplicationController
 
   def page_2
     @account = Account.new(session[:new_account].to_h.merge(account_params))
+    unless verify_turnstile(params["cf-turnstile-response"])
+      @account.errors.add(:base, :failed_captcha)
+      return render :page_1, status: :unprocessable_entity
+    end
     if @account.save
       session.delete(:new_account)
       sign_in(@account)

@@ -11,11 +11,12 @@ main {
   padding: 10px;
   box-sizing: border-box;
   min-height: calc(100svh - 100px);
+  overflow: auto;
 }
 .cf-turnstile {
   width: 300px;
   height: 65px;
   display: inline-block;
   overflow: hidden;
-  background: #333;
+  background: #232323;
 }

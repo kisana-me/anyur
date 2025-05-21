@@ -5,10 +5,11 @@ export default class extends Controller {
     sitekey: String,
     environment: String
   }
+  static targets = ["widget", "submit"]
 
   connect() {
     if (this.environmentValue === "development") {
-      console.log("Turnstile: スキップ（開発環境）")
+      this.enableSubmit()
       return
     }
     if (window.turnstile) {
@@ -17,12 +18,20 @@ export default class extends Controller {
       window.onloadTurnstileCallback = this.renderWidget.bind(this)
       this.loadScript()
     }
+    this.disableSubmit()
   }
 
   renderWidget() {
-    turnstile.render(this.element, {
-      sitekey: this.sitekeyValue
-    })
+    if(this.hasWidgetTarget) {
+      turnstile.render(this.widgetTarget, {
+        sitekey: this.sitekeyValue,
+        callback: this.enableSubmit.bind(this),
+        "error-callback": this.disableSubmit.bind(this),
+        "expired-callback": this.disableSubmit.bind(this)
+      })
+    } else {
+      console.warn("Turnstile widget target not found.")
+    }
   }
 
   loadScript() {
@@ -31,5 +40,17 @@ export default class extends Controller {
     script.async = true
     script.defer = true
     document.head.appendChild(script)
+  }
+
+  disableSubmit() {
+    if (this.hasSubmitTarget) {
+      this.submitTarget.disabled = true
+    }
+  }
+
+  enableSubmit() {
+    if (this.hasSubmitTarget) {
+      this.submitTarget.disabled = false
+    }
   }
 }
