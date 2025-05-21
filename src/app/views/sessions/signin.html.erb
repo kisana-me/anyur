@@ -9,6 +9,12 @@
   <%= f.label :password, 'パスワード', class: '' %>
   <%= f.password_field :password, value: @account.password, class: '' %>
   <br />
+  <div class="cf-turnstile"
+       data-controller="turnstile"
+       data-turnstile-environment-value="<%= Rails.env %>"
+       data-turnstile-sitekey-value="<%= ENV['CLOUDFLARE_TURNSTILE_SITE_KEY'] %>"> 
+  </div>
+  <br />
   <%= f.submit 'サインイン' %>
 <% end %>
 <p>アカウントをお持ちでなければ、<%= link_to(signup_path) do %>Sign up<% end %>。</p>

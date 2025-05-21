@@ -40,3 +40,4 @@ ja:
       invalid_singin: "IDまたはパスワードが間違っています"
       singin_locked: "サインインがロックされています、お問い合わせください"
       wrong_password: "パスワードが間違っています"
+      failed_captcha: "CAPTCHAの認証に失敗しました"

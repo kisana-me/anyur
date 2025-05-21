@@ -12,3 +12,10 @@ main {
   box-sizing: border-box;
   min-height: calc(100svh - 100px);
 }
+.cf-turnstile {
+  width: 300px;
+  height: 65px;
+  display: inline-block;
+  overflow: hidden;
+  background: #333;
+}

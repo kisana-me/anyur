@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  require 'net/http'
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
   before_action :current_account
@@ -57,6 +58,18 @@ class ApplicationController < ActionController::Base
 
   def admin?
     signed_in? && @current_account.admin?
+  end
+
+  def verify_turnstile(token)
+    return true if Rails.env.development?
+    uri = URI("https://challenges.cloudflare.com/turnstile/v0/siteverify")
+    res = Net::HTTP.post_form(uri, {
+      "secret" => ENV['CLOUDFLARE_TURNSTILE_SECRET_KEY'],
+      "response" => token,
+      "remoteip" => request.remote_ip
+    })
+    result = JSON.parse(res.body)
+    result["success"] == true
   end
 
   # signin session
