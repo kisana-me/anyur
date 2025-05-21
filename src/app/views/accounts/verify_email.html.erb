@@ -1,4 +1,8 @@
-<h1>メール認証コードを入力</h1>
+<% content_for :title, "メール認証" %>
+
+<h1>メール認証</h1>
+
+<p>メール認証コードを入力してください。</p>
 
 <%= form_with url: account_verify_email_path, method: :post, data: {turbo:false} do |form| %>
   <div>

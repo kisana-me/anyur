@@ -1,0 +1,62 @@
+<% title = full_title(content_for?(:title) ? yield(:title) : '') %>
+<% keywords = content_for?(:keywords) ? yield(:keywords) : 'ANYUR' %>
+<%
+  raw_keywords = content_for?(:keywords) ? yield(:keywords) : 'キーワード, keywords, hoge, fuga'
+  keywords = raw_keywords.respond_to?(:join) ? raw_keywords.join(', ') : raw_keywords.to_s
+%>
+<% description = content_for?(:description) ? yield(:description) : 'ANYURは連携するサービスにパスワードレスでサインインする為のツールです。' %>
+<%
+  image_url =
+    if content_for?(:image_path)
+      URI.join(request.base_url, yield(:image_path)).to_s
+    elsif content_for?(:image_url)
+      yield(:image_url)
+    else
+      URI.join(request.base_url, '/icon.png').to_s
+    end
+%>
+<% image_alt = content_for?(:image_alt) ? yield(:image_alt) : '' %>
+<% administrator = content_for?(:administrator) ? yield(:administrator) : 'kisana' %>
+<% robots = content_for?(:robots) ? yield(:robots) : 'index,follow' %>
+<% og_type = content_for?(:og_type) ? yield(:og_type) : 'website' %>
+<%# website article profile book music video %>
+<% twitter_card = content_for?(:twitter_card) ? yield(:twitter_card) : 'summary' %>
+<% twitter_id = content_for?(:twitter_id) ? yield(:twitter_id) : '@kisana_me' %>
+<%# summary summary_large_image app player %>
+<% site_name = content_for?(:site_name) ? yield(:site_name) : 'ANYUR' %>
+
+
+
+<meta name="keywords" content="<%= keywords %>" />
+<meta name="description" content="<%= description %>" />
+<meta name="author" content="<%= administrator %>" />
+<meta name="creator" content="<%= administrator %>" />
+<meta name="publisher" content="<%= administrator %>" />
+<meta name="generator" content="<%= administrator %>" />
+
+<meta name="robots" content="<%= robots %>" />
+<meta name="googlebot" content="<%= robots %>" />
+
+
+
+<meta property="og:url" content="<%= request.path %>" />
+<meta property="og:type" content="<%= og_type %>" />
+<meta property="og:title" content="<%= title %>" />
+<meta property="og:description" content="<%= description %>" />
+<meta property="og:image" content="<%= image_url %>" />
+<meta property="og:image:alt" content="<%= image_alt %>" />
+<meta property="og:locale" content="ja_JP" />
+<meta property="og:site_name" content="<%= site_name %>" >
+
+
+
+<meta name="twitter:card" content="<%= twitter_card %>" />
+<meta name="twitter:title" content="<%= title %>" />
+<meta name="twitter:description" content="<%= description %>" />
+<meta name="twitter:image" content="<%= image_url %>" />
+<meta name="twitter:image:alt" content="<%= image_alt %>" />
+
+<meta name="twitter:site" content="<%= site_name %>" />
+<meta name="twitter:site:id" content="<%= twitter_id %>" />
+<meta name="twitter:creator" content="<%= administrator %>" />
+<meta name="twitter:creator:id" content="<%= twitter_id %>" />

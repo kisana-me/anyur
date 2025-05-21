@@ -1,7 +1,5 @@
 class ApplicationController < ActionController::Base
   require 'net/http'
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  allow_browser versions: :modern
   before_action :current_account
   helper_method :email_verified?, :admin?
 
