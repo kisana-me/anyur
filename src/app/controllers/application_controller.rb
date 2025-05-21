@@ -4,9 +4,17 @@ class ApplicationController < ActionController::Base
   before_action :current_account
   helper_method :admin?
 
+  # before action
+
   def signedin_account
     unless @current_account
       redirect_to signin_path, alert: 'サインインしてください'
+    end
+  end
+
+  def email_verified_account
+    unless @current_account&.email_verified
+      redirect_to account_path, alert: 'メール認証してください'
     end
   end
 
@@ -15,6 +23,8 @@ class ApplicationController < ActionController::Base
       render_404
     end
   end
+
+  # error page
 
   def render_400
     render 'errors/400', status: :bad_request
@@ -28,14 +38,16 @@ class ApplicationController < ActionController::Base
     render 'errors/500', status: :internal_server_error
   end
 
-  def current_account()
+  # general method
+
+  def current_account
     @current_account = nil
     return unless token = get_tokens().first
     if account = Account.find_by_token(token)
       @current_account = account
     else
-      refresh_token()
-      current_account()
+      refresh_token
+      current_account
     end
   end
 
@@ -47,6 +59,8 @@ class ApplicationController < ActionController::Base
     signed_in? && @current_account.admin?
   end
 
+  # signin session
+
   def sign_in(account)
     token = SecureRandom.urlsafe_base64
     account.remember(token, request.remote_ip, request.user_agent)
@@ -54,7 +68,6 @@ class ApplicationController < ActionController::Base
     tokens.unshift(token)
     tokens.uniq!
     write_tokens(tokens)
-    # cookies.permanent.signed[:anyur] = tokens.to_json
   end
 
   def sign_out()
@@ -65,7 +78,6 @@ class ApplicationController < ActionController::Base
       cookies.delete(:anyur)
     else
       write_tokens(tokens)
-      # cookies.permanent.signed[:anyur] = tokens.to_json
     end
     @current_account = nil
   end
@@ -82,7 +94,6 @@ class ApplicationController < ActionController::Base
     if scope_token.present?
       new_tokens = tokens.partition { |t| t == scope_token }.flatten
       write_tokens(new_tokens)
-      # cookies.permanent.signed[:anyur] = new_tokens.to_json
       return true
     else
       return false
@@ -100,7 +111,6 @@ class ApplicationController < ActionController::Base
       cookies.delete(:anyur)
     else
       write_tokens(valid_tokens)
-      # cookies.permanent.signed[:anyur] = valid_tokens.to_json
     end
   end
 

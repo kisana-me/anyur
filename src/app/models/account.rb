@@ -7,7 +7,7 @@ class Account < ApplicationRecord
   enum :status, { normal: 0, locked: 1, suspended: 2, hibernated: 3, frozen: 4 }, prefix: true
 
   before_create :generate_custom_id
-  before_save :reset_email_verified_if_email_changed
+  before_update :reset_email_verified_if_email_changed
 
   attr_accessor :validate_level_1
 

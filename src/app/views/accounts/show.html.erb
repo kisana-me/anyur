@@ -1,4 +1,4 @@
-<h1>使用中のアカウント</h1>
+<h1>アカウント</h1>
 
 <div>
   <p>
@@ -29,13 +29,13 @@
     <% end %>
   </p>
 </div>
-
-
 <div>
-  <%= link_to "変更", account_edit_path %><br />
-  <%= link_to "サインイン中のアカウント一覧", accounts_path %><br />
   <%= button_to "ログアウト", signout_path, method: :delete, data: {turbo: false} %>
 </div>
 <div>
-  <%= button_to "アカウントを削除", account_delete_path, method: :delete, data: {turbo: false} %>
+  <%= link_to "登録情報を変更", account_edit_path %>
+  <br>
+  <%= link_to "アカウントを切り替え", account_change_path %>
+  <br>
+  <%= link_to "アカウントを削除", account_delete_path %>
 </div>

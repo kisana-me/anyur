@@ -7,6 +7,7 @@ class CreateSessions < ActiveRecord::Migration[8.0]
       t.string :user_agent, null: false, default: ''
       t.string :ip_address, null: false, default: ''
       t.string :token_digest, null: false, default: ''
+      t.json :meta, null: false, default: {}
       t.boolean :deleted, null: false, default: false
 
       t.timestamps

@@ -1,22 +1,14 @@
 <header>
-  <%= link_to(root_path) do %>
+  <%= link_to(@current_account ? home_path : root_path) do %>
     <div class="header-logo">
       ANYUR
     </div>
   <% end %>
   <nav>
-    <% if @current_account %>
-      <%= link_to(accounts_path) do %>
-        <div class="nav-list">
-          アカウント
-        </div>
-      <% end %>
-    <% else %>
-      <%= link_to(signin_path) do %>
-        <div class="nav-list">
-          サインイン
-        </div>
-      <% end %>
+    <%= link_to(@current_account ? account_path : signin_path) do %>
+      <div class="nav-list">
+        <%= @current_account ? 'アカウント' : 'サインイン' %>
+      </div>
     <% end %>
   </nav>
 </header>

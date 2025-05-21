@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     if !account&.signin_locked? && account&.authenticate(params[:session][:password])
       sign_in(account)
       account.reset_failed_signin
-      redirect_to root_path, notice: 'サインインしました'
+      redirect_to home_path, notice: 'サインインしました'
     elsif account&.signin_locked? && account&.authenticate(params[:session][:password])
       @account = Account.new(name_id: params[:session][:name_id], password: params[:session][:password])
       @account.errors.add(:base, :singin_locked)
