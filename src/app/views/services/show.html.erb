@@ -1,10 +1,9 @@
-<p style="color: green"><%= notice %></p>
-
-<%= render @service %>
+<h1><%= @service.name %></h1>
 
 <div>
-  <%= link_to "Edit this service", edit_service_path(@service) %> |
-  <%= link_to "Back to services", services_path %>
+  <%= raw @service.description_cache %>
+</div>
 
-  <%= button_to "Destroy this service", @service, method: :delete %>
+<div>
+  <%= link_to "一覧へ", services_path %>
 </div>

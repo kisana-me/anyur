@@ -25,7 +25,7 @@ class SessionsController < ApplicationController
   end
 
   def signout
-    sign_out if signed_in?
+    sign_out if @current_account
     redirect_to root_path, notice: 'サインアウトしました'
   end
 end

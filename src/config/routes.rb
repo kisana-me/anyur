@@ -2,11 +2,15 @@ Rails.application.routes.draw do
   root "pages#index"
   get "home" => "pages#home"
 
-  resources :services, only: %i[ index show ]
-
+  resources :documents, param: :name_id, only: %i[ index show ]
+  resources :services, param: :name_id, only: %i[ index show ]
   resources :personas
 
-  resources :documents, param: :name_id, only: %i[ index show ]
+  # pages
+  get "terms-of-service" => "pages#terms_of_service"
+  get "privacy-policy" => "pages#privacy_policy"
+  get "contact" => "pages#contact"
+  # post "contact" => "pages#contact" # 受け取り
 
   # signup
   get "signup" => "signup#index"
@@ -36,17 +40,12 @@ Rails.application.routes.draw do
   get "account/password/edit" => "accounts#edit_password"
   patch "account/password/update" => "accounts#update_password"
 
-  # pages
-  get "terms-of-service" => "pages#terms_of_service"
-  get "privacy-policy" => "pages#privacy_policy"
-  get "contact" => "pages#contact"
-  # post "contact" => "pages#contact" # 受け取り
-
   # admin
   namespace :admin do
     root "pages#index"
     get "test" => "pages#test"
     resources :documents
+    resources :services
   end
 
   # others

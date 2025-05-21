@@ -1,16 +1,13 @@
-<p style="color: green"><%= notice %></p>
 
 <% content_for :title, "Services" %>
 
 <h1>Services</h1>
 
-<div id="services">
+<div>
   <% @services.each do |service| %>
-    <%= render service %>
+    <%= service.name %>
     <p>
-      <%= link_to "Show this service", service %>
+      <%= link_to "詳細へ", service_path(service.name_id) %>
     </p>
   <% end %>
 </div>
-
-<%= link_to "New service", new_service_path %>

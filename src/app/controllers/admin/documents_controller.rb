@@ -44,6 +44,9 @@ class Admin::DocumentsController < Admin::ApplicationController
   end
 
   def document_params
-    params.expect(document: [ :name, :name_id, :content, :meta, :status, :deleted ])
+    params.expect(document: [
+      :name, :name_id, :summary, :content, :content_cache,
+      :published_at, :status, :deleted
+    ])
   end
 end

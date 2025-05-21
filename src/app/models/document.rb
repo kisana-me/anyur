@@ -13,8 +13,6 @@ class Document < ApplicationRecord
                       format: { with: /\A[a-zA-Z0-9_-]+\z/, message: :invalid_name_id_format },
                       if: -> { name_id.present? }
 
-
-
   private
 
   def cache_rendered_content

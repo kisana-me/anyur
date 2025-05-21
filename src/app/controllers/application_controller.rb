@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
   before_action :current_account
-  helper_method :admin?
+  helper_method :email_verified?, :admin?
 
   # before action
 
@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   end
 
   def email_verified_account
-    unless @current_account&.email_verified
+    unless email_verified?
       redirect_to account_path, alert: 'メール認証してください'
     end
   end
@@ -52,12 +52,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def signed_in?
-    @current_account.present?
+  def email_verified?
+    @current_account&.email_verified
   end
 
   def admin?
-    signed_in? && @current_account.admin?
+    @current_account&.admin?
   end
 
   def verify_turnstile(token)
