@@ -18,5 +18,10 @@ main {
   height: 65px;
   display: inline-block;
   overflow: hidden;
-  background: #232323;
+  background: #fafafa;
+}
+@media (prefers-color-scheme: dark) {
+  .cf-turnstile {
+    background: #232323;
+  }
 }
