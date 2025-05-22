@@ -26,8 +26,8 @@
       ✅メール認証済み
     <% else %>
       ❎メール認証していません<br>
-      <%= link_to '📬認証コードを送信', account_verify_email_path(send_code: true) %><br>
-      <%= link_to '🔢認証コードを入力', account_verify_email_path %>
+      <%= link_to "📬認証コードを送信", account_verify_email_path(send_code: true) %><br>
+      <%= link_to "🔢認証コードを入力", account_verify_email_path %>
     <% end %>
   </p>
 </div>

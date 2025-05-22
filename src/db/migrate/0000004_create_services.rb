@@ -2,12 +2,12 @@ class CreateServices < ActiveRecord::Migration[8.0]
   def change
     create_table :services, id: false do |t|
       t.string :id, null: false, limit: 14, primary_key: true
-      t.string :name, null: false, default: ''
-      t.string :name_id, null: false, default: ''
-      t.string :summary, null: false, default: ''
-      t.text :description, null: false, default: ''
-      t.text :description_cache, null: false, default: ''
-      t.string :host, null: false, default: ''
+      t.string :name, null: false, default: ""
+      t.string :name_id, null: false, default: ""
+      t.string :summary, null: false, default: ""
+      t.text :description, null: false, default: ""
+      t.text :description_cache, null: false, default: ""
+      t.string :host, null: false, default: ""
       t.json :cache, null: false, default: {}
       t.json :settings, null: false, default: {}
       t.json :meta, null: false, default: {}

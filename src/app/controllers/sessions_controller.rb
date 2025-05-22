@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
     if !account&.signin_locked? && account&.authenticate(params[:session][:password])
       sign_in(account)
       account.reset_failed_signin
-      redirect_to home_path, notice: 'サインインしました'
+      redirect_to home_path, notice: "サインインしました"
     elsif account&.signin_locked? && account&.authenticate(params[:session][:password])
       @account.errors.add(:base, :singin_locked)
       render :signin, status: :unprocessable_entity
@@ -26,6 +26,6 @@ class SessionsController < ApplicationController
 
   def signout
     sign_out if @current_account
-    redirect_to root_path, notice: 'サインアウトしました'
+    redirect_to root_path, notice: "サインアウトしました"
   end
 end

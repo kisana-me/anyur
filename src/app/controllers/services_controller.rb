@@ -4,6 +4,6 @@ class ServicesController < ApplicationController
   end
 
   def show
-    @service = Service.find_by(name_id: params.expect(:name_id), deleted: false)#status
+    @service = Service.find_by!(name_id: params.expect(:name_id), deleted: false)#status
   end
 end

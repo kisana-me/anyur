@@ -1,0 +1,31 @@
+<% content_for :title, "お問い合わせ完了" %>
+
+<h1>お問い合わせ完了</h1>
+<p>お問い合わせを以下の内容で承りました。</p>
+
+<h2>お問い合わせ内容</h2>
+<hr />
+<h3>お問い合わせID</h3>
+<p><%= @inquiry.id %></p>
+<hr />
+<h3>件名</h3>
+<p><%= @inquiry.subject %></p>
+<h3>概要</h3>
+<p><%= @inquiry.summary %></p>
+<h3>内容</h3>
+<p><%= @inquiry.content %></p>
+<hr />
+<h3>名前</h3>
+<p><%= @inquiry.name %></p>
+<h3>メール</h3>
+<p><%= @inquiry.email %></p>
+<hr />
+<h3>アカウント</h3>
+<% if @inquiry.account %>
+<p>固有ID:<%= @inquiry.account.id %></p>
+<p>名前:<%= @inquiry.account.name %></p>
+<p>ID:<%= @inquiry.account.name_id %></p>
+<% else %>
+<p>紐づけされていません</p>
+<% end %>
+<hr />

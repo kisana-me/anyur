@@ -2,7 +2,7 @@
 
 <h1>登録情報を変更</h1>
 <%= form_with(model: @current_account, url: account_edit_path, data: { turbo: false }) do |form| %>
-  <%= render 'shared/error_messages', instead: @current_account %>
+  <%= render "shared/error_messages", instead: @current_account %>
 
   <div>
     <%= form.label :id, style: "display: block" %>
@@ -23,5 +23,5 @@
     <%= form.submit %>
   </div>
 <% end %>
-<%= link_to 'メールを変更', account_email_edit_path %><br>
-<%= link_to 'パスワードを変更', account_password_edit_path %>
+<%= link_to "メールを変更", account_email_edit_path %><br>
+<%= link_to "パスワードを変更", account_password_edit_path %>

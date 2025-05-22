@@ -44,7 +44,7 @@ class AccountsController < ApplicationController
     end
     if params[:account][:email].present? && @current_account.update(account_update_email_params)
       # 変更適用メールを送信して、それを踏んでもらえたら適用が望ましい
-      return redirect_to account_path, notice: "パスワードを更新しました"
+      return redirect_to account_path, notice: "メールを更新しました"
     elsif params[:account][:email].blank?
       @current_account.errors.add(:email, :blank)
     end
@@ -69,7 +69,7 @@ class AccountsController < ApplicationController
     # パスワード認証
     if @current_account.authenticate(params[:account][:current_password])
       if params[:account][:password].present? && @current_account.update(account_update_password_params)
-        redirect_to account_path, notice: "パスワードを更新しました"
+        return redirect_to account_path, notice: "パスワードを更新しました"
       else
         flash.now[:alert] = "パスワードを更新できません"
         render :password_edit, status: :unprocessable_entity
@@ -84,7 +84,7 @@ class AccountsController < ApplicationController
     if @current_account.email_verified
       redirect_to account_path, alert: "メール認証は済んでいます"
     else
-      if params[:send_code] == 'true'
+      if params[:send_code] == "true"
         if @current_account.email_locked?
           flash.now[:alert] = "メールを使用できません、お問い合わせください"
         else
@@ -96,11 +96,11 @@ class AccountsController < ApplicationController
   end
 
   def post_verify_email
-    flag = (@current_account.meta['EVC_for'].to_s == 'verify_email') && (@current_account.meta['EVC'].to_s == params[:verification_code].to_s)
+    flag = (@current_account.meta["EVC_for"].to_s == "verify_email") && (@current_account.meta["EVC"].to_s == params[:verification_code].to_s)
     if !@current_account.EVC_locked? && flag
       @current_account.email_verified = true
       @current_account.end_EVC
-      redirect_to account_path, notice: '認証が完了しました'
+      redirect_to account_path, notice: "認証が完了しました"
     elsif @current_account.EVC_locked? && flag
       flash.now[:alert] = "認証コードが無効です、再発行してください"
       render :verify_email

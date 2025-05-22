@@ -31,7 +31,7 @@ export default class extends Controller {
   update() {
     this.trackTarget.style.transform = `translateX(-${this.indexValue * 100}%)`
 
-    const dots = this.dotsTarget.querySelectorAll('.dot')
+    const dots = this.dotsTarget.querySelectorAll(".dot")
     dots.forEach((dot, i) => {
       dot.classList.toggle("active", i === this.indexValue)
     })

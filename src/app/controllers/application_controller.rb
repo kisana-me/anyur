@@ -1,19 +1,25 @@
 class ApplicationController < ActionController::Base
-  require 'net/http'
+  require "net/http"
   before_action :current_account
   helper_method :email_verified?, :admin?
+
+  unless Rails.env.development?
+    rescue_from Exception,                      with: :render_500
+    rescue_from ActiveRecord::RecordNotFound,   with: :render_404
+    rescue_from ActionController::RoutingError, with: :render_404
+  end
 
   # before action
 
   def signedin_account
     unless @current_account
-      redirect_to signin_path, alert: 'サインインしてください'
+      redirect_to signin_path, alert: "サインインしてください"
     end
   end
 
   def email_verified_account
     unless email_verified?
-      redirect_to account_path, alert: 'メール認証してください'
+      redirect_to account_path, alert: "メール認証してください"
     end
   end
 
@@ -26,15 +32,15 @@ class ApplicationController < ActionController::Base
   # error page
 
   def render_400
-    render 'errors/400', status: :bad_request
+    render "errors/400", status: :bad_request
   end
 
   def render_404
-    render 'errors/404', status: :not_found
+    render "errors/404", status: :not_found
   end
 
   def render_500
-    render 'errors/500', status: :internal_server_error
+    render "errors/500", status: :internal_server_error
   end
 
   # general method
@@ -62,7 +68,7 @@ class ApplicationController < ActionController::Base
     return true if Rails.env.development?
     uri = URI("https://challenges.cloudflare.com/turnstile/v0/siteverify")
     res = Net::HTTP.post_form(uri, {
-      "secret" => ENV['CLOUDFLARE_TURNSTILE_SECRET_KEY'],
+      "secret" => ENV["CLOUDFLARE_TURNSTILE_SECRET_KEY"],
       "response" => token,
       "remoteip" => request.remote_ip
     })
@@ -95,7 +101,7 @@ class ApplicationController < ActionController::Base
 
   def change_account(account_id)
     tokens = get_tokens()
-    scope_token = ''
+    scope_token = ""
     tokens.each do |t|
       if account_id == Account.find_by_token(t)&.id
         scope_token = t
@@ -112,7 +118,7 @@ class ApplicationController < ActionController::Base
   end
 
   def get_tokens()
-    Array.wrap(JSON.parse(cookies.permanent.signed[:anyur] || '[]'))
+    Array.wrap(JSON.parse(cookies.permanent.signed[:anyur] || "[]"))
   end
 
   def refresh_token()

@@ -10,7 +10,7 @@ class Document < ApplicationRecord
   validates :name_id, presence: true
   validates :name_id, uniqueness: { case_sensitive: false },
                       length: { in: 5..30 },
-                      format: { with: /\A[a-zA-Z0-9_-]+\z/, message: :invalid_name_id_format },
+                      format: { with: NAME_ID_REGEX, message: :invalid_name_id_format },
                       if: -> { name_id.present? }
 
   private

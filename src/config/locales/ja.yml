@@ -3,6 +3,7 @@ ja:
     models:
       account: "アカウント"
       document: "文書"
+      inquiry: "お問い合わせ"
     attributes:
       account:
         id: "固有ID"
@@ -18,6 +19,13 @@ ja:
         content: "内容"
         status: "状態"
         deleted: "削除"
+      inquiry:
+        subject: "件名"
+        summary: "概要"
+        content: "内容"
+        name: "名前"
+        email: "メール"
+        account: "アカウント"
     enums:
       document:
         status:
@@ -35,7 +43,7 @@ ja:
   errors:
     messages:
       invalid_email_format: "はメールの形式で入力してください"
-      invalid_name_id_format: "は英字(大文字小文字区別せず)、数字、_(アンダーバー)、-(ハイフン)、のみで入力してください"
+      invalid_name_id_format: "は英字(大文字小文字区別せず)、数字、_(アンダーバー)、のみで入力してください"
       exists_email: "は使用できません"
       invalid_singin: "IDまたはパスワードが間違っています"
       singin_locked: "サインインがロックされています、お問い合わせください"

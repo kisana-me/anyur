@@ -9,7 +9,7 @@ services:
     volumes:
       - ./src:/app
     ports:
-      - '3000:3000'
+      - "3000:3000"
     depends_on:
       - db
     command: >
@@ -28,7 +28,7 @@ services:
     volumes:
       - db-vol:/var/lib/mysql
     ports:
-      - '3306:3306'
+      - "3306:3306"
 
   phpmyadmin:
     image: phpmyadmin:latest
@@ -37,7 +37,7 @@ services:
     env_file:
       - .dev.env
     ports:
-      - '8080:80'
+      - "8080:80"
     depends_on:
       - db
 

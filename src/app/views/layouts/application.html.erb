@@ -15,7 +15,7 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <meta name="format-detection" content="email=no,telephone=no,address=no" />
-    <%= render 'layouts/head' %>
+    <%= render "layouts/head" %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <meta name="turbo-prefetch" content="false">
@@ -25,30 +25,30 @@
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      gtag("js", new Date());
 
-      gtag('config', 'G-V0CTL140Q8');
+      gtag("config", "G-V0CTL140Q8");
     </script>
     <% end %>
   </head>
 
   <body>
-    <%= render 'layouts/header' %>
+    <%= render "layouts/header" %>
     <main>
       <%= yield %>
     </main>
     <% flash.each do |message_type, message| %>
       <div class="<%= message_type %>"
-        style="position: absolute;
+        style="position: fixed;
                 bottom: 100px;
                 right: 80px;
                 padding: 4px 6px;
                 border-radius: 6px;
-                background: <%= message_type == 'notice' ? '#bbd4f9' : '#ff9eb6' %>;"
+                background: <%= message_type == "notice" ? "#bbd4f9" : "#ff9eb6" %>;"
       >
         <%= message %>
       </div>
     <% end %>
-    <%= render 'layouts/footer' %>
+    <%= render "layouts/footer" %>
   </body>
 </html>

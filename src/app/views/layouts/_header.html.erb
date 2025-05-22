@@ -7,7 +7,7 @@
   <nav>
     <%= link_to(@current_account ? account_path : signin_path) do %>
       <div class="nav-list">
-        <%= @current_account ? 'アカウント' : 'サインイン' %>
+        <%= @current_account ? "アカウント" : "サインイン" %>
       </div>
     <% end %>
   </nav>

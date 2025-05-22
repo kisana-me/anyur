@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :documents, param: :name_id, only: %i[ index show ]
   resources :services, param: :name_id, only: %i[ index show ]
   resources :personas
+  resources :inquiries, only: %i[ new create ]
 
   # pages
   get "terms-of-service" => "pages#terms_of_service"
@@ -20,10 +21,9 @@ Rails.application.routes.draw do
   # sessions
   get "signin" => "sessions#signin"
   post "signin" => "sessions#post_signin"
-  delete 'signout' => 'sessions#signout'
+  delete "signout" => "sessions#signout"
 
   # accounts
-  # get "accounts" => "accounts#index"
   get "account" => "accounts#show"
   get "account/change" => "accounts#index"
   post "account/change" => "accounts#change"
@@ -54,10 +54,12 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # errors
-  get '*path', to: 'errors#not_found'
-  post '*path', to: 'errors#not_found'
-  put '*path', to: 'errors#not_found'
-  patch '*path', to: 'errors#not_found'
-  delete '*path', to: 'errors#not_found'
-  match '*path', to: 'errors#not_found', via: :options
+  unless Rails.env.development?
+    get "*path", to: "application#render_404"
+    post "*path", to: "application#render_404"
+    put "*path", to: "application#render_404"
+    patch "*path", to: "application#render_404"
+    delete "*path", to: "application#render_404"
+    match "*path", to: "application#render_404", via: :options
+  end
 end

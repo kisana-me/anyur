@@ -35,7 +35,7 @@ class SignupController < ApplicationController
     if @account.save
       session.delete(:new_account)
       sign_in(@account)
-      flash.now[:notice] = 'アカウントを作成しました'
+      flash.now[:notice] = "アカウントを作成しました"
     else
       render :page_1, status: :unprocessable_entity
     end

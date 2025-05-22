@@ -5,6 +5,6 @@ class DocumentsController < ApplicationController
   end
 
   def show
-    @document = Document.find_by(name_id: params.expect(:name_id), status: :published, deleted: false)
+    @document = Document.find_by!(name_id: params.expect(:name_id), status: :published, deleted: false)
   end
 end

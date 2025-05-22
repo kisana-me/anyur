@@ -1,0 +1,27 @@
+class InquiriesController < ApplicationController
+  def new
+    @inquiry = Inquiry.new
+  end
+
+  def create
+    @inquiry = Inquiry.new(inquiry_params)
+    unless verify_turnstile(params["cf-turnstile-response"])
+      @inquiry.errors.add(:base, :failed_captcha)
+      return render :new, status: :unprocessable_entity
+    end
+    if (params[:inquiry][:account] == "1") && @current_account
+      @inquiry.account = @current_account
+    end
+    if @inquiry.save
+      flash.now[:notice] = "お問い合わせを承りました"
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def inquiry_params
+    params.expect(inquiry: [ :subject, :summary, :content, :name, :email ])
+  end
+end

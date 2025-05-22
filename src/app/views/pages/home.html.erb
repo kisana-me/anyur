@@ -2,13 +2,13 @@
 
 <h1>ホーム</h1>
 <% unless email_verified? %>
-<p>⚠️<%= link_to 'メール認証', account_path %>を済ませてください</p>
+<p>⚠️<%= link_to "メール認証", account_path %>を済ませてください</p>
 <% end %>
 <p>こんにちは</p>
-<%= link_to 'アカウント', account_path %>
+<%= link_to "アカウント", account_path %>
 <br />
 <br />
-<%= link_to 'サービス一覧', services_path %>
+<%= link_to "サービス一覧", services_path %>
 <br />
 <br />
-<%= link_to '文書一覧', documents_path %>
+<%= link_to "文書一覧", documents_path %>

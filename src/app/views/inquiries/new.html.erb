@@ -1,0 +1,46 @@
+<% content_for :title, "お問い合わせ" %>
+
+<h1>お問い合わせ</h1>
+<p>件名、内容、名前は必須入力です。</p>
+<p>基本的に、返信は致しません。</p>
+<div data-controller="turnstile"
+     data-turnstile-environment-value="<%= Rails.env %>"
+     data-turnstile-sitekey-value="<%= ENV["CLOUDFLARE_TURNSTILE_SITE_KEY"] %>">
+<%= form_with model: @inquiry, url: inquiries_path, data: { turbo: false } do |f| %>
+  <%= render "shared/error_messages", instead: @inquiry %>
+  <div>
+    <%= f.label :subject %>
+    <%= f.text_field :subject %>
+  </div>
+  <div>
+    <%= f.label :summary %>
+    <%= f.text_field :summary %>
+  </div>
+  <div>
+    <%= f.label :content %>
+    <%= f.text_area :content %>
+  </div>
+  <% if @current_account %>
+    <div>
+      <%= f.label :account %>
+      <%= f.checkbox :account %>
+      <br />
+      <small>サインイン中のアカウントをお問い合わせに紐づけます</small>
+      <br />
+      <small>紐づけた場合は以下の名前は不要です</small>
+    </div>
+  <% end %>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+  </div>
+  <div class="cf-turnstile" data-turnstile-target="widget"></div>
+  <div>
+    <%= f.submit "送信", data: { turnstile_target: "submit" }, disabled: true %>
+  </div>
+<% end %>
+</div>

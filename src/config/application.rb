@@ -15,7 +15,7 @@ module App
       html_tag.html_safe
     end
     config.session_store :cookie_store,
-      key: '_anyur',
+      key: "_anyur",
       domain: :all,
       tld_length: 3,
       same_site: :strict,
