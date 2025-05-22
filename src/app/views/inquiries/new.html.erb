@@ -10,7 +10,7 @@
   <%= render "shared/error_messages", instead: @inquiry %>
   <div>
     <%= f.label :service_id %>
-    <%= f.collection_select :service_id, @services, :id, :name, prompt: "選択しない" %>
+    <%= f.collection_select :service_id, @services, :id, :name, include_blank: "選択しない" %>
   </div>
   <div>
     <%= f.label :subject %>

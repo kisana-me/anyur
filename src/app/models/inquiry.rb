@@ -19,12 +19,15 @@ class Inquiry < ApplicationRecord
   validates :email, length: { in: 1..255 },
                     format: { with: URI::MailTo::EMAIL_REGEXP },
                     if: -> { email.present? }
-  validates :address, length: { in: 1..255 },
-                   if: -> { address.present? }
 
   enum :status, { received: 0, processing: 1, finished: 2 }, prefix: true
 
   before_create :generate_custom_id
+  before_validation :normalize_service_id
 
   private
+
+  def normalize_service_id
+    self.service_id = nil if service_id.blank?
+  end
 end
