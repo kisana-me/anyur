@@ -20,6 +20,7 @@ ja:
         status: "状態"
         deleted: "削除"
       inquiry:
+        service_id: "サービス"
         subject: "件名"
         summary: "概要"
         content: "内容"

@@ -1,11 +1,12 @@
 <% content_for :title, @service.name %>
 
 <h1><%= @service.name %></h1>
-
+<p><%= @service.host %></p>
+<hr />
 <div>
   <%= raw @service.description_cache %>
 </div>
-
+<hr />
 <div>
   <%= link_to "一覧へ", services_path %>
 </div>

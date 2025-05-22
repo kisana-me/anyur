@@ -60,7 +60,6 @@ ActiveRecord::Schema[8.0].define(version: 6) do
     t.text "content", default: "", null: false
     t.text "name", default: "", null: false
     t.string "email", default: "", null: false
-    t.string "address", default: "", null: false
     t.text "memo", default: "", null: false
     t.text "cache", size: :long, default: "{}", null: false, collation: "utf8mb4_bin"
     t.text "settings", size: :long, default: "{}", null: false, collation: "utf8mb4_bin"

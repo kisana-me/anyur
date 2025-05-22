@@ -13,6 +13,9 @@ main {
   min-height: calc(100svh - 100px);
   overflow: auto;
 }
+img {
+  width: 100%;
+}
 .cf-turnstile {
   width: 300px;
   height: 65px;

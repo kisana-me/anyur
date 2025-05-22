@@ -1,6 +1,7 @@
 class InquiriesController < ApplicationController
   def new
     @inquiry = Inquiry.new
+    @services = Service.where(deleted: false)#status
   end
 
   def create
@@ -22,6 +23,6 @@ class InquiriesController < ApplicationController
   private
 
   def inquiry_params
-    params.expect(inquiry: [ :subject, :summary, :content, :name, :email ])
+    params.expect(inquiry: [ :service_id, :subject, :summary, :content, :name, :email ])
   end
 end
