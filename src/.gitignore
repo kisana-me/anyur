@@ -35,3 +35,6 @@
 /config/credentials.yml.enc
 
 /config/credentials/development.key
+
+/config/credentials/*.enc
+/config/credentials/*.key

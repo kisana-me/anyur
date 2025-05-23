@@ -60,7 +60,7 @@ class Account < ApplicationRecord
   end
 
   def email_locked?
-    meta["use_email"].to_i >= 3
+    meta["use_email"].to_i >= 20
   end
 
   # check signin fails
