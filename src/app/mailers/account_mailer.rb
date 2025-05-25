@@ -1,23 +1,16 @@
 class AccountMailer < ApplicationMailer
-  def authentication_code(account, code)
-    @account = account
+  def authentication_code(email, code)
     @code = code
     mail(
-      to: account.email,
+      to: email,
       subject: "ANYUR 認証コードのお知らせ"
     )
   end
-  def authentication_page(account)
-    @account = account
+  def password_reset(email, token)
+    @email = email
+    @token = token
     mail(
-      to: account.email,
-      subject: "ANYUR 認証ページのお知らせ"
-    )
-  end
-  def password_reset(account)
-    @account = account
-    mail(
-      to: account.email,
+      to: email,
       subject: "ANYUR パスワードを再設定"
     )
   end

@@ -3,6 +3,7 @@
 <h1>メール認証</h1>
 
 <p>メール認証コードを入力してください。</p>
+<p>メールが迷惑フォルダに入っている場合があります。ご確認ください。</p>
 
 <%= form_with url: account_verify_email_path, method: :post, data: {turbo:false} do |form| %>
   <div>

@@ -7,9 +7,9 @@ class Account < ApplicationRecord
   enum :status, { normal: 0, locked: 1, suspended: 2, hibernated: 3, frozen: 4 }, prefix: true
 
   before_create :generate_custom_id
-  before_update :reset_email_verified_if_email_changed
+  # before_update :reset_email_verified_if_email_changed
 
-  attr_accessor :validate_level_1
+  attr_accessor :check_password
 
   validates :name, presence: true
   validates :name, length: { in: 1..20 },
@@ -19,21 +19,20 @@ class Account < ApplicationRecord
                       length: { in: 5..20 },
                       format: { with: NAME_ID_REGEX, message: :invalid_name_id_format },
                       if: -> { name_id.present? }
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   validates :email, presence: true
   validates :email, uniqueness: { case_sensitive: false, message: :exists_email },
                     length: { in: 5..120 },
                     format: { with: VALID_EMAIL_REGEX, message: :invalid_email_format },
                     if: -> { email.present? }
   has_secure_password
+  validates :password, presence: true,
+                        if: :check_password
   validates :password, length: { in: 8..30 },
                         if: -> { password.present? }
   validates :password, confirmation: true,
-                        if: -> { password_confirmation.present? },
-                        unless: :validate_level_1
+                        if: -> { password_confirmation.present? }
   validates :password_confirmation, presence: true,
-                                    if: -> { password.present? && password_confirmation.present? },
-                                    unless: :validate_level_1
+                                    if: -> { password.present? && password_confirmation.present? }
 
   MAX_FAILED_ATTEMPTS = 7
 
@@ -89,41 +88,74 @@ class Account < ApplicationRecord
   def start_EVC(send_email: true, evc_for: "verify_email")
     meta["use_email"] = meta["use_email"].to_i + 1 if send_email
     code = "%06d" % SecureRandom.random_number(1_000_000)
-    meta["EVC"] = code
-    meta["EVC_for"] = evc_for
-    meta["start_EVC_at"] = Time.current
-    meta.delete("lock_EVC_at")
-    meta.delete("failed_EVC")
+    meta["EVC"] ||= {}
+    meta["EVC"]["code"] = code
+    meta["EVC"]["for"] = evc_for
+    meta["EVC"]["started_at"] = Time.current
+    meta["EVC"]["failed_times"] = 0
     save
-    AccountMailer.authentication_code(self, code).deliver_now if send_email
+    AccountMailer.authentication_code(self.email, code).deliver_now if send_email
   end
 
-  def fail_EVC
-    next_failed_EVC = meta["failed_EVC"].to_i + 1
-    if next_failed_EVC >= MAX_FAILED_ATTEMPTS
-      meta["lock_EVC_at"] = Time.current
+  # change email
+
+  def start_change_email(next_email)
+    meta["use_email"] = meta["use_email"].to_i + 1
+    code = "%06d" % SecureRandom.random_number(1_000_000)
+    meta["change_email"] ||= {}
+    meta["change_email"]["code"] = code
+    meta["change_email"]["next_email"] = next_email
+    meta["change_email"]["started_at"] = Time.current
+    meta["change_email"]["failed_times"] = 0
+    save
+    AccountMailer.authentication_code(next_email, code).deliver_now
+  end
+
+  # reset password
+
+  def start_reset_password
+    meta["use_email"] = meta["use_email"].to_i + 1
+    token = generate_base36(32)
+    meta["reset_password"] ||= {}
+    meta["reset_password"]["token_digest"] = digest(token)
+    meta["reset_password"]["started_at"] = Time.current
+    meta["reset_password"]["failed_times"] = 0
+    save
+    AccountMailer.password_reset(self.email, token).deliver_now
+  end
+
+  def authenticate_reset_password(token)
+    token_digest = meta.dig("reset_password", "token_digest")
+    if BCrypt::Password.new(token_digest).is_password?(token)
+      return true
+    else
+      failed_flow("reset_password")
     end
-    meta["failed_EVC"] = next_failed_EVC
+    return false
+  end
+
+  # flow
+
+  def start_flow(str)
+  end
+
+  def end_flow(str)
+    meta.delete(str)
     save
   end
 
-  def end_EVC
-    meta.delete("EVC")
-    meta.delete("EVC_for")
-    meta.delete("start_EVC_at")
-    meta.delete("lock_EVC_at")
-    meta.delete("failed_EVC")
+  def failed_flow(str)
+    next_failed_times = meta.dig(str, "failed_times").to_i + 1
+    meta[str]["failed_times"] = next_failed_times
     save
   end
 
-  def EVC_locked?
-    fails_flag = meta["failed_EVC"].to_i >= MAX_FAILED_ATTEMPTS
-    start_at = meta["start_EVC_at"]
-    time_flag = true
-    if start_at.present?
-      time_flag = Time.current >= Time.parse(start_at.to_s) + 3.minutes
-    end
-    return fails_flag || time_flag
+  def flow_valid?(str, int = 10)
+    fails_flag = meta.dig(str, "failed_times").to_i < MAX_FAILED_ATTEMPTS
+    time_flag = Time.current < Time.parse(meta.dig(str, "started_at").to_s) + int.minutes
+    return fails_flag && time_flag
+  rescue ArgumentError, TypeError
+    false
   end
 
   # ===== #
@@ -144,9 +176,9 @@ class Account < ApplicationRecord
 
   private
 
-  def reset_email_verified_if_email_changed
-    if will_save_change_to_email?
-      self.email_verified = false
-    end
-  end
+  # def reset_email_verified_if_email_changed
+  #   if will_save_change_to_email?
+  #     self.email_verified = false
+  #   end
+  # end
 end

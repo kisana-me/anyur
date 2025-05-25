@@ -12,8 +12,7 @@ class SignupController < ApplicationController
       @account.errors.add(:base, :failed_captcha)
       return render :index, status: :unprocessable_entity
     end
-    @account.validate_level_1 = true
-    if @account.valid?(:level1)
+    if @account.valid?()
       session[:new_account] ||= {}
       session[:new_account].merge!(
         name: params[:account][:name],

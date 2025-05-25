@@ -11,7 +11,6 @@ Rails.application.routes.draw do
   get "terms-of-service" => "pages#terms_of_service"
   get "privacy-policy" => "pages#privacy_policy"
   get "contact" => "pages#contact"
-  # post "contact" => "pages#contact" # 受け取り
 
   # signup
   get "signup" => "signup#index"
@@ -34,11 +33,16 @@ Rails.application.routes.draw do
   get "account/verify-email" => "accounts#verify_email"
   post "account/verify-email" => "accounts#post_verify_email"
   get "account/email/edit" => "accounts#edit_email"
+  post "account/email/check" => "accounts#check_email"
   patch "account/email/update" => "accounts#update_email"
-  get "account/password/reset" => "accounts#request_reset_password"
-  post "account/password/reset" => "accounts#post_request_reset_password"
   get "account/password/edit" => "accounts#edit_password"
   patch "account/password/update" => "accounts#update_password"
+
+  # reset password
+  get "account/reset-password" => "reset_password#get_request"
+  post "account/reset-password" => "reset_password#post_request"
+  get "account/reset-password/edit" => "reset_password#edit"
+  patch "account/reset-password/update" => "reset_password#update"
 
   # admin
   namespace :admin do
