@@ -10,7 +10,7 @@
 
   <div>
     <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email, value: params.dig(:email) || params.dig(:account, :email) %>
+    <%= form.email_field :email, value: params.dig(:email) || params.dig(:account, :email) %>
   </div>
 
   <div>

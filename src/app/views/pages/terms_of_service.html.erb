@@ -1,7 +1,8 @@
 <% content_for :title, "利用規約" %>
 
 <% if @document %>
-<%= @document.content %>
+<h1><%= @document.name %></h1>
+<%= raw @document.content_cache %>
 <% else %>
 <h1>利用規約</h1>
 <p>利用規約</p>

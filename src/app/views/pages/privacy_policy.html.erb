@@ -2,7 +2,8 @@
 
 
 <% if @document %>
-<%= @document.content %>
+<h1><%= @document.name %></h1>
+<%= raw @document.content_cache %>
 <% else %>
 <h1>プライバシーポリシー</h1>
 <p>プライバシーポリシー</p>
