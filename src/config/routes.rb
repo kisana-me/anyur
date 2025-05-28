@@ -4,8 +4,13 @@ Rails.application.routes.draw do
 
   resources :documents, param: :name_id, only: %i[ index show ]
   resources :services, param: :name_id, only: %i[ index show ]
-  resources :personas
+  # resources :personas, except: %i[ index show ]
   resources :inquiries, only: %i[ new create ]
+
+  # oauth
+  get "oauth/authorize" => "oauth#authorize"
+  post "oauth/authorize" => "oauth#post_authorize"
+  post "oauth/token" => "oauth#token"
 
   # pages
   get "terms-of-service" => "pages#terms_of_service"
@@ -50,11 +55,13 @@ Rails.application.routes.draw do
     get "test" => "pages#test"
     resources :documents
     resources :services
+    resources :personas, only: %i[ index ]
+    resources :inquiries, only: %i[ index ]
   end
 
   # others
   # get "up" => "rails/health#show", as: :rails_health_check
-  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
+  get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # errors

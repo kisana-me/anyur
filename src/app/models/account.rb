@@ -36,11 +36,6 @@ class Account < ApplicationRecord
 
   MAX_FAILED_ATTEMPTS = 7
 
-  def self.digest(token)
-    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
-    BCrypt::Password.create(token, cost: cost)
-  end
-
   def authenticated?(token)
     lookup = Digest::SHA256.hexdigest(token)[0...24]
     return false unless ses = Session.find_by(id: lookup, deleted: false)
@@ -49,7 +44,7 @@ class Account < ApplicationRecord
 
   def remember(token, ip, ua)
     lookup = Digest::SHA256.hexdigest(token)[0...24]
-    Session.create(id: lookup, account: self, token_digest: Account.digest(token), ip_address: ip, user_agent: ua)
+    Session.create(id: lookup, account: self, token_digest: generate_digest(token), ip_address: ip, user_agent: ua)
   end
 
   def forget(token)
@@ -117,7 +112,7 @@ class Account < ApplicationRecord
     meta["use_email"] = meta["use_email"].to_i + 1
     token = generate_base36(32)
     meta["reset_password"] ||= {}
-    meta["reset_password"]["token_digest"] = digest(token)
+    meta["reset_password"]["token_digest"] = generate_digest(token)
     meta["reset_password"]["started_at"] = Time.current
     meta["reset_password"]["failed_times"] = 0
     save

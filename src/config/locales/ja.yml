@@ -4,6 +4,8 @@ ja:
       account: "アカウント"
       document: "文書"
       inquiry: "お問い合わせ"
+      service: "サービス"
+      persona: "ペルソナ"
     attributes:
       account:
         id: "固有ID"
@@ -27,6 +29,22 @@ ja:
         name: "名前"
         email: "メール"
         account: "アカウント"
+      service:
+        id: "固有ID"
+        name: "名前"
+        name_id: "ID"
+        summary: "概要"
+        description: "説明"
+        description_cache: "説明のキャッシュ"
+        host: "ホスト"
+        redirect_uris: "リダイレクトURI配列"
+        scopes: "スコープ配列"
+      persona:
+        id: "固有ID"
+        account_id: "アカウント固有ID"
+        service_id: "サービス固有ID"
+        name: "名前"
+        scopes: "スコープ配列"
     enums:
       document:
         status:
@@ -34,19 +52,21 @@ ja:
           unlisted: "限定公開"
           specific: "特定用途"
           published: "公開"
-    messages:
-      blank: "を入力してください"
-      too_short: "は%{count}文字以上で入力してください"
-      taken: "は使用できません"
-      confirmation: "が一致しません"
-      invalid: "は正しい形式で入力してください"
-      not_a_number: "は数値で入力してください"
-  errors:
-    messages:
-      invalid_email_format: "はメールの形式で入力してください"
-      invalid_name_id_format: "は英字(大文字小文字区別せず)、数字、_(アンダーバー)、のみで入力してください"
-      exists_email: "は使用できません"
-      invalid_singin: "IDまたはパスワードが間違っています"
-      singin_locked: "サインインがロックされています、お問い合わせください"
-      wrong_password: "パスワードが間違っています"
-      failed_captcha: "CAPTCHAの認証に失敗しました"
+    errors:
+      messages:
+        # default
+        blank: "を入力してください"
+        too_short: "は%{count}文字以上で入力してください"
+        too_long: "は%{count}文字以内で入力してください"
+        taken: "は使用できません"
+        confirmation: "が一致しません"
+        invalid: "は正しい形式で入力してください"
+        not_a_number: "は数値で入力してください"
+        # custom
+        invalid_email_format: "はメールの形式で入力してください"
+        invalid_name_id_format: "は英字(大文字小文字区別せず)、数字、_(アンダーバー)、のみで入力してください"
+        exists_email: "は使用できません"
+        invalid_singin: "IDまたはパスワードが間違っています"
+        singin_locked: "サインインがロックされています、お問い合わせください"
+        wrong_password: "パスワードが間違っています"
+        failed_captcha: "CAPTCHAの認証に失敗しました"

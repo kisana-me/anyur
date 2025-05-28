@@ -9,9 +9,11 @@
 #   end
 
 Account.create!(
+  id: "00000000000000",
   name: "kisana",
   name_id: "kisana",
   email: "kisana@kisana.me",
+  email_verified: true,
   roles: "admin",
   password: "kisana528",
   password_confirmation: "kisana528"

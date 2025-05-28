@@ -1,0 +1,24 @@
+<% content_for :title, "お問い合わせ一覧" %>
+
+<h1>お問い合わせ一覧</h1>
+
+<div id="inquiries">
+  <hr />
+  <% @inquiries.each do |inquiry| %>
+    <p>
+      <strong>件名:</strong> <%= inquiry.subject %>
+      <br />
+      <strong>概要:</strong> <%= inquiry.summary %>
+      <br />
+      <strong>名前:</strong> <%= inquiry.name %>
+      <br />
+      <strong>メール:</strong> <%= inquiry.email %>
+      <br />
+      <small><strong>作成:</strong> <%= inquiry.created_at %></small>
+    </p>
+    <p>
+      <strong>内容:</strong> <%= inquiry.content %>
+    </p>
+    <hr />
+  <% end %>
+</div>

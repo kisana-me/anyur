@@ -1,0 +1,41 @@
+<% content_for :title, "認可" %>
+<% content_for :robots, "noindex,nofollow,noarchive" %>
+
+<% if @error.present? %>
+  <h2>認可エラー</h2>
+  <p><%= @error %></p>
+<% else %>
+  <h2><%= @service.name %> が次の情報へアクセスしようとしています：</h2>
+
+  <ul>
+    <% (params[:scope] || "").split(" ").each do |scope| %>
+      <li><%= scope %></li>
+    <% end %>
+  </ul>
+
+  <%= form_with url: oauth_authorize_path, method: :post, data:{turbo:false} do %>
+    <%= hidden_field_tag :client_id, params[:client_id] %>
+    <%= hidden_field_tag :redirect_uri, params[:redirect_uri] %>
+    <%= hidden_field_tag :state, params[:state] %>
+    <%= hidden_field_tag :scope, params[:scope] %>
+    <%= hidden_field_tag :response_type, params[:response_type] %>
+
+    <div>
+      <%= radio_button_tag :persona_id, "", true, {id: "persona_id_none", value: "none"} %>
+      <%= label_tag "persona_id_none", "新たな連携を作成" %>
+      <br />
+      <%= label_tag "persona_name", "新たな連携の名前" %>
+      <%= text_field_tag :persona_name, "#{@service.name}との連携#{@personas.size + 1}" %>
+    </div>
+
+    <% @personas.each do |persona| %>
+      <div>
+        <%= radio_button_tag :persona_id, persona.id %>
+        <%= label_tag "persona_id_#{persona.id}", "#{persona.name}(ID: #{persona.id})" %>
+      </div>
+    <% end %>
+    <br />
+    <%= submit_tag "許可する" %>
+    <%= link_to "キャンセル", home_path %>
+  <% end %>
+<% end %>

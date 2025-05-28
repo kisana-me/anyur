@@ -1,0 +1,20 @@
+<% content_for :title, "ペルソナ一覧" %>
+
+<h1>ペルソナ一覧</h1>
+
+<div id="personas">
+  <hr />
+  <% @personas.each do |persona| %>
+    <p>
+      <strong>名前:</strong> <%= persona.name %>
+      <br />
+      <strong>スコープ配列:</strong> <%= persona.scopes %>
+      <br />
+      <small><strong>作成:</strong> <%= persona.created_at %></small>
+    </p>
+    <p>
+      <strong>内容:</strong> アカウント:<%= persona.account_id %> サービス<%= persona.service_id %>
+    </p>
+    <hr />
+  <% end %>
+</div>

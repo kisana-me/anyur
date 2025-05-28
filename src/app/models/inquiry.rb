@@ -1,5 +1,8 @@
 class Inquiry < ApplicationRecord
   self.primary_key = "id"
+  attribute :cache, :json, default: {}
+  attribute :meta, :json, default: {}
+  attribute :settings, :json, default: {}
 
   belongs_to :account, optional: true
   belongs_to :service, optional: true

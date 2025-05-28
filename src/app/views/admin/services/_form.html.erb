@@ -27,6 +27,16 @@
   </div>
 
   <div>
+    <%= form.label :redirect_uris, style: "display: block" %>
+    <%= form.textarea :redirect_uris %>
+  </div>
+
+  <div>
+    <%= form.label :scopes, style: "display: block" %>
+    <%= form.textarea :scopes %>
+  </div>
+
+  <div>
     <%= form.label :status, style: "display: block" %>
     <%= form.number_field :status %>
   </div>

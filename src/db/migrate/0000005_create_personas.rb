@@ -5,7 +5,9 @@ class CreatePersonas < ActiveRecord::Migration[8.0]
       t.string :account_id, null: false
       t.string :service_id, null: false
       t.string :name, null: false, default: ""
-      t.string :authorization_code, null: false, default: ""
+      t.string :authorization_code_lookup, null: false, default: ""
+      t.string :authorization_code_digest, null: false, default: ""
+      t.datetime :authorization_code_expires_at
       t.datetime :authorization_code_generated_at
       t.string :access_token_lookup, null: false, default: ""
       t.string :access_token_digest, null: false, default: ""
@@ -15,6 +17,7 @@ class CreatePersonas < ActiveRecord::Migration[8.0]
       t.string :refresh_token_digest, null: false, default: ""
       t.datetime :refresh_token_expires_at
       t.datetime :refresh_token_generated_at
+      t.json :scopes, null: false, default: []
       t.json :cache, null: false, default: {}
       t.json :settings, null: false, default: {}
       t.json :meta, null: false, default: {}
@@ -27,6 +30,7 @@ class CreatePersonas < ActiveRecord::Migration[8.0]
     add_index :personas, :account_id
     add_foreign_key :personas, :services, column: :service_id
     add_index :personas, :service_id
+    add_index :personas, :authorization_code_lookup, unique: true
     add_index :personas, :access_token_lookup, unique: true
     add_index :personas, :refresh_token_lookup, unique: true
   end

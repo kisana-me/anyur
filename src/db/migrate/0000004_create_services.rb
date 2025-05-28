@@ -8,6 +8,12 @@ class CreateServices < ActiveRecord::Migration[8.0]
       t.text :description, null: false, default: ""
       t.text :description_cache, null: false, default: ""
       t.string :host, null: false, default: ""
+      t.string :client_secret_lookup, null: false, default: ""
+      t.string :client_secret_digest, null: false, default: ""
+      t.datetime :client_secret_expires_at
+      t.datetime :client_secret_generated_at
+      t.json :redirect_uris, null: false, default: []
+      t.json :scopes, null: false, default: []
       t.json :cache, null: false, default: {}
       t.json :settings, null: false, default: {}
       t.json :meta, null: false, default: {}
