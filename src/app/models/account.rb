@@ -1,6 +1,7 @@
 class Account < ApplicationRecord
   self.primary_key = "id"
   has_many :sessions
+  has_many :subscriptions
   attribute :cache, :json, default: {}
   attribute :meta, :json, default: {}
   attribute :settings, :json, default: {}
@@ -55,6 +56,16 @@ class Account < ApplicationRecord
 
   def email_locked?
     meta["use_email"].to_i >= 20
+  end
+
+  def active_subscription
+    subscriptions.where(status: [:active, :trialing])
+                 .order(created_at: :desc)
+                 .first
+  end
+
+  def self.find_by_sci(str)
+    find_by(stripe_customer_id: str, status: :normal, deleted: false)
   end
 
   # check signin fails

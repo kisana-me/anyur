@@ -136,7 +136,7 @@ class ApplicationController < ActionController::Base
       value: tokens.to_json,
       domain: :all,
       tld_length: 3,
-      same_site: :strict,
+      same_site: :lax,
       expires: 1.year.from_now,
       secure: Rails.env.production?,
       httponly: true

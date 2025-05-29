@@ -1,0 +1,10 @@
+<h1>ANYUR ONLINE プラン</h1>
+
+<div>
+  <h2>ANYUR ONLINE</h2>
+  <p>月額 ¥300</p>
+  <%= form_with url: subscriptions_path, method: :post, data: { turbo: false } do |form| %>
+    <%= form.hidden_field :price_id, value: @price_id %>
+    <%= form.submit "このプランに登録する" %>
+  <% end %>
+</div>

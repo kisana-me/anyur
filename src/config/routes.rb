@@ -43,6 +43,18 @@ Rails.application.routes.draw do
   get "account/password/edit" => "accounts#edit_password"
   patch "account/password/update" => "accounts#update_password"
 
+  # subscription
+  resources :subscriptions, only: [:index, :new, :create] do
+    collection do
+      get 'success'
+      get 'cancel'
+      get 'customer_portal'
+    end
+  end
+
+  # Stripe
+  post "stripe/webhooks", to: "stripe_webhooks#create"
+
   # reset password
   get "account/reset-password" => "reset_password#get_request"
   post "account/reset-password" => "reset_password#post_request"

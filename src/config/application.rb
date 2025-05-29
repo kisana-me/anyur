@@ -18,7 +18,7 @@ module App
       key: "_anyur",
       domain: :all,
       tld_length: 3,
-      same_site: :strict,
+      same_site: :lax,
       secure: Rails.env.production?,
       httponly: true
   end

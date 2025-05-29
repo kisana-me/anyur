@@ -8,6 +8,7 @@ class CreateAccounts < ActiveRecord::Migration[8.0]
       t.boolean :email_verified, null: false, default: false
       t.string :roles, null: false, default: ""
       t.string :password_digest, null: false, default: ""
+      t.string :stripe_customer_id, null: false, default: ""
       t.json :cache, null: false, default: {}
       t.json :settings, null: false, default: {}
       t.json :meta, null: false, default: {}
