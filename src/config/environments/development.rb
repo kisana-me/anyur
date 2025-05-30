@@ -51,6 +51,9 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
 
+  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "debug")
+  config.logger = Logger.new('log/development.log', 'daily')
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 

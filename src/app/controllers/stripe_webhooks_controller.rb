@@ -52,16 +52,16 @@ class StripeWebhooksController < ApplicationController
     account = Account.find_by(stripe_customer_id: stripe_sub.customer)
     return unless account
 
-    subscription = account.subscriptions.find_or_initialize_by(stripe_subscription_id: stripe_sub.id)
+    subscription = account.subscriptions.find_or_initialize_by(stripe_subscription_id: stripe_sub['id'])
     subscription.assign_attributes(
-      stripe_plan_id: stripe_sub.items.data[0].price.id,
-      status: stripe_sub.status,
-      current_period_start: Time.at(stripe_sub.current_period_start),
-      current_period_end: Time.at(stripe_sub.current_period_end),
-      cancel_at_period_end: stripe_sub.cancel_at_period_end,
-      canceled_at: stripe_sub.canceled_at ? Time.at(stripe_sub.canceled_at) : nil,
-      trial_start_at: stripe_sub.trial_start ? Time.at(stripe_sub.trial_start) : nil,
-      trial_end_at: stripe_sub.trial_end ? Time.at(stripe_sub.trial_end) : nil
+      stripe_plan_id: stripe_sub['items']['data'][0]['price']['id'],
+      status: stripe_sub['status'],
+      current_period_start: stripe_sub['items']['data'][0]['current_period_start'] ? Time.at(stripe_sub['items']['data'][0]['current_period_start']) : nil,
+      current_period_end: stripe_sub['items']['data'][0]['current_period_end'] ? Time.at(stripe_sub['items']['data'][0]['current_period_end']) : nil,
+      cancel_at_period_end: stripe_sub['cancel_at_period_end'],
+      canceled_at: stripe_sub['canceled_at'] ? Time.at(stripe_sub['canceled_at']) : nil,
+      trial_start_at: stripe_sub['trial_start'] ? Time.at(stripe_sub['trial_start']) : nil,
+      trial_end_at: stripe_sub['trial_end'] ? Time.at(stripe_sub['trial_end']) : nil
     )
     subscription.save!
   end

@@ -3,6 +3,7 @@ services:
     build: .
     tty: true
     stdin_open: true
+    restart: always
     env_file:
       - .exa.env
     working_dir: /app
@@ -24,6 +25,7 @@ services:
     image: mariadb:latest
     tty: true
     stdin_open: true
+    restart: always
     env_file:
       - .exa.env
     volumes:
@@ -35,6 +37,7 @@ services:
     image: phpmyadmin:latest
     tty: true
     stdin_open: true
+    restart: always
     env_file:
       - .exa.env
     ports:

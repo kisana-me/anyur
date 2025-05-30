@@ -11,6 +11,8 @@ class Subscription < ApplicationRecord
     unpaid: 6
   }
 
+  before_create :generate_custom_id
+
   validates :stripe_subscription_id, presence: true, uniqueness: true
   validates :stripe_plan_id, presence: true
   validates :status, presence: true
