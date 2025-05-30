@@ -25,19 +25,20 @@
     <% if @current_account.email_verified %>
       ✅メール認証済み
     <% else %>
-      ❎メール認証していません<br>
-      <%= link_to "📬認証コードを送信", account_verify_email_path(send_code: true) %><br>
+      ❎メール認証していません<br />
+      <%= link_to "📬認証コードを送信", account_verify_email_path(send_code: true) %><br />
       <%= link_to "🔢認証コードを入力", account_verify_email_path %>
     <% end %>
   </p>
 </div>
 <div>
-  <%= button_to "ログアウト", signout_path, method: :delete, data: {turbo: false} %>
-</div>
-<div>
   <%= link_to "登録情報を変更", account_edit_path %>
-  <br>
+  <br /><br />
+  <%= link_to "サブスクリプション", subscriptions_path %>
+  <br /><br />
   <%= link_to "アカウントを切り替え", account_change_path %>
-  <br>
+  <br /><br />
+  <%= button_to "ログアウト", signout_path, method: :delete, data: {turbo: false} %>
+  <br />
   <%= link_to "アカウントを削除", account_delete_path %>
 </div>

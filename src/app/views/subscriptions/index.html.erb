@@ -1,3 +1,9 @@
 <h1>サブスクリプション</h1>
 
+<% if @current_account.stripe_customer_id.present? %>
 <%= link_to "↗️サブスクリプション管理(stripe.com)", customer_portal_subscriptions_path, method: :get, data: { turbo: false } %>
+<% else %>
+<p>サブスクリプションを開始していません</p>
+<% end %>
+<br /><br />
+<%= link_to "サブスクリプション一覧", new_subscription_path %>

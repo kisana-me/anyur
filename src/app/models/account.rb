@@ -9,6 +9,8 @@ class Account < ApplicationRecord
 
   before_create :generate_custom_id
   # before_update :reset_email_verified_if_email_changed
+  after_update :sync_name_with_stripe, if: :saved_change_to_name?
+  after_update :sync_email_with_stripe, if: :saved_change_to_email?
 
   attr_accessor :check_password
 
@@ -187,4 +189,36 @@ class Account < ApplicationRecord
   #     self.email_verified = false
   #   end
   # end
+
+  def sync_name_with_stripe
+    return if stripe_customer_id.blank?
+
+    begin
+      # 高頻度の更新が予想される場合、API呼び出しの頻度を考慮
+      # 場合によっては非同期処理 (バックグラウンドジョブ) で行うことを検討
+      Stripe::Customer.update(
+        stripe_customer_id,
+        { name: name } # 更新後の名前
+      )
+      Rails.logger.info "Stripe customer name updated for account #{id}"
+    rescue Stripe::StripeError => e
+      Rails.logger.error "Stripe API error while updating customer name for account #{id}: #{e.message}"
+      # エラーハンドリング
+    end
+  end
+
+  def sync_email_with_stripe
+    return if stripe_customer_id.blank? # Stripe顧客IDがない場合は何もしない
+
+    begin
+      Stripe::Customer.update(
+        stripe_customer_id,
+        { email: email } # 更新後のメールアドレス
+      )
+      Rails.logger.info "Stripe customer email updated for account #{id}"
+    rescue Stripe::StripeError => e
+      Rails.logger.error "Stripe API error while updating customer email for account #{id}: #{e.message}"
+      # エラーハンドリング (例: あとで再試行するジョブをキューに入れるなど)
+    end
+  end
 end

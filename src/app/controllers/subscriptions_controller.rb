@@ -7,6 +7,10 @@ class SubscriptionsController < ApplicationController
   end
 
   def customer_portal
+    if @current_account.stripe_customer_id.blank?
+      flash[:alert] = "購入をしたことがありません"
+      redirect_to subscriptions_path
+    end
     portal_session = Stripe::BillingPortal::Session.create({
       customer: @current_account.stripe_customer_id,
       return_url: home_url
@@ -26,7 +30,7 @@ class SubscriptionsController < ApplicationController
       customer = Stripe::Customer.create({
         email: @current_account.email,
         name: @current_account.name,
-        metadata: { id: @current_account.id, name_id: @current_account.name_id }
+        metadata: { id: @current_account.id }
       })
       @current_account.update(stripe_customer_id: customer.id)
     end
