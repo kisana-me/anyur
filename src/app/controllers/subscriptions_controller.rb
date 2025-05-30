@@ -1,9 +1,9 @@
 class SubscriptionsController < ApplicationController
-  before_action :signedin_account
-  before_action :email_verified_account
-  before_action :redirect_if_already_subscribed, only: [:new, :create]
+  before_action :redirect_if_already_subscribed, only: [:create]
 
   def index
+    @subscription = @current_account.active_subscription
+    @subscriptions = @current_account.subscriptions.order(created_at: :desc)
   end
 
   def customer_portal
@@ -13,12 +13,13 @@ class SubscriptionsController < ApplicationController
     end
     portal_session = Stripe::BillingPortal::Session.create({
       customer: @current_account.stripe_customer_id,
-      return_url: home_url
+      return_url: subscriptions_url
     })
     redirect_to portal_session.url, allow_other_host: true, status: :see_other
   end
 
   def new
+    @subscription = @current_account.active_subscription
     @price_id = ENV['STRIPE_PRICE_ID']
   end
 
@@ -61,7 +62,7 @@ class SubscriptionsController < ApplicationController
     # checkout_session = Stripe::Checkout::Session.retrieve(session_id)
     # subscription_id = checkout_session.subscription
     # current_user.update(stripe_subscription_id: subscription_id, subscription_status: 'active') # 例
-    flash[:info] = "サブスクリプションが開始されました！"
+    flash[:notice] = "サブスクリプションが開始されました！"
     redirect_to subscriptions_url
   end
 

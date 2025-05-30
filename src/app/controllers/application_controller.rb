@@ -1,32 +1,14 @@
 class ApplicationController < ActionController::Base
   require "net/http"
   before_action :current_account
+  before_action :require_signin
+
   helper_method :email_verified?, :admin?
 
   unless Rails.env.development?
     rescue_from Exception,                      with: :render_500
     rescue_from ActiveRecord::RecordNotFound,   with: :render_404
     rescue_from ActionController::RoutingError, with: :render_404
-  end
-
-  # before action
-
-  def signedin_account
-    unless @current_account
-      redirect_to signin_path, alert: "サインインしてください"
-    end
-  end
-
-  def email_verified_account
-    unless email_verified?
-      redirect_to account_path, alert: "メール認証してください"
-    end
-  end
-
-  def admin_account
-    unless admin?
-      render_404
-    end
   end
 
   # error page
@@ -53,6 +35,23 @@ class ApplicationController < ActionController::Base
     else
       refresh_token
       current_account
+    end
+  end
+
+  def require_signin
+    if @current_account&.email_verified
+    elsif @current_account
+      session[:email_verified_return_to] = request.fullpath
+      redirect_to verify_email_path, alert: "メール認証してください"
+    else
+      session[:signin_return_to] = request.fullpath
+      redirect_to signin_path, alert: "サインインしてください"
+    end
+  end
+
+  def require_admin
+    unless admin?
+      render_404
     end
   end
 

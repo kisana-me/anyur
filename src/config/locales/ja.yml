@@ -52,6 +52,15 @@ ja:
           unlisted: "限定公開"
           specific: "特定用途"
           published: "公開"
+      subscription:
+        status:
+          incomplete: "未完了"
+          incomplete_expired: "未完了(期限切れ)"
+          trialing: "トライアル中"
+          active: "有効"
+          past_due: "支払い遅延"
+          canceled: "キャンセル済み"
+          unpaid: "未払い"
     errors:
       messages:
         # default

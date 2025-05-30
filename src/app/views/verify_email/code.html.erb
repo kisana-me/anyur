@@ -5,7 +5,11 @@
 <p>メール認証コードを入力してください。</p>
 <p>メールが迷惑フォルダに入っている場合があります。ご確認ください。</p>
 
-<%= form_with url: account_verify_email_path, method: :post, data: {turbo:false} do |form| %>
+<% if flash[:alert] %>
+  <p style="color: red;"><%= flash[:alert] %></p>
+<% end %>
+
+<%= form_with url: verify_email_code_path, method: :post, data: { turbo: false } do |form| %>
   <div>
     <%= form.label :verification_code, "認証コード" %><br>
     <%= form.text_field :verification_code, pattern: "\\d{6}", required: true, maxlength: 6, autofocus: true %>
@@ -14,8 +18,4 @@
   <div>
     <%= form.submit "認証する" %>
   </div>
-<% end %>
-
-<% if flash[:alert] %>
-  <p style="color: red;"><%= flash[:alert] %></p>
 <% end %>

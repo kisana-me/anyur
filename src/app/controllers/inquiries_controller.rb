@@ -1,4 +1,6 @@
 class InquiriesController < ApplicationController
+  skip_before_action :require_signin
+
   def new
     @inquiry = Inquiry.new
     @services = Service.where(deleted: false)#status

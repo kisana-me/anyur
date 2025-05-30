@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_action :signedin_account, only: :home
+  skip_before_action :require_signin, except: :home
 
   def index
   end

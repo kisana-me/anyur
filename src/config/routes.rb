@@ -22,6 +22,13 @@ Rails.application.routes.draw do
   post "signup/1" => "signup#page_1"
   post "signup/2" => "signup#page_2"
 
+  # verify email
+  get "verify-email" => "verify_email#index"
+  get "verify-email/change" => "verify_email#change"
+  patch "verify-email/change" => "verify_email#post_change"
+  get "verify-email/code" => "verify_email#code"
+  post "verify-email/code" => "verify_email#post_code"
+
   # sessions
   get "signin" => "sessions#signin"
   post "signin" => "sessions#post_signin"
@@ -35,8 +42,6 @@ Rails.application.routes.draw do
   patch "account/edit" => "accounts#update"
   get "account/delete" => "accounts#delete"
   delete "account/delete/confirm" => "accounts#delete_confirm"
-  get "account/verify-email" => "accounts#verify_email"
-  post "account/verify-email" => "accounts#post_verify_email"
   get "account/email/edit" => "accounts#edit_email"
   post "account/email/check" => "accounts#check_email"
   patch "account/email/update" => "accounts#update_email"

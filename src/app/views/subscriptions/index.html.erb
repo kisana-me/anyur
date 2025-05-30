@@ -1,9 +1,117 @@
+<% content_for :title, "サブスクリプション" %>
+
 <h1>サブスクリプション</h1>
 
-<% if @current_account.stripe_customer_id.present? %>
-<%= link_to "↗️サブスクリプション管理(stripe.com)", customer_portal_subscriptions_path, method: :get, data: { turbo: false } %>
+<h2>現在の状況</h2>
+<% if @subscription %>
+  <p>👑サブスクリプション中です</p>
+  <p><strong>ID:</strong> <%= @subscription.id %></p>
 <% else %>
-<p>サブスクリプションを開始していません</p>
+  <p>サブスクリプションしていません</p>
+  <%= link_to "サブスクリプションを開始", new_subscription_path %>
 <% end %>
-<br /><br />
-<%= link_to "サブスクリプション一覧", new_subscription_path %>
+
+<h2>お支払いの管理</h2>
+<% if @current_account.stripe_customer_id.present? %>
+  <%= link_to "↗️ポータルで管理(stripe.com)", customer_portal_subscriptions_path, method: :get, data: { turbo: false } %>
+<% else %>
+  <p>お支払いは一度もありません</p>
+  <%= link_to "サブスクリプションを開始", new_subscription_path %>
+<% end %>
+
+<h2>これまでの履歴</h2>
+
+<div class="container">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Stripe サブスクリプションID</th>
+        <th>Stripe プランID</th>
+        <th>現在の期間開始日時</th>
+        <th>現在の期間終了日時</th>
+        <th>期間終了時にキャンセル</th>
+        <th>キャンセル日時</th>
+        <th>トライアル開始日時</th>
+        <th>トライアル終了日時</th>
+        <th>ステータス</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @subscriptions.each do |subscription| %>
+      <tr>
+        <td><%= subscription.id %></td>
+        <td><%= subscription.stripe_subscription_id %></td>
+        <td><%= subscription.stripe_plan_id %></td>
+        <td><%= subscription.current_period_start&.strftime("%Y-%m-%d %H:%M:%S") %></td>
+        <td><%= subscription.current_period_end&.strftime("%Y-%m-%d %H:%M:%S") %></td>
+        <td><%= subscription.cancel_at_period_end ? 'はい' : 'いいえ' %></td>
+        <td><%= subscription.canceled_at&.strftime("%Y-%m-%d %H:%M:%S") %></td>
+        <td><%= subscription.trial_start_at&.strftime("%Y-%m-%d %H:%M:%S") %></td>
+        <td><%= subscription.trial_end_at&.strftime("%Y-%m-%d %H:%M:%S") %></td>
+        <td>
+          <%#
+            case subscription.status
+            when "incomplete" then "未完了"
+            when "incomplete_expired" then "未完了（期限切れ）"
+            when "trialing" then "トライアル中"
+            when "active" then "有効"
+            when "past_due" then "支払い遅延"
+            when "canceled" then "キャンセル済み"
+            when "unpaid" then "未払い"
+            else
+              subscription.status # 不明な場合は元の値を表示
+            end
+          %>
+          <%= t("activerecord.enums.subscription.status.#{subscription.status.downcase}") %>
+      </td>
+      </tr>
+      <% end %>
+      <% if @subscriptions.empty? %>
+        <tr>
+          <td colspan="10" class="no-data">サブスクリプションが見つかりません。</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    background-color: #fff;
+    table-layout: auto;
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 12px 15px;
+    text-align: left;
+  }
+  th {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+    white-space: nowrap;
+    min-width: 150px;
+  }
+  td {
+    white-space: nowrap;
+  }
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  tr:hover {
+    background-color: #f1f1f1;
+  }
+  .container {
+    overflow-x: auto;
+  }
+  .no-data {
+    text-align: left;
+    padding: 20px;
+    font-style: italic;
+  }
+</style>

@@ -1,10 +1,43 @@
-<h1>ANYUR ONLINE プラン</h1>
+<% content_for :title, "サブスクリプションを開始" %>
 
+<h1>サブスクリプションを開始</h1>
+
+<% if @subscription %>
+  <p>✅既にサブスクリプションに加入しています✅</p>
+<% end %>
+<br /><br />
 <div>
-  <h2>ANYUR ONLINE</h2>
-  <p>月額 ¥300</p>
-  <%= form_with url: subscriptions_path, method: :post, data: { turbo: false } do |form| %>
-    <%= form.hidden_field :price_id, value: @price_id %>
-    <%= form.submit "このプランに登録する" %>
+  <h2>🌈ANYUR BASIC⚡</h2>
+  <p>月額 <strong>¥0</strong></p>
+  <p>お申し込みは不要です</p>
+  <p>サブスクリプションをしていなければ自動的にこのプランになります</p>
+</div>
+<br /><br />
+<div>
+  <h2>🍭ANYUR PLUS💗</h2>
+  <p>月額 <strong>¥300</strong></p>
+  <% if @subscription %>
+    <% if @subscription.stripe_plan_id == @price_id %>
+      <p>このプランに加入中です</p>
+    <% else %>
+      <p>切り替えは<%= link_to "サブスクリプション管理", subscriptions_path %>ページから行ってください</p>
+    <% end %>
+  <% else %>
+    <%= form_with url: subscriptions_path, method: :post, data: { turbo: false } do |form| %>
+      <%= form.hidden_field :price_id, value: @price_id %>
+      <%= form.submit "このプランに登録する" %>
+    <% end %>
   <% end %>
+</div>
+<br /><br />
+<div>
+  <h2>🌠ANYUR PREMIUM🌟</h2>
+  <p>月額 <strong>¥1,000</strong></p>
+  <p><%= link_to "お問い合わせください", contact_path %></p>
+</div>
+<br /><br />
+<div>
+  <h2>🔮ANYUR LUXURY🪄</h2>
+  <p>月額 <strong>¥3,200</strong></p>
+  <p><%= link_to "お問い合わせください", contact_path %></p>
 </div>
