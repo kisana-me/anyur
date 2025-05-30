@@ -56,8 +56,8 @@ class StripeWebhooksController < ApplicationController
     subscription.assign_attributes(
       stripe_plan_id: stripe_sub.items.data[0].price.id,
       status: stripe_sub.status,
-      current_period_start: Time.at(stripe_sub.items.data.0.current_period_start),
-      current_period_end: Time.at(stripe_sub.items.data.0.current_period_end),
+      current_period_start: Time.at(stripe_sub.items.data[0].current_period_start),
+      current_period_end: Time.at(stripe_sub.items.data[0].current_period_end),
       cancel_at_period_end: stripe_sub.cancel_at_period_end,
       canceled_at: Time.at(stripe_sub.canceled_at),
       trial_start_at: Time.at(stripe_sub.trial_start),
@@ -73,8 +73,8 @@ class StripeWebhooksController < ApplicationController
     subscription.assign_attributes(
       stripe_plan_id: stripe_sub.items.data[0].price.id,
       status: stripe_sub.status,
-      current_period_start: Time.at(stripe_sub.items.data.0.current_period_start),
-      current_period_end: Time.at(stripe_sub.items.data.0.current_period_end),
+      current_period_start: Time.at(stripe_sub.items.data[0].current_period_start),
+      current_period_end: Time.at(stripe_sub.items.data[0].current_period_end),
       cancel_at_period_end: stripe_sub.cancel_at_period_end,
       canceled_at: Time.at(stripe_sub.canceled_at),
       trial_start_at: Time.at(stripe_sub.trial_start),
@@ -90,7 +90,7 @@ class StripeWebhooksController < ApplicationController
     subscription.update!(
       status: :canceled,
       canceled_at: Time.at(stripe_sub.canceled_at),
-      current_period_end: Time.at(stripe_sub.items.data.0.current_period_end)
+      current_period_end: Time.at(stripe_sub.items.data[0].current_period_end)
     )
   end
 end
