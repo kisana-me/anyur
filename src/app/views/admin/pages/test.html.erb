@@ -2,39 +2,62 @@
 
 <div style="overflow: auto;">
   <div>
-    host:
+    <strong>session: </strong>
+    <% if session.present? %>
+      <table>
+        <thead>
+          <tr>
+            <th>キー</th>
+            <th>値</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% session.each do |key, value| %>
+            <tr>
+              <td><%= key.inspect %></td>
+              <td><%= value.inspect %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p>セッションは空です。</p>
+    <% end %>
+  </div>
+  <div>
+    <strong>host: </strong>
     <%= request.host %>
   </div>
   <div>
-    host_with_port:
+    <strong>host_with_port: </strong>
     <%= request.host_with_port %>
   </div>
   <div>
-    base_url:
+    <strong>base_url: </strong>
     <%= request.base_url %>
   </div>
   <div>
-    remote_ip:
+    <strong>remote_ip: </strong>
     <%= request.remote_ip %>
   </div>
   <div>
-    ip:
+    <strong>ip: </strong>
     <%= request.ip %>
   </div>
   <div>
-    user_agent:
+    <strong>user_agent: </strong>
     <%= request.user_agent %>
   </div>
   <div>
-    referer:
+    <strong>referer: </strong>
     <%= request.referer %>
   </div>
   <div>
-    origin:
+    <strong>origin: </strong>
     <%= request.origin %>
   </div>
   <div>
-    headers:
+    <strong>header: </strong>
     <% headers = request.headers.env.select { |k, _| k.start_with?("HTTP_", "CONTENT_", "REMOTE_", "REQUEST_") } %>
     <table>
       <thead>

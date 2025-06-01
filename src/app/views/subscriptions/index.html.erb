@@ -13,7 +13,7 @@
 
 <h2>お支払いの管理</h2>
 <% if @current_account.stripe_customer_id.present? %>
-  <%= link_to "↗️ポータルで管理(stripe.com)", customer_portal_subscriptions_path, method: :get, data: { turbo: false } %>
+  <%= link_to "↗️ポータルで管理(stripe.com)", customer_portal_subscriptions_path, method: :get, target: "_blank", rel: "noopener noreferrer", data: { turbo: false } %>
 <% else %>
   <p>お支払いは一度もありません</p>
   <%= link_to "サブスクリプションを開始", new_subscription_path %>
