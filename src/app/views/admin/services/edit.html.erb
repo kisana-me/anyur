@@ -7,6 +7,21 @@
 <br>
 
 <div>
+<%= form_with url: create_client_secret_admin_service_path, method: :post, data: { turbo: false } do |f| %>
+  <div>
+    <%= label_tag :expires_in, "有効期限（秒）" %>
+    <%= number_field_tag :expires_in, 0, min: 0 %>
+  </div>
+
+  <div>
+    <%= submit_tag "作成" %>
+  </div>
+<% end %>
+</div>
+
+<br>
+
+<div>
   <%= link_to "Show this service", admin_service_path(@service) %> |
   <%= link_to "Back to services", admin_services_path %>
 </div>

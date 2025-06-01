@@ -66,12 +66,22 @@ Rails.application.routes.draw do
   get "account/reset-password/edit" => "reset_password#edit"
   patch "account/reset-password/update" => "reset_password#update"
 
+  # api
+  namespace :api do
+    root "resources#root"
+    post "resources" => "resources#index"
+  end
+
   # admin
   namespace :admin do
     root "pages#index"
     get "test" => "pages#test"
     resources :documents
-    resources :services
+    resources :services do
+      member do
+        post "create_client_secret"
+      end
+    end
     resources :personas, only: %i[ index ]
     resources :inquiries, only: %i[ index ]
   end

@@ -1,5 +1,5 @@
 class Admin::ServicesController < Admin::ApplicationController
-  before_action :set_service, only: %i[ show edit update destroy ]
+  before_action :set_service, only: %i[ show edit create_client_secret update destroy ]
 
   def index
     @services = Service.all
@@ -13,6 +13,16 @@ class Admin::ServicesController < Admin::ApplicationController
   end
 
   def edit
+  end
+
+  def create_client_secret
+    @client_secret = @service.generate_token("client_secret", params[:expires_in])
+    if @service.save
+      #画面表示
+    else
+      flash.now[:alert] = "client_secretの発行に失敗しました"
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def create

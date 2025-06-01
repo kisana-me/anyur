@@ -2,13 +2,14 @@ class Account < ApplicationRecord
   self.primary_key = "id"
   has_many :sessions
   has_many :subscriptions
+  has_many :activity_logs
   attribute :cache, :json, default: {}
   attribute :meta, :json, default: {}
   attribute :settings, :json, default: {}
   enum :status, { normal: 0, locked: 1, suspended: 2, hibernated: 3, frozen: 4 }, prefix: true
 
   before_create :generate_custom_id
-  # before_update :reset_email_verified_if_email_changed
+  after_update :log_changes
   after_update :sync_name_with_stripe, if: :saved_change_to_name?
   after_update :sync_email_with_stripe, if: :saved_change_to_email?
 
@@ -184,11 +185,20 @@ class Account < ApplicationRecord
 
   private
 
-  # def reset_email_verified_if_email_changed
-  #   if will_save_change_to_email?
-  #     self.email_verified = false
-  #   end
-  # end
+  def log_changes
+    saved_changes.each do |attr, values|
+      next unless %w[name name_id email password_digest].include?(attr)
+      previous, current = values
+      activity_logs.create!(
+        action_name: "cng/#{attr}",
+        previous_value: previous.to_s,
+        new_value: current.to_s,
+        changed_at: Time.current,
+        change_reason: "",
+        meta: {}
+      )
+    end
+  end
 
   def sync_name_with_stripe
     return if stripe_customer_id.blank?

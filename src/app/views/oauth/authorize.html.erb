@@ -9,7 +9,18 @@
 
   <ul>
     <% (params[:scope] || "").split(" ").each do |scope| %>
-      <li><%= scope %></li>
+      <% if scope == "id" %>
+      <li><strong>固有ID</strong> (<%=@current_account.id%>)</li>
+      <% end %>
+      <% if scope == "email" %>
+      <li><strong>メール</strong> (<%=@current_account.email%>)</li>
+      <% end %>
+      <% if scope == "name" %>
+      <li><strong>名前</strong> (<%=@current_account.name%>)</li>
+      <% end %>
+      <% if scope == "name_id" %>
+      <li><strong>ID</strong> (<%=@current_account.name_id%>)</li>
+      <% end %>
     <% end %>
   </ul>
 
@@ -20,6 +31,7 @@
     <%= hidden_field_tag :scope, params[:scope] %>
     <%= hidden_field_tag :response_type, params[:response_type] %>
 
+    <% if @personas.size == 0 %>
     <div>
       <%= radio_button_tag :persona_id, "", true, {id: "persona_id_none", value: "none"} %>
       <%= label_tag "persona_id_none", "新たな連携を作成" %>
@@ -27,6 +39,7 @@
       <%= label_tag "persona_name", "新たな連携の名前" %>
       <%= text_field_tag :persona_name, "#{@service.name}との連携#{@personas.size + 1}" %>
     </div>
+    <% end %>
 
     <% @personas.each do |persona| %>
       <div>

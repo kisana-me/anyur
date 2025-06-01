@@ -2,7 +2,7 @@ class CreateSubscriptions < ActiveRecord::Migration[8.0]
   def change
     create_table :subscriptions, id: false do |t|
       t.string :id, null: false, limit: 14, primary_key: true
-      t.string :account_id, null: false
+      t.string :account_id, null: false, limit: 14
       t.string :stripe_subscription_id, null: false, default: ""
       t.string :stripe_plan_id, null: false, default: ""
       t.datetime :current_period_start

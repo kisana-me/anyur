@@ -2,8 +2,8 @@ class CreatePersonas < ActiveRecord::Migration[8.0]
   def change
     create_table :personas, id: false do |t|
       t.string :id, null: false, limit: 14, primary_key: true
-      t.string :account_id, null: false
-      t.string :service_id, null: false
+      t.string :account_id, null: false, limit: 14
+      t.string :service_id, null: false, limit: 14
       t.string :name, null: false, default: ""
       t.string :authorization_code_lookup, null: false, default: ""
       t.string :authorization_code_digest, null: false, default: ""

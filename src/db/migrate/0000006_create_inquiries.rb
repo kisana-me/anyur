@@ -2,8 +2,8 @@ class CreateInquiries < ActiveRecord::Migration[8.0]
   def change
     create_table :inquiries, id: false do |t|
       t.string :id, null: false, limit: 14, primary_key: true
-      t.string :account_id, null: true
-      t.string :service_id, null: true
+      t.string :account_id, null: true, limit: 14
+      t.string :service_id, null: true, limit: 14
       t.string :subject, null: false, default: ""
       t.string :summary, null: false, default: ""
       t.text :content, null: false, default: ""

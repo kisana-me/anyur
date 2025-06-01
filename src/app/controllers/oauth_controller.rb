@@ -1,4 +1,5 @@
 class OauthController < ApplicationController
+  skip_before_action :verify_authenticity_token
   skip_before_action :require_signin, only: :token
 
 
@@ -39,8 +40,8 @@ class OauthController < ApplicationController
         status: 0,
         deleted: false
       )
-      if personas.size >= 2
-          @error = "連携を作成できません/作成可能な連携は最大2つです"
+      if personas.size >= 1
+          @error = "連携を作成できません/作成可能な連携は最大1つです"
           return render :authorize, status: :unprocessable_entity
       else
         @persona = Persona.new(name: params[:persona_name])
@@ -76,10 +77,23 @@ class OauthController < ApplicationController
 
 
   def token
-    if params[:grant_type] != "authorization_code"
-      return render json: { error: "unsupported_grant_type" }, status: 400
+    if params[:grant_type] == "authorization_code"
+      return handle_authorization_code
+    elsif params[:grant_type] == "refresh_token"
+      return handle_refresh_token
+    else
+      render json: { error: "unsupported_grant_type" }, status: 400
     end
+  end
 
+
+
+  private
+
+
+
+  def handle_authorization_code
+    # clientを検証
     client_id = params[:client_id]# || basic_auth_client_id
     client_secret = params[:client_secret]# || basic_auth_client_secret
 
@@ -104,7 +118,7 @@ class OauthController < ApplicationController
       return render json: { error: "invalid_code" }, status: 401
     end
 
-    # access token発行
+    # token発行
     access_token = persona.generate_token("access_token", 10.minutes)
     refresh_token = persona.generate_token("refresh_token", 30.days)
     persona.authorization_code_expires_at = Time.current
@@ -124,7 +138,38 @@ class OauthController < ApplicationController
 
 
 
-  private
+  def handle_refresh_token#仮
+    # clientを検証
+    client_id = params[:client_id]# || basic_auth_client_id
+    client_secret = params[:client_secret]# || basic_auth_client_secret
+    service = Service.find_by_token("client_secret", client_secret)
+    unless service && service.name_id == client_id
+      return render json: { error: "invalid_client" }, status: 401
+    end
+
+    # personaを探す
+    persona = Persona.find_by_token("refresh_token", params[:refresh_token])
+    unless persona
+      return render json: { error: "invalid_refresh_token" }, status: 401
+    end
+
+    # token発行
+    access_token = persona.generate_token("access_token", 10.minutes)
+    refresh_token = persona.generate_token("refresh_token", 30.days)
+    persona.authorization_code_expires_at = Time.current
+    unless persona.save
+      return render json: { error: "server_error" }, status: 401
+    end
+
+    # 返却
+    render json: {
+      access_token: access_token,
+      token_type: "Bearer",
+      expires_in: 600,
+      refresh_token: refresh_token,
+      scope: persona.scopes.join(" ")
+    }
+  end
 
 
 
