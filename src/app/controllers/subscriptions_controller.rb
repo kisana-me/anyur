@@ -79,7 +79,7 @@ class SubscriptionsController < ApplicationController
       return render :new, alert: "継続中のサブスクリプションがありません"
     end
     price_id = params[:price_id]
-    subscription = Stripe::Subscription.retrieve(@current_account.stripe_subscription_id)
+    subscription = Stripe::Subscription.retrieve(@subscription.stripe_subscription_id)
 
     unless @subscription.stripe_subscription_id == subscription.id
       return render :new, alert: "サブスクリプションに不整合が生じました お問い合わせください"
@@ -97,9 +97,23 @@ class SubscriptionsController < ApplicationController
       }
     )
 
+    # ここで即時課金を行うために、未決済の請求書を作成
+    upcoming_invoice = Stripe::Invoice.create({
+      customer: subscription.customer,
+      subscription: subscription.id,
+      collection_method: "charge_automatically"
+    })
+
+    # 請求書を確定し、即時支払い
+    finalized_invoice = Stripe::Invoice.finalize_invoice(upcoming_invoice.id)
+    paid_invoice = Stripe::Invoice.pay(finalized_invoice.id)
+
     redirect_to subscriptions_path, notice: "プランをアップグレードしました"
   rescue Stripe::StripeError => e
     redirect_to subscriptions_path, alert: "エラー: #{e.message}"
+  rescue => e
+    logger.error e.full_message
+    redirect_to subscriptions_path, alert: "予期せぬエラーが発生しました: #{e.message}"
   end
 
   private
