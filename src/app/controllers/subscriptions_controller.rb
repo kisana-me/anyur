@@ -113,7 +113,7 @@ class SubscriptionsController < ApplicationController
       notice_msg = "プランを変更しました(お支払いは発生しませんでした)"
     end
 
-    redirect_to subscriptions_path, notice: "プランをアップグレードしました"
+    redirect_to subscriptions_path, notice: notice_msg
   rescue Stripe::StripeError => e
     redirect_to subscriptions_path, alert: "エラー: #{e.message}"
   rescue => e
