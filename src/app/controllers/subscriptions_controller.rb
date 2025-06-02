@@ -106,7 +106,12 @@ class SubscriptionsController < ApplicationController
 
     # 請求書を確定し、即時支払い
     finalized_invoice = Stripe::Invoice.finalize_invoice(upcoming_invoice.id)
-    paid_invoice = Stripe::Invoice.pay(finalized_invoice.id)
+    if finalized_invoice.total.positive?
+      paid_invoice = Stripe::Invoice.pay(finalized_invoice.id)
+      notice_msg = "プランを変更しました(お支払いが発生しました)"
+    else
+      notice_msg = "プランを変更しました(お支払いは発生しませんでした)"
+    end
 
     redirect_to subscriptions_path, notice: "プランをアップグレードしました"
   rescue Stripe::StripeError => e

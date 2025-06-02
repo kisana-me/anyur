@@ -1,9 +1,10 @@
-<% content_for :title, "サブスクリプションを開始" %>
+<% content_for :title, "サブスクリプションについて" %>
 
-<h1>サブスクリプションを開始</h1>
+<h1>サブスクリプションについて</h1>
 
 <% if @subscription %>
   <p>✅既にサブスクリプションに加入しています✅</p>
+  <p style="color: #ff0000;">⚠️プランを変更すると即時にお支払いが発生します⚠️</p>
 <% end %>
 
 <br /><br />
@@ -26,13 +27,13 @@
     <% else %>
       <%= form_with url: change_subscriptions_path, method: :post, data: { turbo: false } do |form| %>
         <%= form.hidden_field :price_id, value: ENV['ANYUR_PLUS_STRIPE_PRICE_ID'] %>
-        <%= form.submit "このプランに変更する" %>
+        <%= form.submit "♻️このプランに変更する(即時お支払い)" %>
       <% end %>
     <% end %>
   <% else %>
     <%= form_with url: subscriptions_path, method: :post, data: { turbo: false } do |form| %>
       <%= form.hidden_field :price_id, value: ENV['ANYUR_PLUS_STRIPE_PRICE_ID'] %>
-      <%= form.submit "このプランに登録する" %>
+      <%= form.submit "↗️このプランに登録する(stripe.com)" %>
     <% end %>
   <% end %>
 </div>
@@ -48,13 +49,13 @@
     <% else %>
       <%= form_with url: change_subscriptions_path, method: :post, data: { turbo: false } do |form| %>
         <%= form.hidden_field :price_id, value: ENV['ANYUR_PREMIUM_STRIPE_PRICE_ID'] %>
-        <%= form.submit "このプランに変更する" %>
+        <%= form.submit "♻️このプランに変更する(即時お支払い)" %>
       <% end %>
     <% end %>
   <% else %>
     <%= form_with url: subscriptions_path, method: :post, data: { turbo: false } do |form| %>
       <%= form.hidden_field :price_id, value: ENV['ANYUR_PREMIUM_STRIPE_PRICE_ID'] %>
-      <%= form.submit "このプランに登録する" %>
+      <%= form.submit "↗️このプランに登録する(stripe.com)" %>
     <% end %>
   <% end %>
 </div>
@@ -70,13 +71,13 @@
     <% else %>
       <%= form_with url: change_subscriptions_path, method: :post, data: { turbo: false } do |form| %>
         <%= form.hidden_field :price_id, value: ENV['ANYUR_LUXURY_STRIPE_PRICE_ID'] %>
-        <%= form.submit "このプランに変更する" %>
+        <%= form.submit "♻️このプランに変更する(即時お支払い)" %>
       <% end %>
     <% end %>
   <% else %>
     <%= form_with url: subscriptions_path, method: :post, data: { turbo: false } do |form| %>
       <%= form.hidden_field :price_id, value: ENV['ANYUR_LUXURY_STRIPE_PRICE_ID'] %>
-      <%= form.submit "このプランに登録する" %>
+      <%= form.submit "↗️このプランに登録する(stripe.com)" %>
     <% end %>
   <% end %>
 </div>
