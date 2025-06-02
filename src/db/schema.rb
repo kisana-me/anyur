@@ -153,13 +153,17 @@ ActiveRecord::Schema[8.0].define(version: 8) do
     t.check_constraint "json_valid(`settings`)", name: "settings"
   end
 
-  create_table "sessions", id: { type: :string, limit: 24 }, charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+  create_table "sessions", id: { type: :string, limit: 14 }, charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "account_id", limit: 14, null: false
     t.string "name", default: "", null: false
     t.string "user_agent", default: "", null: false
     t.string "ip_address", default: "", null: false
+    t.string "token_lookup", default: "", null: false
     t.string "token_digest", default: "", null: false
+    t.datetime "token_expires_at"
+    t.datetime "token_generated_at"
     t.text "meta", size: :long, default: "{}", null: false, collation: "utf8mb4_bin"
+    t.integer "status", limit: 1, default: 0, null: false
     t.boolean "deleted", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

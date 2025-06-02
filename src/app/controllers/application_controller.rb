@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   def current_account
     @current_account = nil
     return unless token = get_tokens().first
-    if account = Account.find_by_token(token)
+    if account = Account.find_by_session(token)
       @current_account = account
     else
       refresh_token
@@ -78,8 +78,7 @@ class ApplicationController < ActionController::Base
   # signin session
 
   def sign_in(account)
-    token = SecureRandom.urlsafe_base64
-    account.remember(token, request.remote_ip, request.user_agent)
+    token = account.remember(request.remote_ip, request.user_agent)
     tokens = get_tokens()
     tokens.unshift(token)
     tokens.uniq!
@@ -102,7 +101,7 @@ class ApplicationController < ActionController::Base
     tokens = get_tokens()
     scope_token = ""
     tokens.each do |t|
-      if account_id == Account.find_by_token(t)&.id
+      if account_id == Account.find_by_session(t)&.id
         scope_token = t
         break
       end
@@ -122,7 +121,7 @@ class ApplicationController < ActionController::Base
 
   def refresh_token()
     tokens = get_tokens()
-    valid_tokens = tokens.select { |token| Account.find_by_token(token).present? }
+    valid_tokens = tokens.select { |token| Account.find_by_session(token).present? }
     if valid_tokens.empty?
       cookies.delete(:anyur)
     else

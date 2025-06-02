@@ -40,15 +40,10 @@ class Account < ApplicationRecord
 
   MAX_FAILED_ATTEMPTS = 7
 
-  def authenticated?(token)
-    lookup = Digest::SHA256.hexdigest(token)[0...24]
-    return false unless ses = Session.find_by(id: lookup, deleted: false)
-    BCrypt::Password.new(ses.remember_token).is_password?(token)
-  end
-
-  def remember(token, ip, ua)
-    lookup = Digest::SHA256.hexdigest(token)[0...24]
-    Session.create(id: lookup, account: self, token_digest: generate_digest(token), ip_address: ip, user_agent: ua)
+  def remember(ip, ua)
+    session = Session.new(account: self, ip_address: ip, user_agent: ua)
+    token = session.generate_token("token", 2592000)
+    return token if session.save
   end
 
   def forget(token)
@@ -173,14 +168,13 @@ class Account < ApplicationRecord
     self.roles.include?("admin")
   end
 
-  def self.find_by_token(token)
-    lookup = Digest::SHA256.hexdigest(token)[0...24]
-    account = Session.find_by(id: lookup, deleted: false)&.account
+  def self.find_by_session(token)
+    account = Session.find_by_token("token", token)&.account
     account&.status_normal? && !account.deleted ? account : nil
   end
 
   def self.signed_in_accounts(tokens)
-    tokens.map { |t| Account.find_by_token(t) }.compact.uniq
+    tokens.map { |t| Account.find_by_session(t) }.compact.uniq
   end
 
   private
