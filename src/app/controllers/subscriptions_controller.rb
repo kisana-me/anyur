@@ -79,7 +79,7 @@ class SubscriptionsController < ApplicationController
       return render :new, alert: "継続中のサブスクリプションがありません"
     end
     price_id = params[:price_id]
-    subscription = Stripe::Subscription.retrieve(current_user.stripe_subscription_id)
+    subscription = Stripe::Subscription.retrieve(@current_account.stripe_subscription_id)
 
     unless @subscription.stripe_subscription_id == subscription.id
       return render :new, alert: "サブスクリプションに不整合が生じました お問い合わせください"
