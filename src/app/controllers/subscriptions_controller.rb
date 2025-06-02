@@ -20,10 +20,11 @@ class SubscriptionsController < ApplicationController
 
   def new
     @subscription = @current_account.active_subscription
-    @price_id = ENV['STRIPE_PRICE_ID']
   end
 
   def create
+    @subscription = @current_account.active_subscription
+    return render :new, alert: "既にサブスクリプションを開始しています" if @subscription
     price_id = params[:price_id]
 
     # ユーザーがStripe顧客でない場合は作成
@@ -70,6 +71,35 @@ class SubscriptionsController < ApplicationController
     # 支払いキャンセル時の処理
     flash[:alert] = "サブスクリプションの登録がキャンセルされました"
     redirect_to subscriptions_url
+  end
+
+  def change
+    @subscription = @current_account.active_subscription
+    unless @subscription
+      return render :new, alert: "継続中のサブスクリプションがありません"
+    end
+    price_id = params[:price_id]
+    subscription = Stripe::Subscription.retrieve(current_user.stripe_subscription_id)
+
+    unless @subscription.stripe_subscription_id == subscription.id
+      return render :new, alert: "サブスクリプションに不整合が生じました お問い合わせください"
+    end
+
+    # サブスクリプションを新プランへ更新
+    updated_subscription = Stripe::Subscription.update(
+      subscription.id,
+      {
+        items: [{
+          id: subscription.items.data[0].id,
+          price: price_id
+        }],
+        proration_behavior: "create_prorations"
+      }
+    )
+
+    redirect_to subscriptions_path, notice: "プランをアップグレードしました"
+  rescue Stripe::StripeError => e
+    redirect_to subscriptions_path, alert: "エラー: #{e.message}"
   end
 
   private

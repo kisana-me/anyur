@@ -19,7 +19,7 @@
   <%= link_to "サブスクリプションを開始", new_subscription_path %>
 <% end %>
 
-<h2>これまでの履歴</h2>
+<h2>詳細</h2>
 
 <div class="container">
   <table>
@@ -50,19 +50,6 @@
         <td><%= subscription.trial_start_at&.strftime("%Y-%m-%d %H:%M:%S") %></td>
         <td><%= subscription.trial_end_at&.strftime("%Y-%m-%d %H:%M:%S") %></td>
         <td>
-          <%#
-            case subscription.status
-            when "incomplete" then "未完了"
-            when "incomplete_expired" then "未完了（期限切れ）"
-            when "trialing" then "トライアル中"
-            when "active" then "有効"
-            when "past_due" then "支払い遅延"
-            when "canceled" then "キャンセル済み"
-            when "unpaid" then "未払い"
-            else
-              subscription.status # 不明な場合は元の値を表示
-            end
-          %>
           <%= t("activerecord.enums.subscription.status.#{subscription.status.downcase}") %>
       </td>
       </tr>

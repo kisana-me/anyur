@@ -51,9 +51,10 @@ Rails.application.routes.draw do
   # subscription
   resources :subscriptions, only: [:index, :new, :create] do
     collection do
-      get 'success'
-      get 'cancel'
-      get 'customer_portal'
+      get "success"
+      get "cancel"
+      get "customer_portal"
+      post "change"
     end
   end
 
