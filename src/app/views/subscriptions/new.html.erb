@@ -24,7 +24,7 @@
     <% if @subscription.stripe_plan_id == ENV['ANYUR_PLUS_STRIPE_PRICE_ID'] %>
       <p>このプランに加入中です</p>
     <% else %>
-      <%= form_with url: change_subscription_path, method: :post, data: { turbo: false } do |form| %>
+      <%= form_with url: change_subscriptions_path, method: :post, data: { turbo: false } do |form| %>
         <%= form.hidden_field :price_id, value: ENV['ANYUR_PLUS_STRIPE_PRICE_ID'] %>
         <%= form.submit "このプランに変更する" %>
       <% end %>
@@ -46,7 +46,7 @@
     <% if @subscription.stripe_plan_id == ENV['ANYUR_PREMIUM_STRIPE_PRICE_ID'] %>
       <p>このプランに加入中です</p>
     <% else %>
-      <%= form_with url: change_subscription_path, method: :post, data: { turbo: false } do |form| %>
+      <%= form_with url: change_subscriptions_path, method: :post, data: { turbo: false } do |form| %>
         <%= form.hidden_field :price_id, value: ENV['ANYUR_PREMIUM_STRIPE_PRICE_ID'] %>
         <%= form.submit "このプランに変更する" %>
       <% end %>
@@ -68,7 +68,7 @@
     <% if @subscription.stripe_plan_id == ENV['ANYUR_LUXURY_STRIPE_PRICE_ID'] %>
       <p>このプランに加入中です</p>
     <% else %>
-      <%= form_with url: change_subscription_path, method: :post, data: { turbo: false } do |form| %>
+      <%= form_with url: change_subscriptions_path, method: :post, data: { turbo: false } do |form| %>
         <%= form.hidden_field :price_id, value: ENV['ANYUR_LUXURY_STRIPE_PRICE_ID'] %>
         <%= form.submit "このプランに変更する" %>
       <% end %>
