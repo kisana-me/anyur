@@ -195,7 +195,7 @@ class OauthController < ApplicationController
       return
     end
 
-    unless input_uri.host == service.host
+    unless input_uri.host == service.host || input_uri.host == "localhost"
       @error = "redirect_uri_host_mismatch"
       return
     end
