@@ -108,7 +108,7 @@ class OauthController < ApplicationController
     rescue URI::InvalidURIError
       return render json: { error: "invalid_redirect_uri" }, status: 401
     end
-    unless input_uri.host == service.host
+    unless input_uri.host == service.host || input_uri.host == "localhost"
       return render json: { error: "redirect_uri_host_mismatch" }, status: 401
     end
 
