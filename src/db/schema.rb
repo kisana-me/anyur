@@ -37,11 +37,12 @@ ActiveRecord::Schema[8.0].define(version: 8) do
 
   create_table "activity_logs", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "aid", limit: 14, null: false
-    t.bigint "account_id", null: false
-    t.string "model_name", default: "", null: false
+    t.bigint "account_id"
+    t.string "record_name", default: "", null: false
     t.string "attribute_name", default: "", null: false
     t.string "action_name", default: "", null: false
-    t.text "previous_value", default: "", null: false
+    t.string "target_aid", default: "", null: false
+    t.text "value", default: "", null: false
     t.datetime "changed_at", default: -> { "current_timestamp(6)" }, null: false
     t.string "change_reason", default: "", null: false
     t.string "user_agent", default: "", null: false
