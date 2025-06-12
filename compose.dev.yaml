@@ -14,7 +14,7 @@ services:
       - db
     command: >
       bash -c "rm -f /app/tmp/pids/server.pid &&
-      rm -f /app/public/assets &&
+      rm -rf /app/public/assets &&
       gem cleanup &&
       bundle install -j4 &&
       rails s -b 0.0.0.0"
