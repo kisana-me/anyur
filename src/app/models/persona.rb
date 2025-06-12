@@ -1,4 +1,5 @@
 class Persona < ApplicationRecord
+
   attribute :scopes, :json, default: []
   attribute :cache, :json, default: {}
   attribute :meta, :json, default: {}
@@ -7,7 +8,7 @@ class Persona < ApplicationRecord
   belongs_to :account
   belongs_to :service
 
-  before_create :generate_custom_id
+  before_create :set_aid
   before_create :initialize_tokens
 
   validates :name, presence: true
@@ -21,4 +22,5 @@ class Persona < ApplicationRecord
     generate_token("access_token")
     generate_token("refresh_token")
   end
+
 end

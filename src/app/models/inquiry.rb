@@ -1,5 +1,5 @@
 class Inquiry < ApplicationRecord
-  self.primary_key = "id"
+
   attribute :cache, :json, default: {}
   attribute :meta, :json, default: {}
   attribute :settings, :json, default: {}
@@ -25,7 +25,7 @@ class Inquiry < ApplicationRecord
 
   enum :status, { received: 0, processing: 1, finished: 2 }, prefix: true
 
-  before_create :generate_custom_id
+  before_create :set_aid
   before_validation :normalize_service_id
 
   private
@@ -33,4 +33,5 @@ class Inquiry < ApplicationRecord
   def normalize_service_id
     self.service_id = nil if service_id.blank?
   end
+
 end

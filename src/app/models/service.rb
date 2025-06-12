@@ -1,10 +1,11 @@
 class Service < ApplicationRecord
+
   attribute :scopes, :json, default: []
   attribute :cache, :json, default: {}
   attribute :meta, :json, default: {}
   attribute :settings, :json, default: {}
 
-  before_create :generate_custom_id
+  before_create :set_aid
   before_create :initialize_tokens
   before_save :cache_rendered_content
 
@@ -19,11 +20,12 @@ class Service < ApplicationRecord
 
   private
 
+  def initialize_tokens
+    generate_token("client_secret")
+  end
+
   def cache_rendered_content
     self.description_cache = ::MarkdownRenderer.render(description)
   end
 
-  def initialize_tokens
-    generate_token("client_secret")
-  end
 end

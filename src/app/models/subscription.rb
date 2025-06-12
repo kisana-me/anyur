@@ -1,4 +1,5 @@
 class Subscription < ApplicationRecord
+
   belongs_to :account
 
   enum :status, {
@@ -11,7 +12,7 @@ class Subscription < ApplicationRecord
     unpaid: 6
   }
 
-  before_create :generate_custom_id
+  before_create :set_aid
 
   validates :stripe_subscription_id, presence: true, uniqueness: true
   validates :stripe_plan_id, presence: true
@@ -21,7 +22,4 @@ class Subscription < ApplicationRecord
   scope :active_or_trialing, -> { where(status: [:active, :trialing]) }
   scope :canceled, -> { where(status: :canceled) }
 
-  def active_or_trialing?
-    active? || trialing?
-  end
 end

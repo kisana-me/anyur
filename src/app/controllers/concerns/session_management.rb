@@ -4,8 +4,6 @@ module SessionManagement
   # models/token_toolsが必須
   # Sessionに必要なカラム差分(名前 型)
   # - account references
-  # - ip_address string # 廃止予定
-  # - user_agent string # 廃止予定
   # Accountに必要なカラム(名前 型)
   # - deleted boolean
 
@@ -25,7 +23,7 @@ module SessionManagement
   end
 
   def sign_in(account)
-    db_session = Session.new(account: account, ip_address: request.remote_ip, user_agent: request.user_agent)
+    db_session = Session.new(account: account)
     token = db_session.generate_token("token", COOKIE_EXPIRES)
     tokens = get_tokens()
     tokens.unshift(token)
@@ -76,7 +74,7 @@ module SessionManagement
   def refresh_token()
     tokens = get_tokens()
     valid_tokens = tokens.select do |token|
-      db_session = Session.find_by_token(token)
+      db_session = Session.find_by_token("token", token)
       db_session&.account && !db_session.account.deleted
     end
     if valid_tokens.empty?

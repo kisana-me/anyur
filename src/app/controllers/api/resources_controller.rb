@@ -49,15 +49,15 @@ class Api::ResourcesController < Api::ApplicationController
   private
 
   def authenticate_with_token!
-    auth_header = request.headers['Authorization']
+    auth_header = request.headers["Authorization"]
 
-    unless auth_header&.start_with?('Bearer ')
+    unless auth_header&.start_with?("Bearer ")
       return render_unauthorized("Missing or malformed Authorization header")
     end
 
-    token = auth_header.split(' ').last
+    token = auth_header.split(" ").last
 
-    persona = Persona.find_by_token(:access_token, token)
+    persona = Persona.find_by_token("access_token", token)
 
     if persona.nil?
       return render_unauthorized("Invalid or expired token")
