@@ -119,7 +119,7 @@ class Account < ApplicationRecord
 
   def start_reset_password
     meta["use_email"] = meta["use_email"].to_i + 1
-    token = generate_base36(32)
+    token = SecureRandom.base36(32)
     meta["reset_password"] ||= {}
     meta["reset_password"]["token_digest"] = generate_digest(token)
     meta["reset_password"]["started_at"] = Time.current
