@@ -9,7 +9,7 @@
 #   end
 
 Account.create!(
-  id: "00000000000000",
+  aid: "00000000000000",
   name: "kisana",
   name_id: "kisana",
   email: "kisana@kisana.me",
@@ -19,7 +19,7 @@ Account.create!(
   password_confirmation: "kisana528"
 )
 Service.create!(
-  id: "00000000000001",
+  aid: "00000000000001",
   name: "Amiverse",
   name_id: "Amiverse",
   summary: "Amiverse SNS",
@@ -29,7 +29,7 @@ Service.create!(
   scopes: ["id", "email", "name", "name_id"]
 )
 Service.create!(
-  id: "00000000000002",
+  aid: "00000000000002",
   name: "IVECOLOR",
   name_id: "IVECOLOR",
   summary: "IVECOLOR BLOG",
@@ -39,7 +39,7 @@ Service.create!(
   scopes: ["id", "email", "name", "name_id"]
 )
 Service.create!(
-  id: "00000000000003",
+  aid: "00000000000003",
   name: "KISANA:ME",
   name_id: "KISANA_ME",
   summary: "KISANA:ME プロフィール",
@@ -49,7 +49,7 @@ Service.create!(
   scopes: ["id", "email", "name", "name_id"]
 )
 Service.create!(
-  id: "00000000000004",
+  aid: "00000000000004",
   name: "Be Alive.",
   name_id: "Be_Alive",
   summary: "Be Alive. 生存確認",
@@ -59,7 +59,7 @@ Service.create!(
   scopes: ["id", "email", "name", "name_id"]
 )
 Service.create!(
-  id: "00000000000005",
+  aid: "00000000000005",
   name: "得句巣",
   name_id: "x_ekusu",
   summary: "得句巣 英字漢字",

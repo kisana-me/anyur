@@ -1,5 +1,4 @@
 module TurnstileManagement
-
   # ver 1.0.0
 
   require "net/http"
@@ -15,5 +14,4 @@ module TurnstileManagement
     result = JSON.parse(res.body)
     result["success"] == true
   end
-
 end

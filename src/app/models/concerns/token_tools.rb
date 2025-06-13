@@ -1,5 +1,4 @@
 module TokenTools
-
   # ver 1.0.0
   # 必要なカラム(名前 型)
   # - ??_lookup string
@@ -43,5 +42,4 @@ module TokenTools
       record
     end
   end
-
 end

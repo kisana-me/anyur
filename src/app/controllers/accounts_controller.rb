@@ -1,13 +1,12 @@
 class AccountsController < ApplicationController
 
   def index
-    tokens = get_tokens()
-    @accounts = Account.signed_in_accounts(tokens)
+    @accounts = signed_in_accounts()
   end
 
   def change
-    account_id = params[:selected_account_id]
-    if change_account(account_id)
+    account_aid = params[:selected_account_aid]
+    if change_account(account_aid)
       redirect_to account_path, notice: "アカウントを切り替えました"
     else
       redirect_to account_path, alert: "アカウントを切り替えられませんでした"

@@ -1,5 +1,4 @@
 class Document < ApplicationRecord
-
   attribute :cache, :json, default: {}
   attribute :meta, :json, default: {}
   attribute :settings, :json, default: {}
@@ -23,5 +22,4 @@ class Document < ApplicationRecord
   def cache_rendered_content
     self.content_cache = ::MarkdownRenderer.render(content)
   end
-
 end

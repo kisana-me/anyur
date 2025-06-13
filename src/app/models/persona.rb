@@ -1,5 +1,4 @@
 class Persona < ApplicationRecord
-
   attribute :scopes, :json, default: []
   attribute :cache, :json, default: {}
   attribute :meta, :json, default: {}
@@ -22,5 +21,4 @@ class Persona < ApplicationRecord
     generate_token("access_token")
     generate_token("refresh_token")
   end
-
 end

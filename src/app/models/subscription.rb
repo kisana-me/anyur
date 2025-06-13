@@ -1,5 +1,4 @@
 class Subscription < ApplicationRecord
-
   belongs_to :account
 
   enum :status, {
@@ -21,5 +20,4 @@ class Subscription < ApplicationRecord
   # スコープ
   scope :active_or_trialing, -> { where(status: [:active, :trialing]) }
   scope :canceled, -> { where(status: :canceled) }
-
 end

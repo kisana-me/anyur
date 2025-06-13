@@ -8,17 +8,13 @@ module Loggable
 
   private
 
-  # record_nameとtarget_aidはポリモーフィック?できるか？
-
   def log_create
     return if self.is_a?(ActivityLog)
     ActivityLog.create!(
-      aid: SecureRandom.base36(14),
       account: Current.account,
-      record_name: self.class.name,
+      loggable: self,
       attribute_name: "",
       action_name: "create",
-      target_aid: self.aid,
       value: "",
       changed_at: Time.current,
       change_reason: "",
@@ -34,12 +30,10 @@ module Loggable
       next if before == after
 
       ActivityLog.create!(
-        aid: SecureRandom.base36(14),
         account: Current.account,
-        record_name: self.class.name,
+        loggable: self,
         attribute_name: attr,
         action_name: "update",
-        target_aid: self.aid,
         value: before.to_s,
         changed_at: Time.current,
         change_reason: "",

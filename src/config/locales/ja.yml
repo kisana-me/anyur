@@ -8,21 +8,21 @@ ja:
       persona: "ペルソナ"
     attributes:
       account:
-        id: "固有ID"
+        aid: "固有ID"
         name: "名前"
         name_id: "ID"
         email: "メール"
         password: "パスワード"
         password_confirmation: "パスワード(確認)"
       document:
-        id: "固有ID"
+        aid: "固有ID"
         name: "名前"
         name_id: "ID"
         content: "内容"
         status: "状態"
         deleted: "削除"
       inquiry:
-        service_id: "サービス"
+        service_aid: "サービス"
         subject: "件名"
         summary: "概要"
         content: "内容"
@@ -30,7 +30,7 @@ ja:
         email: "メール"
         account: "アカウント"
       service:
-        id: "固有ID"
+        aid: "固有ID"
         name: "名前"
         name_id: "ID"
         summary: "概要"
@@ -40,9 +40,9 @@ ja:
         redirect_uris: "リダイレクトURI配列"
         scopes: "スコープ配列"
       persona:
-        id: "固有ID"
-        account_id: "アカウント固有ID"
-        service_id: "サービス固有ID"
+        aid: "固有ID"
+        account_aid: "アカウント固有ID"
+        service_aid: "サービス固有ID"
         name: "名前"
         scopes: "スコープ配列"
     enums:

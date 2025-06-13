@@ -1,5 +1,4 @@
 class Account < ApplicationRecord
-
   has_many :sessions
   has_many :subscriptions
   has_many :activity_logs
@@ -39,18 +38,6 @@ class Account < ApplicationRecord
                                     if: -> { password.present? && password_confirmation.present? }
 
   MAX_FAILED_ATTEMPTS = 7
-
-  def remember(ip, ua)
-    session = Session.new(account: self, ip_address: ip, user_agent: ua)
-    token = session.generate_token("token", 2592000)
-    return token if session.save
-  end
-
-  def forget(token)
-    lookup = Digest::SHA256.hexdigest(token)[0...24]
-    return unless ses = Session.find_by(id: lookup, deleted: false)
-    ses.update(deleted: true)
-  end
 
   def email_locked?
     meta["use_email"].to_i >= 20
@@ -168,29 +155,7 @@ class Account < ApplicationRecord
     self.roles.include?("admin")
   end
 
-  def self.find_by_session(token)
-    account = Session.find_by_token("token", token)&.account
-    account&.status_normal? && !account.deleted ? account : nil
-  end
-
-  def self.signed_in_accounts(tokens)
-    tokens.map { |t| Account.find_by_session(t) }.compact.uniq
-  end
-
   private
-
-  # def log_changes
-  #   saved_changes.each do |attr, values|
-  #     next unless %w[name name_id email password_digest].include?(attr)
-  #     previous, current = values
-  #     activity_logs.create!(
-  #       model_name: "account",
-  #       attribute_name: attr,
-  #       action_name: "update",
-  #       previous_value: previous.to_s
-  #     )
-  #   end
-  # end
 
   def sync_name_with_stripe
     return if stripe_customer_id.blank?
@@ -223,5 +188,4 @@ class Account < ApplicationRecord
       # エラーハンドリング (例: あとで再試行するジョブをキューに入れるなど)
     end
   end
-
 end

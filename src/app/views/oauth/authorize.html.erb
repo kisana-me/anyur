@@ -10,7 +10,7 @@
   <ul>
     <% (params[:scope] || "").split(" ").each do |scope| %>
       <% if scope == "id" %>
-      <li><strong>固有ID</strong> (<%=@current_account.id%>)</li>
+      <li><strong>固有ID</strong> (<%=@current_account.aid%>)</li>
       <% end %>
       <% if scope == "email" %>
       <li><strong>メール</strong> (<%=@current_account.email%>)</li>

@@ -1,5 +1,4 @@
 module SessionManagement
-
   # 複数サインイン版 ver 1.0.0
   # models/token_toolsが必須
   # Sessionに必要なカラム差分(名前 型)
@@ -23,6 +22,7 @@ module SessionManagement
   end
 
   def sign_in(account)
+    return false if account&.deleted
     db_session = Session.new(account: account)
     token = db_session.generate_token("token", COOKIE_EXPIRES)
     tokens = get_tokens()
@@ -47,12 +47,21 @@ module SessionManagement
     db_session.update(deleted: true)
   end
 
-  def change_account(account_id)
+  def signed_in_accounts()
+    tokens = get_tokens()
+    tokens.filter_map do |token|
+      account = Session.find_by_token("token", token)&.account
+      account unless account.deleted
+    end.uniq
+  end
+
+  def change_account(account_aid)
     tokens = get_tokens()
     scope_token = ""
-    tokens.each do |t|
-      if account_id == Account.find_by_session(t)&.id
-        scope_token = t
+    tokens.each do |token|
+      account = Session.find_by_token("token", token)&.account
+      if account && !account.deleted && account_aid == account.aid
+        scope_token = token
         break
       end
     end
@@ -95,5 +104,4 @@ module SessionManagement
       httponly: true
     }
   end
-
 end

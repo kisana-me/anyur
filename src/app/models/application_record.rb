@@ -1,5 +1,4 @@
 class ApplicationRecord < ActiveRecord::Base
-
   primary_abstract_class
   include TokenTools
   include Loggable
@@ -12,5 +11,4 @@ class ApplicationRecord < ActiveRecord::Base
   def set_aid
     self.aid ||= SecureRandom.base36(14)
   end
-
 end

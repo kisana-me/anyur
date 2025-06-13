@@ -26,6 +26,6 @@ class InquiriesController < ApplicationController
   private
 
   def inquiry_params
-    params.expect(inquiry: [ :service_id, :subject, :summary, :content, :name, :email ])
+    params.expect(inquiry: [ :service_aid, :subject, :summary, :content, :name, :email ])
   end
 end

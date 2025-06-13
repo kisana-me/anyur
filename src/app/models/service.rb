@@ -1,5 +1,4 @@
 class Service < ApplicationRecord
-
   attribute :scopes, :json, default: []
   attribute :cache, :json, default: {}
   attribute :meta, :json, default: {}
@@ -27,5 +26,4 @@ class Service < ApplicationRecord
   def cache_rendered_content
     self.description_cache = ::MarkdownRenderer.render(description)
   end
-
 end

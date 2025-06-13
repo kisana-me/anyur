@@ -13,7 +13,7 @@
       <small><strong>作成:</strong> <%= persona.created_at %></small>
     </p>
     <p>
-      <strong>内容:</strong> アカウント:<%= persona.account_id %> サービス<%= persona.service_id %>
+      <strong>内容:</strong> アカウント: <%= persona.account.name %> サービス: <%= persona.service.name %>
     </p>
     <hr />
   <% end %>

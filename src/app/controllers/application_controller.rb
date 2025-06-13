@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-
   include SessionManagement
   include TurnstileManagement
 
@@ -63,5 +62,4 @@ class ApplicationController < ActionController::Base
     Current.ip_address = request.remote_ip
     Current.user_agent = request.user_agent
   end
-
 end

@@ -38,10 +38,10 @@ ActiveRecord::Schema[8.0].define(version: 8) do
   create_table "activity_logs", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "aid", limit: 14, null: false
     t.bigint "account_id"
-    t.string "record_name", default: "", null: false
+    t.string "loggable_type"
+    t.bigint "loggable_id"
     t.string "attribute_name", default: "", null: false
     t.string "action_name", default: "", null: false
-    t.string "target_aid", default: "", null: false
     t.text "value", default: "", null: false
     t.datetime "changed_at", default: -> { "current_timestamp(6)" }, null: false
     t.string "change_reason", default: "", null: false
@@ -52,6 +52,7 @@ ActiveRecord::Schema[8.0].define(version: 8) do
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_activity_logs_on_account_id"
     t.index ["aid"], name: "index_activity_logs_on_aid", unique: true
+    t.index ["loggable_type", "loggable_id"], name: "index_activity_logs_on_loggable"
     t.check_constraint "json_valid(`meta`)", name: "meta"
   end
 

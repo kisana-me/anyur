@@ -1,5 +1,4 @@
 class Inquiry < ApplicationRecord
-
   attribute :cache, :json, default: {}
   attribute :meta, :json, default: {}
   attribute :settings, :json, default: {}
@@ -26,12 +25,11 @@ class Inquiry < ApplicationRecord
   enum :status, { received: 0, processing: 1, finished: 2 }, prefix: true
 
   before_create :set_aid
-  before_validation :normalize_service_id
+  before_validation :normalize_service_aid
 
   private
 
-  def normalize_service_id
-    self.service_id = nil if service_id.blank?
+  def normalize_service_aid
+    self.service_aid = nil if service_aid.blank?
   end
-
 end

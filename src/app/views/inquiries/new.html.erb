@@ -9,8 +9,8 @@
 <%= form_with model: @inquiry, url: inquiries_path, data: { turbo: false } do |f| %>
   <%= render "shared/error_messages", instead: @inquiry %>
   <div>
-    <%= f.label :service_id %>
-    <%= f.collection_select :service_id, @services, :id, :name, include_blank: "選択しない" %>
+    <%= f.label :service_aid %>
+    <%= f.collection_select :service_aid, @services, :aid, :name, include_blank: "選択しない" %>
   </div>
   <div>
     <%= f.label :subject %>
