@@ -8,7 +8,6 @@ class Account < ApplicationRecord
   enum :status, { normal: 0, locked: 1 }, prefix: true
 
   before_create :set_aid
-  # after_update :log_changes
   after_update :sync_name_with_stripe, if: :saved_change_to_name?
   after_update :sync_email_with_stripe, if: :saved_change_to_email?
 

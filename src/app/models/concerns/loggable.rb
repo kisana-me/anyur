@@ -1,4 +1,11 @@
 module Loggable
+  # ver 1.0.0
+  # 下3つ必須
+  # models/current.rb 作成
+  # models/activity_log.rb 作成
+  # controllers/application_controller.rb 追記
+  # db/activity_log.rb
+
   extend ActiveSupport::Concern
 
   included do

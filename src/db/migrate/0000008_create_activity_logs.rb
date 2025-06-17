@@ -7,7 +7,7 @@ class CreateActivityLogs < ActiveRecord::Migration[8.0]
       t.string :attribute_name, null: false, default: ""
       t.string :action_name, null: false, default: ""
       t.text :value, null: false, default: ""
-      t.datetime :changed_at, null: false, default: -> { 'CURRENT_TIMESTAMP' }
+      t.datetime :changed_at, null: false, default: -> { "CURRENT_TIMESTAMP" }
       t.string :change_reason, null: false, default: ""
       t.string :user_agent, null: false, default: ""
       t.string :ip_address, null: false, default: ""
