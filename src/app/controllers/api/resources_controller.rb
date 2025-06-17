@@ -21,7 +21,7 @@ class Api::ResourcesController < Api::ApplicationController
     permitted_data = {}
 
     if @current_persona.scopes.include?("id")
-      permitted_data[:id] = @current_persona.account.id
+      permitted_data[:id] = @current_persona.account.aid
     end
 
     if @current_persona.scopes.include?("email")
