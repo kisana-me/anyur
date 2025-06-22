@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   # pages
   get "terms-of-service" => "pages#terms_of_service"
   get "privacy-policy" => "pages#privacy_policy"
+  get "specified-commercial-transactions" => "pages#specified_commercial_transactions"
   get "contact" => "pages#contact"
 
   # signup

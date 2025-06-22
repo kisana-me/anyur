@@ -10,7 +10,7 @@ a {
 main {
   padding: 10px;
   box-sizing: border-box;
-  min-height: calc(100svh - 100px);
+  min-height: calc(100svh - 150px);
   overflow: auto;
 }
 img {

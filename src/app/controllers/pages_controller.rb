@@ -15,6 +15,10 @@ class PagesController < ApplicationController
     @document = Document.find_by(name_id: "privacy_policy", status: :specific, deleted: false)
   end
 
+  def specified_commercial_transactions
+    @document = Document.find_by(name_id: "specified_commercial_transactions", status: :specific, deleted: false)
+  end
+
   def contact
   end
 end
