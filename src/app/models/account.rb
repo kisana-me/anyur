@@ -41,7 +41,7 @@ class Account < ApplicationRecord
   end
 
   def active_subscription
-    subscriptions.where(status: [:active, :trialing])
+    subscriptions.where(subscription_status: [:active, :trialing])
                  .order(created_at: :desc)
                  .first
   end

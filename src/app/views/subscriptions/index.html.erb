@@ -52,7 +52,7 @@
         <td><%= subscription.trial_start_at&.strftime("%Y-%m-%d %H:%M:%S") %></td>
         <td><%= subscription.trial_end_at&.strftime("%Y-%m-%d %H:%M:%S") %></td>
         <td>
-          <%= t("activerecord.enums.subscription.status.#{subscription.status.downcase}") %>
+          <%= t("activerecord.enums.subscription.subscription_status.#{subscription.subscription_status.downcase}") %>
       </td>
       </tr>
       <% end %>
