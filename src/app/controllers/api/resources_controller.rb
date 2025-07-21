@@ -21,7 +21,11 @@ class Api::ResourcesController < Api::ApplicationController
     permitted_data = {}
 
     if @current_persona.scopes.include?("id")
-      permitted_data[:id] = @current_persona.account.aid
+      permitted_data[:id] = @current_persona.aid
+    end
+
+    if @current_persona.scopes.include?("anyur_aid")
+      permitted_data[:anyur_aid] = @current_persona.account.aid
     end
 
     if @current_persona.scopes.include?("email")
@@ -34,6 +38,10 @@ class Api::ResourcesController < Api::ApplicationController
 
     if @current_persona.scopes.include?("name_id")
       permitted_data[:name_id] = @current_persona.account.name_id
+    end
+
+    if @current_persona.scopes.include?("subscription")
+      permitted_data[:subscription] = @current_persona.account.active_subscription&.as_json(only: [:current_period_start, :current_period_end, :subscription_status]) || {subscription_status: "none"}
     end
 
     # if @current_persona.scopes.include?("profile")

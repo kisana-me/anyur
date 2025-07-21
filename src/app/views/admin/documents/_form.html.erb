@@ -27,8 +27,8 @@
   </div>
 
   <div>
-    <%= form.label :status, style: "display: block" %>
-    <%= form.select :status, Document.statuses.keys.map { |k| [t("activerecord.enums.document.status.#{k}"), k] }, {} %>
+    <%= form.label :visibility_status, style: "display: block" %>
+    <%= form.select :visibility_status, Document.visibility_statuses.keys.map { |k| [t("activerecord.enums.document.visibility_status.#{k}"), k] }, {} %>
   </div>
 
   <div>

@@ -1,8 +1,8 @@
 class Service < ApplicationRecord
+  attribute :redirect_uris, :json, default: []
   attribute :scopes, :json, default: []
-  attribute :cache, :json, default: {}
   attribute :meta, :json, default: {}
-  attribute :settings, :json, default: {}
+  enum :status, { normal: 0, locked: 1 }, prefix: true
 
   before_create :set_aid
   before_create :initialize_tokens

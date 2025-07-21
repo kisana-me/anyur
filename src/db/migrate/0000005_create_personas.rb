@@ -18,8 +18,6 @@ class CreatePersonas < ActiveRecord::Migration[8.0]
       t.datetime :refresh_token_expires_at, default: -> { "CURRENT_TIMESTAMP" }
       t.datetime :refresh_token_generated_at, default: -> { "CURRENT_TIMESTAMP" }
       t.json :scopes, null: false, default: []
-      t.json :settings, null: false, default: {}
-      t.json :cache, null: false, default: {}
       t.json :meta, null: false, default: {}
       t.integer :status, null: false, limit: 1, default: 0
       t.boolean :deleted, null: false, default: false

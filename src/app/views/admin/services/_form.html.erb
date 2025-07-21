@@ -28,17 +28,17 @@
 
   <div>
     <%= form.label :redirect_uris, style: "display: block" %>
-    <%= form.textarea :redirect_uris %>
+    <%= form.textarea :redirect_uris, value: JSON.pretty_generate(service.redirect_uris) %>
   </div>
 
   <div>
     <%= form.label :scopes, style: "display: block" %>
-    <%= form.textarea :scopes %>
+    <%= form.textarea :scopes, value: JSON.pretty_generate(service.scopes) %>
   </div>
 
   <div>
     <%= form.label :status, style: "display: block" %>
-    <%= form.number_field :status %>
+    <%= form.select :status, Service.statuses.keys.map { |k| [t("activerecord.enums.service.status.#{k}"), k] }, {} %>
   </div>
 
   <div>

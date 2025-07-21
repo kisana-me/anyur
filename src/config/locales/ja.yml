@@ -19,7 +19,7 @@ ja:
         name: "名前"
         name_id: "ID"
         content: "内容"
-        status: "状態"
+        visibility_status: "公開状態"
         deleted: "削除"
       inquiry:
         service_aid: "サービス"
@@ -47,13 +47,13 @@ ja:
         scopes: "スコープ配列"
     enums:
       document:
-        status:
+        visibility_status:
           draft: "下書き"
           unlisted: "限定公開"
           specific: "特定用途"
           published: "公開"
       subscription:
-        status:
+        subscription_status:
           incomplete: "未完了"
           incomplete_expired: "未完了(期限切れ)"
           trialing: "トライアル中"

@@ -1,7 +1,6 @@
 class Inquiry < ApplicationRecord
-  attribute :cache, :json, default: {}
   attribute :meta, :json, default: {}
-  attribute :settings, :json, default: {}
+  enum :status, { normal: 0, locked: 1 }, prefix: true
 
   belongs_to :account, optional: true
   belongs_to :service, optional: true

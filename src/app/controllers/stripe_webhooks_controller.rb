@@ -56,7 +56,7 @@ class StripeWebhooksController < ApplicationController
     subscription = account.subscriptions.find_or_initialize_by(stripe_subscription_id: stripe_sub.id)
     subscription.assign_attributes(
       stripe_plan_id: stripe_sub['items']['data'][0]['price']['id'],
-      status: stripe_sub['status'],
+      subscription_status: stripe_sub['status'],
       current_period_start: stripe_sub['items']['data'][0]['current_period_start'] ? Time.at(stripe_sub['items']['data'][0]['current_period_start']) : nil,
       current_period_end: stripe_sub['items']['data'][0]['current_period_end'] ? Time.at(stripe_sub['items']['data'][0]['current_period_end']) : nil,
       cancel_at_period_end: stripe_sub['cancel_at_period_end'],
@@ -73,7 +73,7 @@ class StripeWebhooksController < ApplicationController
 
     subscription.assign_attributes(
       stripe_plan_id: stripe_sub['items']['data'][0]['price']['id'],
-      status: stripe_sub['status'],
+      subscription_status: stripe_sub['status'],
       current_period_start: stripe_sub['items']['data'][0]['current_period_start'] ? Time.at(stripe_sub['items']['data'][0]['current_period_start']) : nil,
       current_period_end: stripe_sub['items']['data'][0]['current_period_end'] ? Time.at(stripe_sub['items']['data'][0]['current_period_end']) : nil,
       cancel_at_period_end: stripe_sub['cancel_at_period_end'],
@@ -89,7 +89,7 @@ class StripeWebhooksController < ApplicationController
     return unless subscription
 
     subscription.update!(
-      status: :canceled,
+      subscription_status: :canceled,
       canceled_at: stripe_sub['canceled_at'] ? Time.at(stripe_sub['canceled_at']) : nil,
       current_period_end: stripe_sub['items']['data'][0]['current_period_end'] ? Time.at(stripe_sub['items']['data'][0]['current_period_end']) : nil
     )

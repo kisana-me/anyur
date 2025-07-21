@@ -2,9 +2,7 @@ class Account < ApplicationRecord
   has_many :sessions
   has_many :subscriptions
   has_many :activity_logs
-  attribute :cache, :json, default: {}
   attribute :meta, :json, default: {}
-  attribute :settings, :json, default: {}
   enum :status, { normal: 0, locked: 1 }, prefix: true
 
   before_create :set_aid

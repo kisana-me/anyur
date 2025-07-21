@@ -54,9 +54,12 @@ class Admin::ServicesController < Admin::ApplicationController
   end
 
   def service_params
-    params.expect(service: [
-      :name, :name_id, :summary, :description, :description_cache,
-      :host, :status, :deleted
-    ])
+    service_parameters = params.require(:service).permit(
+      :name, :name_id, :summary, :description,
+      :host, :redirect_uris, :scopes, :status, :deleted
+    )
+    service_parameters[:scopes] = JSON.parse(service_parameters[:scopes]) if service_parameters[:scopes].is_a?(String)
+    service_parameters[:redirect_uris] = JSON.parse(service_parameters[:redirect_uris]) if service_parameters[:redirect_uris].is_a?(String)
+    service_parameters
   end
 end

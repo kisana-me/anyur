@@ -33,7 +33,7 @@ class OauthController < ApplicationController
 
     @persona = nil
 
-    if params[:persona_id] == "none"
+    if params[:persona_aid] == "none"
       personas = Persona.where(
         account: @current_account,
         service: @service,
@@ -55,7 +55,7 @@ class OauthController < ApplicationController
     else
       @persona = Persona.find_by(
         account: @current_account,
-        id: params[:persona_id],
+        aid: params[:persona_aid],
         status: 0,
         deleted: false
       )

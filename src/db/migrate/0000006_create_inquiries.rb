@@ -10,7 +10,6 @@ class CreateInquiries < ActiveRecord::Migration[8.0]
       t.string :name, null: false, default: ""
       t.string :email, null: false, default: ""
       t.text :memo, null: false, default: ""
-      t.json :cache, null: false, default: {}
       t.json :meta, null: false, default: {}
       t.integer :status, null: false, limit: 1, default: 0
       t.boolean :deleted, null: false, default: false

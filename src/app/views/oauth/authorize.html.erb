@@ -9,17 +9,41 @@
 
   <ul>
     <% (params[:scope] || "").split(" ").each do |scope| %>
+      <% if scope == "anyur_aid" %>
+      <li>
+        <strong>ANYURの固有ID</strong> (<%=@current_account.aid%>)<br />
+        <small>ANYURのアカウントに与えられた変更不可能な固有IDです。</small>
+      </li>
+      <% end %>
       <% if scope == "id" %>
-      <li><strong>固有ID</strong> (<%=@current_account.aid%>)</li>
+      <li>
+        <strong>外部連携用 固有ID</strong> (下で作成/選択)<br />
+        <small>外部連携用に作成されたIDです。</small>
+      </li>
       <% end %>
       <% if scope == "email" %>
-      <li><strong>メール</strong> (<%=@current_account.email%>)</li>
+      <li>
+        <strong>メール</strong> (<%=@current_account.email%>)<br />
+        <small>ANYURのアカウントに登録されたメールを提供します。</small>
+      </li>
       <% end %>
       <% if scope == "name" %>
-      <li><strong>名前</strong> (<%=@current_account.name%>)</li>
+      <li>
+        <strong>名前</strong> (<%=@current_account.name%>)<br />
+        <small>ANYURのアカウントに登録された名前を提供します。</small>
+      </li>
       <% end %>
       <% if scope == "name_id" %>
-      <li><strong>ID</strong> (<%=@current_account.name_id%>)</li>
+      <li>
+        <strong>ID</strong> (<%=@current_account.name_id%>)<br />
+        <small>ANYURのアカウントに登録されたIDを提供します。</small>
+      </li>
+      <% end %>
+      <% if scope == "subscription" %>
+      <li>
+        <strong>サブスクリプション</strong> (<%=@current_account.aid%>)<br />
+        <small>ANYURのアカウントで契約されたサブスクリプションの状況を提供します。</small>
+      </li>
       <% end %>
     <% end %>
   </ul>
@@ -33,8 +57,8 @@
 
     <% if @personas.size == 0 %>
     <div>
-      <%= radio_button_tag :persona_id, "", true, {id: "persona_id_none", value: "none"} %>
-      <%= label_tag "persona_id_none", "新たな連携を作成" %>
+      <%= radio_button_tag :persona_aid, "", true, {id: "persona_aid_none", value: "none"} %>
+      <%= label_tag "persona_aid_none", "新たな連携を作成" %>
       <br />
       <%= label_tag "persona_name", "新たな連携の名前" %>
       <%= text_field_tag :persona_name, "#{@service.name}との連携#{@personas.size + 1}" %>
@@ -43,8 +67,8 @@
 
     <% @personas.each do |persona| %>
       <div>
-        <%= radio_button_tag :persona_id, persona.id %>
-        <%= label_tag "persona_id_#{persona.id}", "#{persona.name}(ID: #{persona.id})" %>
+        <%= radio_button_tag :persona_aid, persona.aid %>
+        <%= label_tag "persona_aid_#{persona.aid}", "#{persona.name} (固有ID: #{persona.aid})" %>
       </div>
     <% end %>
     <br />

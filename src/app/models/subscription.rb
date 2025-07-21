@@ -1,7 +1,9 @@
 class Subscription < ApplicationRecord
   belongs_to :account
 
-  enum :status, {
+  attribute :meta, :json, default: {}
+  enum :status, { normal: 0, locked: 1 }, prefix: true
+  enum :subscription_status, {
     incomplete: 0,
     incomplete_expired: 1,
     trialing: 2,
@@ -15,9 +17,9 @@ class Subscription < ApplicationRecord
 
   validates :stripe_subscription_id, presence: true, uniqueness: true
   validates :stripe_plan_id, presence: true
-  validates :status, presence: true
+  validates :subscription_status, presence: true
 
   # スコープ
-  scope :active_or_trialing, -> { where(status: [:active, :trialing]) }
-  scope :canceled, -> { where(status: :canceled) }
+  scope :active_or_trialing, -> { where(subscription_status: [:active, :trialing]) }
+  scope :canceled, -> { where(subscription_status: :canceled) }
 end

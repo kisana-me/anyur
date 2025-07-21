@@ -1,8 +1,7 @@
 class Persona < ApplicationRecord
   attribute :scopes, :json, default: []
-  attribute :cache, :json, default: {}
   attribute :meta, :json, default: {}
-  attribute :settings, :json, default: {}
+  enum :status, { normal: 0, locked: 1 }, prefix: true
 
   belongs_to :account
   belongs_to :service
