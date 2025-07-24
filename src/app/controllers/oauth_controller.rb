@@ -138,7 +138,14 @@ class OauthController < ApplicationController
 
 
 
-  def handle_refresh_token#仮
+  def handle_refresh_token
+    # 必須項目
+    # grant_type: "refresh_token"
+    # client_id: "client_id"
+    # client_secret: "client_secret"
+    # refresh_token "refresh_token"
+    # undefinedだと500エラーでhtml帰る
+
     # clientを検証
     client_id = params[:client_id]# || basic_auth_client_id
     client_secret = params[:client_secret]# || basic_auth_client_secret
