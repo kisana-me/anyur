@@ -5,6 +5,7 @@
 <%= link_to "サブスクリプションの一覧", new_subscription_path %>
 
 <h2>現在の状況</h2>
+<p><strong>プラン:</strong> <%= I18n.t("general.subscription.status.#{@current_account.subscription_plan}") %></p>
 <% if @subscription %>
   <p>👑サブスクリプション中です</p>
   <p><strong>ID:</strong> <%= @subscription.aid %></p>

@@ -46,6 +46,24 @@ class Account < ApplicationRecord
                  .first
   end
 
+  def subscription_plan
+    current_subscription = active_subscription()
+    return :basic unless current_subscription
+    
+    return :expired unless current_subscription.current_period_end > Time.current
+    
+    case current_subscription.stripe_plan_id
+    when ENV["ANYUR_PLUS_STRIPE_PRICE_ID"]
+      :plus
+    when ENV["ANYUR_PREMIUM_STRIPE_PRICE_ID"]
+      :premium
+    when ENV["ANYUR_LUXURY_STRIPE_PRICE_ID"]
+      :luxury
+    else
+      :unknown
+    end
+  end
+
   def self.find_by_sci(str)
     find_by(stripe_customer_id: str, status: :normal, deleted: false)
   end

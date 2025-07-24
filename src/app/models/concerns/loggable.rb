@@ -4,7 +4,7 @@ module Loggable
   # models/current.rb 作成
   # models/activity_log.rb 作成
   # controllers/application_controller.rb 追記
-  # db/activity_log.rb
+  # db/activity_log.rb 作成
 
   extend ActiveSupport::Concern
 
