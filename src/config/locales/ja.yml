@@ -79,3 +79,11 @@ ja:
         singin_locked: "サインインがロックされています、お問い合わせください"
         wrong_password: "パスワードが間違っています"
         failed_captcha: "CAPTCHAの認証に失敗しました"
+  general:
+    subscription:
+      status:
+        unknown: "不明"
+        basic: "ベーシック"
+        plus: "プラス"
+        premium: "プレミアム"
+        luxury: "ラグジュアリー"

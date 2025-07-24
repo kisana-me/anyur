@@ -42,6 +42,7 @@ class Api::ResourcesController < Api::ApplicationController
 
     if @current_persona.scopes.include?("subscription")
       permitted_data[:subscription] = @current_persona.account.active_subscription&.as_json(only: [:current_period_start, :current_period_end, :subscription_status]) || {subscription_status: "none"}
+      permitted_data[:subscription] << {plan: @current_persona.account.subscription_plan}
     end
 
     # if @current_persona.scopes.include?("profile")
