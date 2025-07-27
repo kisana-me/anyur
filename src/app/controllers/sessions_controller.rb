@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
     if !account&.signin_locked? && account&.authenticate(params[:session][:password])
       sign_in(account)
       account.reset_failed_signin
-      redirect_to session.delete(:signin_return_to) || home_path, notice: "サインインしました"
+      redirect_back_or home_path, notice: "サインインしました"
     elsif account&.signin_locked? && account&.authenticate(params[:session][:password])
       @account.errors.add(:base, :singin_locked)
       render :signin, status: :unprocessable_entity
