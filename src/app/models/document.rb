@@ -1,7 +1,7 @@
 class Document < ApplicationRecord
   attribute :meta, :json, default: {}
   enum :status, { normal: 0, locked: 1 }, prefix: true
-  enum :visibility_status, { draft: 0, unlisted: 1, specific: 2, published: 3 }, prefix: true
+  enum :visibility, { draft: 0, unlisted: 1, specific: 2, published: 3 }, prefix: true
 
   before_create :set_aid
   before_save :cache_rendered_content

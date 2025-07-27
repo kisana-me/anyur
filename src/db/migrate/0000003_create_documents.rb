@@ -9,7 +9,7 @@ class CreateDocuments < ActiveRecord::Migration[8.0]
       t.text :content_cache, null: false, default: ""
       t.datetime :published_at, null: false, default: -> { "CURRENT_TIMESTAMP" }
       t.datetime :edited_at, null: false, default: -> { "CURRENT_TIMESTAMP" }
-      t.integer :visibility_status, null: false, limit: 1, default: 0
+      t.integer :visibility, null: false, limit: 1, default: 0
       t.json :meta, null: false, default: {}
       t.integer :status, null: false, limit: 1, default: 0
       t.boolean :deleted, null: false, default: false
