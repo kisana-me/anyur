@@ -19,16 +19,15 @@
   <%= f.label :email, "メール", class: "" %>
   <%= f.email_field :email, disabled: true, class: "" %>
   <br />
+  <%= f.label :terms_agreed, "利用規約とプライバシーポリシーに同意する", class: "" %>
+  <%= f.check_box :terms_agreed, disabled: true, class: "" %>
+  <br />
   <%= f.label :password_confirmation, "パスワード(確認)", class: "" %>
   <%= f.password_field :password_confirmation, class: "" %>
   <br />
   <div class="cf-turnstile" data-turnstile-target="widget"></div>
   <br />
   <%= f.submit "作成", data: { turnstile_target: "submit" }, disabled: true %>
-  <br />
-  <small>
-    アカウントを作成することで、ANYURの<%= link_to "利用規約", terms_of_service_path %>と<%= link_to "プライバシーポリシー", privacy_policy_path %>に同意したことになります
-  </small>
 <% end %>
 </div>
 
