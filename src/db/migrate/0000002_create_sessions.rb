@@ -15,5 +15,6 @@ class CreateSessions < ActiveRecord::Migration[8.0]
       t.timestamps
     end
     add_index :sessions, :aid, unique: true
+    add_index :sessions, :token_lookup, unique: true
   end
 end

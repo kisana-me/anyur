@@ -168,6 +168,7 @@ ActiveRecord::Schema[8.0].define(version: 8) do
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_sessions_on_account_id"
     t.index ["aid"], name: "index_sessions_on_aid", unique: true
+    t.index ["token_lookup"], name: "index_sessions_on_token_lookup", unique: true
     t.check_constraint "json_valid(`meta`)", name: "meta"
   end
 
