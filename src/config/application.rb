@@ -9,7 +9,7 @@ module App
     config.load_defaults 8.0
     config.autoload_lib(ignore: %w[assets tasks])
     config.time_zone = "Tokyo"
-    # config.eager_load_paths << Rails.root.join("extras")
+    config.active_record.default_timezone = :local
     config.i18n.default_locale = :ja
     config.action_view.field_error_proc = Proc.new do |html_tag, _instance|
       html_tag.html_safe
@@ -17,7 +17,7 @@ module App
     config.session_store :cookie_store,
       key: "_anyur",
       domain: :all,
-      tld_length: 3,
+      tld_length: 2,
       same_site: :lax,
       secure: Rails.env.production?,
       httponly: true

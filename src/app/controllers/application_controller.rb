@@ -1,50 +1,32 @@
 class ApplicationController < ActionController::Base
+  include ErrorsManagement
   include SessionManagement
   include TurnstileManagement
 
   before_action :current_account
-  before_action :require_signin
+  before_action :require_signin#個別に設定すべき
   before_action :set_current_attributes
 
   helper_method :email_verified?, :admin?
 
-  unless Rails.env.development?
-    rescue_from Exception,                      with: :render_500
-    rescue_from ActiveRecord::RecordNotFound,   with: :render_404
-    rescue_from ActionController::RoutingError, with: :render_404
+  def routing_error
+    raise ActionController::RoutingError, params[:path]
   end
 
-  # error page
-
-  def render_400
-    render "errors/400", status: :bad_request
-  end
-
-  def render_404
-    render "errors/404", status: :not_found
-  end
-
-  def render_500
-    render "errors/500", status: :internal_server_error
-  end
-
-  # general method
+  private
 
   def require_signin
-    if @current_account&.email_verified
-    elsif @current_account
-      session[:email_verified_return_to] = request.fullpath
+    return if @current_account&.email_verified
+    if @current_account
       redirect_to verify_email_path, alert: "メール認証してください"
     else
-      session[:signin_return_to] = request.fullpath
+      store_location
       redirect_to signin_path, alert: "サインインしてください"
     end
   end
 
   def require_admin
-    unless admin?
-      render_404
-    end
+    render_404 unless admin?
   end
 
   def email_verified?
@@ -55,7 +37,13 @@ class ApplicationController < ActionController::Base
     @current_account&.admin?
   end
 
-  private
+  def store_location
+    session[:forwarding_url] = request.original_url if request.get?
+  end
+
+  def redirect_back_or(default = root_path, **options)
+    redirect_to(session.delete(:forwarding_url) || default, **options)
+  end
 
   def set_current_attributes
     Current.account = @current_account

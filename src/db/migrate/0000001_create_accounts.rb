@@ -4,9 +4,11 @@ class CreateAccounts < ActiveRecord::Migration[8.0]
       t.string :aid, null: false, limit: 14
       t.string :name, null: false, default: ""
       t.string :name_id, null: false, default: ""
+      t.text :description, null: false, default: ""
+      t.datetime :birth, null: true
+      t.boolean :terms_agreed, null: false, default: false
       t.string :email, null: false, default: ""
       t.boolean :email_verified, null: false, default: false
-      t.string :roles, null: false, default: ""
       t.string :password_digest, null: false, default: ""
       t.string :stripe_customer_id, null: true
       t.json :meta, null: false, default: {}

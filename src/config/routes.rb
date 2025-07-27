@@ -89,17 +89,10 @@ Rails.application.routes.draw do
   end
 
   # others
-  # get "up" => "rails/health#show", as: :rails_health_check
+  get "up" => "rails/health#show", as: :rails_health_check
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest, defaults: { format: :json }
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # errors
-  unless Rails.env.development?
-    get "*path", to: "application#render_404"
-    post "*path", to: "application#render_404"
-    put "*path", to: "application#render_404"
-    patch "*path", to: "application#render_404"
-    delete "*path", to: "application#render_404"
-    match "*path", to: "application#render_404", via: :options
-  end
+  match "*path", to: "application#routing_error", via: :all
 end

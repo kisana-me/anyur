@@ -38,13 +38,16 @@
     8~30字のすべての文字を使用できます
   </small>
   <br />
+  <%= f.label :terms_agreed, "利用規約とプライバシーポリシーに同意する", class: "" %>
+  <%= f.check_box :terms_agreed, class: "" %>
+  <br />
+  <small>
+    アカウントを作成するにはANYURの<%= link_to "利用規約", terms_of_service_path %>と<%= link_to "プライバシーポリシー", privacy_policy_path %>に同意する必要があります
+  </small>
+  <br />
   <div class="cf-turnstile" data-turnstile-target="widget"></div>
   <br />
   <%= f.submit "進む", data: { turnstile_target: "submit" }, disabled: true %>
-  <br />
-  <small>
-    アカウントを作成することで、ANYURの<%= link_to "利用規約", terms_of_service_path %>と<%= link_to "プライバシーポリシー", privacy_policy_path %>に同意したことになります
-  </small>
 <% end %>
 </div>
 

@@ -15,9 +15,11 @@ ActiveRecord::Schema[8.0].define(version: 8) do
     t.string "aid", limit: 14, null: false
     t.string "name", default: "", null: false
     t.string "name_id", default: "", null: false
+    t.text "description", default: "", null: false
+    t.datetime "birth"
+    t.boolean "terms_agreed", default: false, null: false
     t.string "email", default: "", null: false
     t.boolean "email_verified", default: false, null: false
-    t.string "roles", default: "", null: false
     t.string "password_digest", default: "", null: false
     t.string "stripe_customer_id"
     t.text "meta", size: :long, default: "{}", null: false, collation: "utf8mb4_bin"
@@ -63,7 +65,7 @@ ActiveRecord::Schema[8.0].define(version: 8) do
     t.text "content_cache", default: "", null: false
     t.datetime "published_at", default: -> { "current_timestamp(6)" }, null: false
     t.datetime "edited_at", default: -> { "current_timestamp(6)" }, null: false
-    t.integer "visibility_status", limit: 1, default: 0, null: false
+    t.integer "visibility", limit: 1, default: 0, null: false
     t.text "meta", size: :long, default: "{}", null: false, collation: "utf8mb4_bin"
     t.integer "status", limit: 1, default: 0, null: false
     t.boolean "deleted", default: false, null: false
@@ -169,6 +171,7 @@ ActiveRecord::Schema[8.0].define(version: 8) do
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_sessions_on_account_id"
     t.index ["aid"], name: "index_sessions_on_aid", unique: true
+    t.index ["token_lookup"], name: "index_sessions_on_token_lookup", unique: true
     t.check_constraint "json_valid(`meta`)", name: "meta"
   end
 

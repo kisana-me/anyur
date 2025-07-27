@@ -5,3 +5,4 @@
 <p><strong><%= @current_account.email %></strong></p>
 <p>上記のメールに認証コードを送信します。よろしければ<%= link_to "こちら", verify_email_code_path(send_code: true) %></p>
 <p>メールを変更する場合は<%= link_to "こちら", verify_email_change_path %></p>
+<p><%= button_to "サインアウト", signout_path, method: :delete, data: { turbo: false } %></p>

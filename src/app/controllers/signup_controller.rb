@@ -13,12 +13,17 @@ class SignupController < ApplicationController
       @account.errors.add(:base, :failed_captcha)
       return render :index, status: :unprocessable_entity
     end
+    unless @account.terms_agreed
+      @account.errors.add(:base, :require_agreed)
+      return render :index, status: :unprocessable_entity
+    end
     if @account.valid?()
       session[:new_account] ||= {}
       session[:new_account].merge!(
         name: params[:account][:name],
         name_id: params[:account][:name_id],
         email: params[:account][:email],
+        terms_agreed: params[:account][:terms_agreed],
         password: params[:account][:password]
       )
     else
@@ -30,6 +35,10 @@ class SignupController < ApplicationController
     @account = Account.new(session[:new_account].to_h.merge(account_params))
     unless verify_turnstile(params["cf-turnstile-response"])
       @account.errors.add(:base, :failed_captcha)
+      return render :page_1, status: :unprocessable_entity
+    end
+    unless @account.terms_agreed
+      @account.errors.add(:base, :require_agreed)
       return render :page_1, status: :unprocessable_entity
     end
     if @account.save
@@ -45,6 +54,15 @@ class SignupController < ApplicationController
   private
 
   def account_params
-    params.expect(account: [ :name, :name_id, :email, :password, :password_confirmation ])
+    params.expect(
+      account: [
+        :name,
+        :name_id,
+        :email,
+        :terms_agreed,
+        :password,
+        :password_confirmation
+      ]
+    )
   end
 end

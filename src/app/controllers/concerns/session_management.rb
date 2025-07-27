@@ -1,5 +1,5 @@
 module SessionManagement
-  # 複数サインイン版 ver 1.0.0
+  # 複数サインイン版 ver 1.0.1
   # models/token_toolsが必須
   # Sessionに必要なカラム差分(名前 型)
   # - account references
@@ -97,7 +97,7 @@ module SessionManagement
     cookies.encrypted[COOKIE_NAME.to_sym] = {
       value: tokens.to_json,
       domain: :all,
-      tld_length: 3,
+      tld_length: 2,
       same_site: :lax,
       expires: Time.current + COOKIE_EXPIRES,
       secure: Rails.env.production?,

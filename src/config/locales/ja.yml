@@ -19,7 +19,7 @@ ja:
         name: "名前"
         name_id: "ID"
         content: "内容"
-        visibility_status: "公開状態"
+        visibility: "公開状態"
         deleted: "削除"
       inquiry:
         service_aid: "サービス"
@@ -47,7 +47,7 @@ ja:
         scopes: "スコープ配列"
     enums:
       document:
-        visibility_status:
+        visibility:
           draft: "下書き"
           unlisted: "限定公開"
           specific: "特定用途"
@@ -79,6 +79,7 @@ ja:
         singin_locked: "サインインがロックされています、お問い合わせください"
         wrong_password: "パスワードが間違っています"
         failed_captcha: "CAPTCHAの認証に失敗しました"
+        require_agreed: "同意が必要です"
   general:
     subscription:
       status:
