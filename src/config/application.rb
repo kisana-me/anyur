@@ -17,7 +17,7 @@ module App
     config.session_store :cookie_store,
       key: "_anyur",
       domain: :all,
-      tld_length: 3,
+      tld_length: 2,
       same_site: :lax,
       secure: Rails.env.production?,
       httponly: true
