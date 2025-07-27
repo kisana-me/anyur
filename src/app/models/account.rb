@@ -167,7 +167,7 @@ class Account < ApplicationRecord
   # ===== #
 
   def admin?
-    self.roles.include?("admin")
+    self.meta["roles"]&.include?("admin")
   end
 
   private

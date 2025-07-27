@@ -17,7 +17,6 @@ ActiveRecord::Schema[8.0].define(version: 8) do
     t.string "name_id", default: "", null: false
     t.string "email", default: "", null: false
     t.boolean "email_verified", default: false, null: false
-    t.string "roles", default: "", null: false
     t.string "password_digest", default: "", null: false
     t.string "stripe_customer_id"
     t.text "meta", size: :long, default: "{}", null: false, collation: "utf8mb4_bin"

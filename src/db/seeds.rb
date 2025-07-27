@@ -14,7 +14,7 @@ Account.create!(
   name_id: "kisana",
   email: "kisana@kisana.me",
   email_verified: true,
-  roles: "admin",
+  meta: { roles: "admin" },
   password: "kisana528",
   password_confirmation: "kisana528"
 )
