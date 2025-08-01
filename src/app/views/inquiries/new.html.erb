@@ -5,7 +5,7 @@
 <p>基本的に、返信は致しません。</p>
 <div data-controller="turnstile"
      data-turnstile-environment-value="<%= Rails.env %>"
-     data-turnstile-sitekey-value="<%= ENV["CLOUDFLARE_TURNSTILE_SITE_KEY"] %>">
+     data-turnstile-sitekey-value="<%= ENV.fetch("CLOUDFLARE_TURNSTILE_SITE_KEY") %>">
 <%= form_with model: @inquiry, url: inquiries_path, data: { turbo: false } do |f| %>
   <%= render "shared/error_messages", instead: @inquiry %>
   <div>

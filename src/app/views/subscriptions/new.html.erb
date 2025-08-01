@@ -22,17 +22,17 @@
   <h2>🍭ANYUR PLUS💗</h2>
   <p>月額 <strong>¥300</strong></p>
   <% if @subscription %>
-    <% if @subscription.stripe_plan_id == ENV['ANYUR_PLUS_STRIPE_PRICE_ID'] %>
+    <% if @subscription.stripe_plan_id == ENV.fetch("ANYUR_PLUS_STRIPE_PRICE_ID") %>
       <p>このプランに加入中です</p>
     <% else %>
       <%= form_with url: change_subscriptions_path, method: :post, data: { turbo: false } do |form| %>
-        <%= form.hidden_field :price_id, value: ENV['ANYUR_PLUS_STRIPE_PRICE_ID'] %>
+        <%= form.hidden_field :price_id, value: ENV.fetch("ANYUR_PLUS_STRIPE_PRICE_ID") %>
         <%= form.submit "♻️このプランに変更する(即時お支払い)" %>
       <% end %>
     <% end %>
   <% else %>
     <%= form_with url: subscriptions_path, method: :post, data: { turbo: false } do |form| %>
-      <%= form.hidden_field :price_id, value: ENV['ANYUR_PLUS_STRIPE_PRICE_ID'] %>
+      <%= form.hidden_field :price_id, value: ENV.fetch("ANYUR_PLUS_STRIPE_PRICE_ID") %>
       <%= form.submit "↗️このプランに登録する(stripe.com)" %>
     <% end %>
   <% end %>
@@ -44,17 +44,17 @@
   <h2>🌠ANYUR PREMIUM🌟</h2>
   <p>月額 <strong>¥1,000</strong></p>
   <% if @subscription %>
-    <% if @subscription.stripe_plan_id == ENV['ANYUR_PREMIUM_STRIPE_PRICE_ID'] %>
+    <% if @subscription.stripe_plan_id == ENV.fetch("ANYUR_PREMIUM_STRIPE_PRICE_ID") %>
       <p>このプランに加入中です</p>
     <% else %>
       <%= form_with url: change_subscriptions_path, method: :post, data: { turbo: false } do |form| %>
-        <%= form.hidden_field :price_id, value: ENV['ANYUR_PREMIUM_STRIPE_PRICE_ID'] %>
+        <%= form.hidden_field :price_id, value: ENV.fetch("ANYUR_PREMIUM_STRIPE_PRICE_ID") %>
         <%= form.submit "♻️このプランに変更する(即時お支払い)" %>
       <% end %>
     <% end %>
   <% else %>
     <%= form_with url: subscriptions_path, method: :post, data: { turbo: false } do |form| %>
-      <%= form.hidden_field :price_id, value: ENV['ANYUR_PREMIUM_STRIPE_PRICE_ID'] %>
+      <%= form.hidden_field :price_id, value: ENV.fetch("ANYUR_PREMIUM_STRIPE_PRICE_ID") %>
       <%= form.submit "↗️このプランに登録する(stripe.com)" %>
     <% end %>
   <% end %>
@@ -66,17 +66,17 @@
   <h2>🔮ANYUR LUXURY🪄</h2>
   <p>月額 <strong>¥3,200</strong></p>
   <% if @subscription %>
-    <% if @subscription.stripe_plan_id == ENV['ANYUR_LUXURY_STRIPE_PRICE_ID'] %>
+    <% if @subscription.stripe_plan_id == ENV.fetch("ANYUR_LUXURY_STRIPE_PRICE_ID") %>
       <p>このプランに加入中です</p>
     <% else %>
       <%= form_with url: change_subscriptions_path, method: :post, data: { turbo: false } do |form| %>
-        <%= form.hidden_field :price_id, value: ENV['ANYUR_LUXURY_STRIPE_PRICE_ID'] %>
+        <%= form.hidden_field :price_id, value: ENV.fetch("ANYUR_LUXURY_STRIPE_PRICE_ID") %>
         <%= form.submit "♻️このプランに変更する(即時お支払い)" %>
       <% end %>
     <% end %>
   <% else %>
     <%= form_with url: subscriptions_path, method: :post, data: { turbo: false } do |form| %>
-      <%= form.hidden_field :price_id, value: ENV['ANYUR_LUXURY_STRIPE_PRICE_ID'] %>
+      <%= form.hidden_field :price_id, value: ENV.fetch("ANYUR_LUXURY_STRIPE_PRICE_ID") %>
       <%= form.submit "↗️このプランに登録する(stripe.com)" %>
     <% end %>
   <% end %>

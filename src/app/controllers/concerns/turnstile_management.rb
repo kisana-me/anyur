@@ -1,5 +1,5 @@
 module TurnstileManagement
-  # ver 1.0.0
+  # ver 1.0.1
 
   require "net/http"
 
@@ -7,7 +7,7 @@ module TurnstileManagement
     return true unless Rails.env.production?
     uri = URI("https://challenges.cloudflare.com/turnstile/v0/siteverify")
     res = Net::HTTP.post_form(uri, {
-      "secret" => ENV["CLOUDFLARE_TURNSTILE_SECRET_KEY"],
+      "secret" => ENV.fetch("CLOUDFLARE_TURNSTILE_SECRET_KEY"),
       "response" => token,
       "remoteip" => request.remote_ip
     })

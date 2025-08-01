@@ -5,7 +5,7 @@ class StripeWebhooksController < ApplicationController
   def create
     payload = request.body.read
     sig_header = request.env["HTTP_STRIPE_SIGNATURE"]
-    endpoint_secret = ENV["STRIPE_SIGNING_SECRET"]
+    endpoint_secret = ENV.fetch("STRIPE_SIGNING_SECRET")
     event = nil
 
     begin

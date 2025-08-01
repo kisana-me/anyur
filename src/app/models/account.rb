@@ -53,11 +53,11 @@ class Account < ApplicationRecord
     return :expired unless current_subscription.current_period_end > Time.current
     
     case current_subscription.stripe_plan_id
-    when ENV["ANYUR_PLUS_STRIPE_PRICE_ID"]
+    when ENV.fetch("ANYUR_PLUS_STRIPE_PRICE_ID")
       :plus
-    when ENV["ANYUR_PREMIUM_STRIPE_PRICE_ID"]
+    when ENV.fetch("ANYUR_PREMIUM_STRIPE_PRICE_ID")
       :premium
-    when ENV["ANYUR_LUXURY_STRIPE_PRICE_ID"]
+    when ENV.fetch("ANYUR_LUXURY_STRIPE_PRICE_ID")
       :luxury
     else
       :unknown
