@@ -18,7 +18,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
   config.active_record.attributes_for_inspect = [ :id ]
   config.silence_healthcheck_path = "/up"
-  config.cache_store = :mem_cache_store
+  config.cache_store = :memory_store
 
 
   config.active_job.queue_adapter = :solid_queue
