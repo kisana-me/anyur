@@ -13,14 +13,14 @@ Rails.application.configure do
   config.log_tags = [ :request_id ]
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
   config.logger = Logger.new("log/production.log", "daily")
-  config.silence_healthcheck_path = "/up"
   config.i18n.fallbacks = true
   config.active_support.report_deprecations = false
   config.active_record.dump_schema_after_migration = false
   config.active_record.attributes_for_inspect = [ :id ]
+  config.silence_healthcheck_path = "/up"
   config.cache_store = :mem_cache_store
 
-  # Active Job
+
   config.active_job.queue_adapter = :solid_queue
   config.solid_queue.connects_to = { database: { writing: :queue } }
 
@@ -29,7 +29,7 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: "anyur.com" }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    user_name: Rails.application.credentials.dig(:smtp, :user_name),
+    user_name: Rails.application.credentials.dig(:smtp, :username),
     password: Rails.application.credentials.dig(:smtp, :password),
     domain: "anyur.com",
     address: "smtp.gmail.com",
