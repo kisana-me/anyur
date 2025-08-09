@@ -20,7 +20,6 @@ Rails.application.configure do
   config.silence_healthcheck_path = "/up"
   config.cache_store = :memory_store
 
-
   config.active_job.queue_adapter = :solid_queue
   config.solid_queue.connects_to = { database: { writing: :queue } }
 
