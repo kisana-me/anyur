@@ -1,5 +1,6 @@
 class Inquiry < ApplicationRecord
   attribute :meta, :json, default: {}
+  attr_accessor :service_aid
   enum :status, { normal: 0, locked: 1 }, prefix: true
 
   belongs_to :account, optional: true
