@@ -1,5 +1,5 @@
 class SubscriptionsController < ApplicationController
-  before_action :redirect_if_already_subscribed, only: [:create]
+  before_action :redirect_if_already_subscribed, only: [ :create ]
 
   def index
     @subscription = @current_account.active_subscription
@@ -40,14 +40,14 @@ class SubscriptionsController < ApplicationController
     begin
       session = Stripe::Checkout::Session.create({
         customer: @current_account.stripe_customer_id,
-        payment_method_types: ['card'],
-        line_items: [{
+        payment_method_types: [ "card" ],
+        line_items: [ {
           price: price_id,
-          quantity: 1,
-        }],
-        mode: 'subscription',
-        success_url: success_subscriptions_url + '?session_id={CHECKOUT_SESSION_ID}',
-        cancel_url: cancel_subscriptions_url,
+          quantity: 1
+        } ],
+        mode: "subscription",
+        success_url: success_subscriptions_url + "?session_id={CHECKOUT_SESSION_ID}",
+        cancel_url: cancel_subscriptions_url
       })
 
       redirect_to session.url, allow_other_host: true, status: :see_other
@@ -89,10 +89,10 @@ class SubscriptionsController < ApplicationController
     updated_subscription = Stripe::Subscription.update(
       subscription.id,
       {
-        items: [{
+        items: [ {
           id: subscription.items.data[0].id,
           price: price_id
-        }],
+        } ],
         proration_behavior: "create_prorations"
       }
     )

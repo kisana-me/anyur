@@ -4,7 +4,7 @@
 <p>アクセス: <a href="https://<%= @service.host %>" target="_blank" rel="noopener noreferrer">↗️<%= @service.host %></a></p>
 <hr />
 <div>
-  <%= raw @service.description_cache %>
+  <%= md_render @service.description %>
 </div>
 <hr />
 <div>

@@ -2,8 +2,10 @@ class Account < ApplicationRecord
   has_many :sessions
   has_many :subscriptions
   has_many :activity_logs
-  attribute :meta, :json, default: {}
-  enum :status, { normal: 0, locked: 1 }, prefix: true
+
+  attribute :meta, :json, default: -> { {} }
+  enum :visibility, { closed: 0, limited: 1, opened: 2 }
+  enum :status, { normal: 0, locked: 1, deleted: 2 }
 
   before_create :set_aid
   after_update :sync_name_with_stripe, if: :saved_change_to_name?
@@ -11,28 +13,32 @@ class Account < ApplicationRecord
 
   attr_accessor :check_password
 
-  validates :name, presence: true
-  validates :name, length: { in: 1..20 },
-                    if: -> { name.present? }
-  validates :name_id, presence: true
-  validates :name_id, uniqueness: { case_sensitive: false },
-                      length: { in: 5..20 },
-                      format: { with: NAME_ID_REGEX, message: :invalid_name_id_format },
-                      if: -> { name_id.present? }
-  validates :email, presence: true
-  validates :email, uniqueness: { case_sensitive: false, message: :exists_email },
-                    length: { in: 5..120 },
-                    format: { with: VALID_EMAIL_REGEX, message: :invalid_email_format },
-                    if: -> { email.present? }
-  has_secure_password
-  validates :password, presence: true,
-                        if: :check_password
-  validates :password, length: { in: 8..30 },
-                        if: -> { password.present? }
-  validates :password, confirmation: true,
-                        if: -> { password_confirmation.present? }
-  validates :password_confirmation, presence: true,
-                                    if: -> { password.present? && password_confirmation.present? }
+  validates :name,
+    presence: true,
+    length: { in: 1..20, allow_blank: true }
+  validates :name_id,
+    presence: true,
+    length: { in: 5..20, allow_blank: true },
+    format: { with: NAME_ID_REGEX, message: :invalid_name_id_format, allow_blank: true },
+    uniqueness: { case_sensitive: false, allow_blank: true }
+  validates :description,
+    allow_blank: true,
+    length: { in: 1..500 }
+  validates :email,
+    presence: true,
+    uniqueness: { case_sensitive: false, message: :exists_email, allow_blank: true },
+    length: { in: 5..120, allow_blank: true },
+    format: { with: VALID_EMAIL_REGEX, message: :invalid_email_format, allow_blank: true }
+  has_secure_password validations: false
+  validates :password,
+    allow_blank: true,
+    length: { in: 8..30 },
+    confirmation: true
+
+  scope :is_normal, -> { where(status: :normal) }
+  scope :isnt_deleted, -> { where.not(status: :deleted) }
+  scope :is_opened, -> { where(visibility: :opened) }
+  scope :isnt_closed, -> { where.not(visibility: :closed) }
 
   MAX_FAILED_ATTEMPTS = 7
 
@@ -41,17 +47,18 @@ class Account < ApplicationRecord
   end
 
   def active_subscription
-    subscriptions.where(subscription_status: [:active, :trialing])
-                 .order(created_at: :desc)
-                 .first
+    subscriptions
+      .where(subscription_status: [ :active, :trialing ])
+      .order(created_at: :desc)
+      .first
   end
 
   def subscription_plan
     current_subscription = active_subscription()
     return :basic unless current_subscription
-    
+
     return :expired unless current_subscription.current_period_end > Time.current
-    
+
     case current_subscription.stripe_plan_id
     when ENV.fetch("ANYUR_PLUS_STRIPE_PRICE_ID")
       :plus
@@ -65,7 +72,7 @@ class Account < ApplicationRecord
   end
 
   def self.find_by_sci(str)
-    find_by(stripe_customer_id: str, status: :normal, deleted: false)
+    is_normal.find_by(stripe_customer_id: str)
   end
 
   # check signin fails
@@ -137,7 +144,7 @@ class Account < ApplicationRecord
     else
       failed_flow("reset_password")
     end
-    return false
+    false
   end
 
   # flow
@@ -159,7 +166,7 @@ class Account < ApplicationRecord
   def flow_valid?(str, int = 10)
     fails_flag = meta.dig(str, "failed_times").to_i < MAX_FAILED_ATTEMPTS
     time_flag = Time.current < Time.parse(meta.dig(str, "started_at").to_s) + int.minutes
-    return fails_flag && time_flag
+    fails_flag && time_flag
   rescue ArgumentError, TypeError
     false
   end

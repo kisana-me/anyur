@@ -32,8 +32,8 @@
   </div>
 
   <div>
-    <%= form.label :deleted, style: "display: block" %>
-    <%= form.checkbox :deleted %>
+    <%= form.label :status, style: "display: block" %>
+    <%= form.select :status, Document.statuses.keys.map { |k| [t("activerecord.enums.document.status.#{k}"), k] }, {} %>
   </div>
 
   <div>

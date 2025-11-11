@@ -18,7 +18,7 @@ class Admin::ServicesController < Admin::ApplicationController
   def create_client_secret
     @client_secret = @service.generate_token("client_secret", params[:expires_in])
     if @service.save
-      #画面表示
+      # 画面表示
     else
       flash.now[:alert] = "client_secretの発行に失敗しました"
       render :edit, status: :unprocessable_entity
@@ -43,7 +43,7 @@ class Admin::ServicesController < Admin::ApplicationController
   end
 
   def destroy
-    @service.update(deleted: true)
+    @service.update(status: :deleted)
       redirect_to admin_services_path, status: :see_other, notice: "サービスを削除しました"
   end
 
@@ -56,7 +56,7 @@ class Admin::ServicesController < Admin::ApplicationController
   def service_params
     service_parameters = params.require(:service).permit(
       :name, :name_id, :summary, :description,
-      :host, :redirect_uris, :scopes, :status, :deleted
+      :host, :redirect_uris, :scopes, :meta, :status
     )
     service_parameters[:scopes] = JSON.parse(service_parameters[:scopes]) if service_parameters[:scopes].is_a?(String)
     service_parameters[:redirect_uris] = JSON.parse(service_parameters[:redirect_uris]) if service_parameters[:redirect_uris].is_a?(String)

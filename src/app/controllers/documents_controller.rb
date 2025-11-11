@@ -2,10 +2,10 @@ class DocumentsController < ApplicationController
   skip_before_action :require_signin
 
   def index
-    @documents = Document.where(visibility: :published, deleted: false)
+    @documents = Document.is_normal.is_opened
   end
 
   def show
-    @document = Document.find_by!(name_id: params.expect(:name_id), visibility: :published, deleted: false)
+    @document = Document.is_normal.is_opened.find_by!(name_id: params.expect(:name_id))
   end
 end

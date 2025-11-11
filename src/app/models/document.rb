@@ -1,23 +1,27 @@
 class Document < ApplicationRecord
-  attribute :meta, :json, default: {}
-  enum :status, { normal: 0, locked: 1 }, prefix: true
-  enum :visibility, { draft: 0, unlisted: 1, specific: 2, published: 3 }, prefix: true
+  attribute :meta, :json, default: -> { {} }
+  enum :visibility, { closed: 0, limited: 1, opened: 2 }
+  enum :status, { normal: 0, locked: 1, deleted: 2, specific: 3 }
 
   before_create :set_aid
-  before_save :cache_rendered_content
 
-  validates :name, presence: true
-  validates :name, length: { in: 1..50 },
-                    if: -> { name.present? }
-  validates :name_id, presence: true
-  validates :name_id, uniqueness: { case_sensitive: false },
-                      length: { in: 5..50 },
-                      format: { with: NAME_ID_REGEX, message: :invalid_name_id_format },
-                      if: -> { name_id.present? }
+  validates :name_id,
+    presence: true,
+    length: { in: 5..50, allow_blank: true },
+    format: { with: NAME_ID_REGEX, message: :invalid_name_id_format, allow_blank: true },
+    uniqueness: { case_sensitive: false, allow_blank: true }
+  validates :title,
+    presence: true,
+    length: { in: 1..50, allow_blank: true }
+  validates :summary,
+    presence: true,
+    length: { in: 1..500, allow_blank: true }
+  validates :content,
+    presence: true,
+    length: { in: 1..100_000, allow_blank: true }
 
-  private
-
-  def cache_rendered_content
-    self.content_cache = ::MarkdownRenderer.render(content)
-  end
+  scope :is_normal, -> { where(status: :normal) }
+  scope :isnt_deleted, -> { where.not(status: :deleted) }
+  scope :is_opened, -> { where(visibility: :opened) }
+  scope :isnt_closed, -> { where.not(visibility: :closed) }
 end

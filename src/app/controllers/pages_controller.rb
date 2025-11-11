@@ -8,15 +8,15 @@ class PagesController < ApplicationController
   end
 
   def terms_of_service
-    @document = Document.find_by(name_id: "terms_of_service", visibility: :specific, deleted: false)
+    @document = Document.find_by(name_id: "terms_of_service", status: :specific)
   end
 
   def privacy_policy
-    @document = Document.find_by(name_id: "privacy_policy", visibility: :specific, deleted: false)
+    @document = Document.find_by(name_id: "privacy_policy", status: :specific)
   end
 
   def specified_commercial_transactions
-    @document = Document.find_by(name_id: "specified_commercial_transactions", visibility: :specific, deleted: false)
+    @document = Document.find_by(name_id: "specified_commercial_transactions", status: :specific)
   end
 
   def contact

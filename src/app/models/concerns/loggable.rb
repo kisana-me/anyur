@@ -21,12 +21,9 @@ module Loggable
       account: Current.account,
       loggable: self,
       action_name: "create",
-      attribute_data: [],
       changed_at: Time.current,
-      change_reason: "",
-      user_agent: Current.user_agent.to_s,
-      ip_address: Current.ip_address.to_s,
-      meta: {}
+      ip: Current.ip,
+      user_agent: Current.user_agent
     )
   end
 
@@ -43,10 +40,8 @@ module Loggable
       action_name: "update",
       attribute_data: changes_to_log,
       changed_at: Time.current,
-      change_reason: "",
-      user_agent: Current.user_agent.to_s,
-      ip_address: Current.ip_address.to_s,
-      meta: {}
+      ip: Current.ip,
+      user_agent: Current.user_agent
     )
   end
 end

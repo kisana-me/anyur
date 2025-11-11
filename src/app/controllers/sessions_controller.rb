@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
       @account.errors.add(:base, :failed_captcha)
       return render :signin, status: :unprocessable_entity
     end
-    account = Account.find_by(name_id: params[:session][:name_id], status: :normal, deleted: false)
+    account = Account.is_normal.find_by(name_id: params[:session][:name_id])
     if !account&.signin_locked? && account&.authenticate(params[:session][:password])
       sign_in(account)
       account.reset_failed_signin

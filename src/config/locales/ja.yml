@@ -35,7 +35,6 @@ ja:
         name_id: "ID"
         summary: "概要"
         description: "説明"
-        description_cache: "説明のキャッシュ"
         host: "ホスト"
         redirect_uris: "リダイレクトURI配列"
         scopes: "スコープ配列"

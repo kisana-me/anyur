@@ -12,7 +12,7 @@ module TokenTools
   extend ActiveSupport::Concern
 
   def generate_lookup(token, length = LOOKUP_LENGTH)
-    Digest::SHA256.hexdigest(token)[ 0 ... length ]
+    Digest::SHA256.hexdigest(token)[0 ... length]
   end
 
   def generate_digest(token)
@@ -28,14 +28,14 @@ module TokenTools
     self.send("#{type}_digest=", digest)
     self.send("#{type}_generated_at=", Time.current)
     self.send("#{type}_expires_at=", Time.current + expires_in)
-    return token
+    token
   end
 
   class_methods do
     def find_by_token(type, token)
       lookup = new.generate_lookup(token)
       record = where("#{type}_expires_at > ?", Time.current)
-        .find_by("#{type}_lookup": lookup, deleted: false)
+        .find_by("#{type}_lookup": lookup)
       return nil unless record
       digest = record.send("#{type}_digest")
       return nil unless BCrypt::Password.new(digest).is_password?(token)

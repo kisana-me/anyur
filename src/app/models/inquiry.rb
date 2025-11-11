@@ -1,31 +1,31 @@
 class Inquiry < ApplicationRecord
-  attribute :meta, :json, default: {}
+  attribute :meta, :json, default: -> { {} }
   attr_accessor :service_aid
-  enum :status, { normal: 0, locked: 1 }, prefix: true
+  enum :status, { normal: 0, locked: 1, deleted: 2 }
 
   belongs_to :account, optional: true
   belongs_to :service, optional: true
 
-  validates :subject, presence: true
-  validates :subject, length: { in: 1..255 },
-                      if: -> { subject.present? }
-  validates :summary, length: { in: 1..255 },
-                      if: -> { summary.present? }
-  validates :content, presence: true
-  validates :content, length: { in: 1..4000 },
-                      if: -> { content.present? }
-  validates :name, presence: true,
-                   if: -> { account.blank? }
-  validates :name, length: { in: 1..255 },
-                   if: -> { name.present? }
-  validates :email, length: { in: 1..255 },
-                    format: { with: URI::MailTo::EMAIL_REGEXP },
-                    if: -> { email.present? }
-
-  enum :status, { received: 0, processing: 1, finished: 2 }, prefix: true
+  validates :subject,
+    presence: true,
+    length: { in: 1..255, allow_blank: true }
+  validates :content,
+    presence: true,
+    length: { in: 1..5000, allow_blank: true }
+  validates :name,
+    presence: true,
+    length: { in: 1..255, allow_blank: true }
+  validates :email,
+    length: { in: 1..255, allow_blank: true },
+    format: { with: URI::MailTo::EMAIL_REGEXP, allow_blank: true }
+  validates :memo,
+    length: { in: 1..5000, allow_blank: true }
 
   before_create :set_aid
   before_validation :normalize_service_aid
+
+  scope :is_normal, -> { where(status: :normal) }
+  scope :isnt_deleted, -> { where.not(status: :deleted) }
 
   private
 

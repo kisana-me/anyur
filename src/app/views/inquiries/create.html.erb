@@ -6,7 +6,7 @@
 <h2>お問い合わせ内容</h2>
 <hr />
 <h3>お問い合わせID</h3>
-<p><%= @inquiry.id %></p>
+<p><%= @inquiry.aid %></p>
 <hr />
 <h3>サービス</h3>
 <% if @inquiry.service %>
@@ -18,8 +18,6 @@
 <% end %>
 <h3>件名</h3>
 <p><%= @inquiry.subject %></p>
-<h3>概要</h3>
-<p><%= @inquiry.summary %></p>
 <h3>内容</h3>
 <p><%= @inquiry.content %></p>
 <hr />

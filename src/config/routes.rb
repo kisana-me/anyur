@@ -50,7 +50,7 @@ Rails.application.routes.draw do
   patch "account/password/update" => "accounts#update_password"
 
   # subscription
-  resources :subscriptions, only: [:index, :new, :create] do
+  resources :subscriptions, only: [ :index, :new, :create ] do
     collection do
       get "success"
       get "cancel"

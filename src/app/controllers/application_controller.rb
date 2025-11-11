@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   include TurnstileManagement
 
   before_action :current_account
-  before_action :require_signin#個別に設定すべき
+  before_action :require_signin# 個別に設定すべき
   before_action :set_current_attributes
 
   helper_method :email_verified?, :admin?
@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
 
   def set_current_attributes
     Current.account = @current_account
-    Current.ip_address = request.remote_ip
+    Current.ip = request.remote_ip
     Current.user_agent = request.user_agent
   end
 end

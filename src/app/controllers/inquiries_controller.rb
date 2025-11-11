@@ -3,12 +3,12 @@ class InquiriesController < ApplicationController
 
   def new
     @inquiry = Inquiry.new
-    @services = Service.where(deleted: false)#status
+    @services = Service.is_normal
   end
 
   def create
     @inquiry = Inquiry.new(inquiry_params)
-    @services = Service.where(deleted: false)#status
+    @services = Service.is_normal
     unless verify_turnstile(params["cf-turnstile-response"])
       @inquiry.errors.add(:base, :failed_captcha)
       return render :new, status: :unprocessable_entity

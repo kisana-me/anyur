@@ -66,6 +66,6 @@ Rails.application.configure do
     IPAddr.new("188.114.96.0/20"),
     IPAddr.new("190.93.240.0/20"),
     IPAddr.new("197.234.240.0/22"),
-    IPAddr.new("198.41.128.0/17"),
+    IPAddr.new("198.41.128.0/17")
   ]
 end

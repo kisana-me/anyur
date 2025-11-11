@@ -14,8 +14,7 @@ class OauthController < ApplicationController
     @personas = Persona.where(
       account: @current_account,
       service: @service,
-      status: 0,
-      deleted: false
+      status: 0
     )
     @persona = Persona.new
 
@@ -37,8 +36,7 @@ class OauthController < ApplicationController
       personas = Persona.where(
         account: @current_account,
         service: @service,
-        status: 0,
-        deleted: false
+        status: 0
       )
       if personas.size >= 1
           @error = "連携を作成できません/作成可能な連携は最大1つです"
@@ -56,8 +54,7 @@ class OauthController < ApplicationController
       @persona = Persona.find_by(
         account: @current_account,
         aid: params[:persona_aid],
-        status: 0,
-        deleted: false
+        status: 0
       )
     end
     unless @persona
@@ -71,16 +68,16 @@ class OauthController < ApplicationController
       return render :authorize, status: :unprocessable_entity
     end
     callback = "#{params[:redirect_uri]}?code=#{authorization_code}&state=#{params[:state]}"
-    return redirect_to callback, allow_other_host: true
+    redirect_to callback, allow_other_host: true
   end
 
 
 
   def token
     if params[:grant_type] == "authorization_code"
-      return handle_authorization_code
+      handle_authorization_code
     elsif params[:grant_type] == "refresh_token"
-      return handle_refresh_token
+      handle_refresh_token
     else
       render json: { error: "unsupported_grant_type" }, status: 400
     end
@@ -188,7 +185,7 @@ class OauthController < ApplicationController
     end
 
     # 2. クライアント（サービス）を探す
-    service = Service.find_by(name_id: params[:client_id], status: 0, deleted: false)
+    service = Service.is_normal.find_by(name_id: params[:client_id])
     unless service
       @error = "invalid_client"
       return

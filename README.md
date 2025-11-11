@@ -1,13 +1,7 @@
 # ANYUR
-```sh
-EDITOR="nano" rails credentials:edit
-```
 
-```credentials
-smtp:
-  username: your_name...
-  password: zxcvbnm...
+![ANYURの画像](https://kisana.me/images/anyur/anyur-1.png)
 
-# Used as the base secret for all MessageVerifiers in Rails, including the one protecting cookies.
-secret_key_base: qwertyuiop...
-```
+アカウントマネージャーです。
+
+リンク: [anyur.com](https://anyur.com)

@@ -1,5 +1,4 @@
 class AccountsController < ApplicationController
-
   def index
     @accounts = signed_in_accounts()
   end
@@ -47,7 +46,7 @@ class AccountsController < ApplicationController
       if @current_account.meta.dig("change_email", "code") == params.dig("email_password_form", "authentication_code")
         if @current_account.update(email: @current_account.meta.dig("change_email", "next_email"))
           @current_account.end_flow("change_email")
-          return redirect_to account_path, notice: "メールを更新しました"
+          redirect_to account_path, notice: "メールを更新しました"
         else
           @ep_form.errors.add(:base, "メールを更新できませんでした")
           render :check_email, alert: "メールを更新できませんでした"
@@ -86,7 +85,7 @@ class AccountsController < ApplicationController
     @current_account.check_password = true
     if @current_account.update(account_update_password_params)
       @current_account.end_flow("EVC")
-      return redirect_to account_path, notice: "パスワードを更新しました"
+      redirect_to account_path, notice: "パスワードを更新しました"
     else
       render :edit_password, status: :unprocessable_entity
     end
@@ -96,7 +95,7 @@ class AccountsController < ApplicationController
   end
 
   def delete_confirm
-    @current_account.update(deleted: true)
+    @current_account.update(status: :deleted)
     sign_out()
     redirect_to root_path, status: :see_other, notice: "アカウントを削除しました"
   end

@@ -33,7 +33,7 @@ class Admin::DocumentsController < Admin::ApplicationController
   end
 
   def destroy
-    @document.update(deleted: true)
+    @document.update(status: :deleted)
     redirect_to admin_documents_path, status: :see_other, notice: "文書を削除しました"
   end
 
@@ -45,8 +45,8 @@ class Admin::DocumentsController < Admin::ApplicationController
 
   def document_params
     params.expect(document: [
-      :name, :name_id, :summary, :content, :content_cache,
-      :published_at, :visibility, :deleted
+      :name, :name_id, :summary, :content,
+      :published_at, :visibility, :meta, :status
     ])
   end
 end

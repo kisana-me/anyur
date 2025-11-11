@@ -1,3 +1,3 @@
 class Current < ActiveSupport::CurrentAttributes
-  attribute :account, :ip_address, :user_agent, :request_id
+  attribute :account, :ip, :user_agent, :request_id
 end

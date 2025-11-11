@@ -1,7 +1,7 @@
 class Persona < ApplicationRecord
-  attribute :scopes, :json, default: []
-  attribute :meta, :json, default: {}
-  enum :status, { normal: 0, locked: 1 }, prefix: true
+  attribute :scopes, :json, default: -> { [] }
+  attribute :meta, :json, default: -> { {} }
+  enum :status, { normal: 0, locked: 1, deleted: 2 }
 
   belongs_to :account
   belongs_to :service
@@ -9,9 +9,12 @@ class Persona < ApplicationRecord
   before_create :set_aid
   before_create :initialize_tokens
 
-  validates :name, presence: true
-  validates :name, length: { in: 1..30 },
-                    if: -> { name.present? }
+  validates :name,
+    presence: true,
+    length: { in: 1..30, allow_blank: true }
+
+  scope :is_normal, -> { where(status: :normal) }
+  scope :isnt_deleted, -> { where.not(status: :deleted) }
 
   private
 

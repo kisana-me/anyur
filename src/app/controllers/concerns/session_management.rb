@@ -9,11 +9,11 @@ module SessionManagement
   COOKIE_NAME = "anyur"
   COOKIE_EXPIRES = 1.month # 2592000
 
-  def current_account()
+  def current_account
     @current_account = nil
     return unless token = get_tokens().first
     db_session = Session.find_by_token("token", token)
-    if db_session&.account && !db_session.account.deleted
+    if db_session&.account && !db_session.account.deleted?
       @current_account = db_session.account
     else
       refresh_token()
@@ -22,7 +22,7 @@ module SessionManagement
   end
 
   def sign_in(account)
-    return false if account&.deleted
+    return false if account&.deleted?
     db_session = Session.new(account: account)
     token = db_session.generate_token("token", COOKIE_EXPIRES)
     tokens = get_tokens()
@@ -32,7 +32,7 @@ module SessionManagement
     db_session.save()
   end
 
-  def sign_out()
+  def sign_out
     tokens = get_tokens()
     return unless token = tokens.first
     db_session = Session.find_by_token("token", token)
@@ -44,14 +44,14 @@ module SessionManagement
       write_tokens(tokens)
     end
     @current_account = nil
-    db_session.update(deleted: true)
+    db_session.update(status: :deleted)
   end
 
-  def signed_in_accounts()
+  def signed_in_accounts
     tokens = get_tokens()
     tokens.filter_map do |token|
       account = Session.find_by_token("token", token)&.account
-      account unless account.deleted
+      account unless account.deleted?
     end.uniq
   end
 
@@ -60,7 +60,7 @@ module SessionManagement
     scope_token = ""
     tokens.each do |token|
       account = Session.find_by_token("token", token)&.account
-      if account && !account.deleted && account_aid == account.aid
+      if account && !account.deleted? && account_aid == account.aid
         scope_token = token
         break
       end
@@ -68,23 +68,23 @@ module SessionManagement
     if scope_token.present?
       new_tokens = tokens.partition { |t| t == scope_token }.flatten
       write_tokens(new_tokens)
-      return true
+      true
     else
-      return false
+      false
     end
   end
 
   private
 
-  def get_tokens()
+  def get_tokens
     Array.wrap(JSON.parse(cookies.encrypted[COOKIE_NAME.to_sym] || "[]"))
   end
 
-  def refresh_token()
+  def refresh_token
     tokens = get_tokens()
     valid_tokens = tokens.select do |token|
       db_session = Session.find_by_token("token", token)
-      db_session&.account && !db_session.account.deleted
+      db_session&.account && !db_session.account.deleted?
     end
     if valid_tokens.empty?
       cookies.delete(COOKIE_NAME.to_sym)
