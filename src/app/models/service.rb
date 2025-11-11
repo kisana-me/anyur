@@ -22,6 +22,6 @@ class Service < ApplicationRecord
   private
 
   def initialize_tokens
-    generate_token("client_secret")
+    generate_token(0, "client_secret")
   end
 end

@@ -5,7 +5,7 @@ class Api::ApplicationController < ApplicationController
   private
 
   def check_client
-    @current_service = Service.find_by_token("client_secret", params[:client_secret])
+    @current_service = Service.findby_token(params[:client_secret], "client_secret")
     render json: { "error": "invalid_token" } unless @current_service
   end
 end

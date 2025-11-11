@@ -9,40 +9,60 @@
 
   <ul>
     <% (params[:scope] || "").split(" ").each do |scope| %>
+
       <% if scope == "anyur_aid" %>
       <li>
-        <strong>ANYURの固有ID</strong> (<%=@current_account.aid%>)<br />
+        <strong>ANYURの固有ID</strong> (<%= @current_account.aid %>)<br />
         <small>ANYURのアカウントに与えられた変更不可能な固有IDです。</small>
       </li>
       <% end %>
-      <% if scope == "id" %>
+
+      <% if scope == "persona_aid" %>
       <li>
         <strong>外部連携用 固有ID</strong> (下で作成/選択)<br />
         <small>外部連携用に作成されたIDです。</small>
       </li>
       <% end %>
+
       <% if scope == "email" %>
       <li>
-        <strong>メール</strong> (<%=@current_account.email%>)<br />
-        <small>ANYURのアカウントに登録されたメールを提供します。</small>
+        <strong>メール</strong> (<%= @current_account.email %>)<br />
+        <small>ANYURのアカウントに登録されたメールです。</small>
       </li>
       <% end %>
+
       <% if scope == "name" %>
       <li>
-        <strong>名前</strong> (<%=@current_account.name%>)<br />
-        <small>ANYURのアカウントに登録された名前を提供します。</small>
+        <strong>名前</strong> (<%= @current_account.name %>)<br />
+        <small>ANYURのアカウントに登録された名前です。</small>
       </li>
       <% end %>
+
       <% if scope == "name_id" %>
       <li>
-        <strong>ID</strong> (<%=@current_account.name_id%>)<br />
-        <small>ANYURのアカウントに登録されたIDを提供します。</small>
+        <strong>ID</strong> (<%= @current_account.name_id %>)<br />
+        <small>ANYURのアカウントに登録されたIDです。</small>
       </li>
       <% end %>
+
+      <% if scope == "description" %>
+      <li>
+        <strong>自己紹介文</strong> (<%= @current_account.description %>)<br />
+        <small>ANYURのアカウントに登録された自己紹介文です。</small>
+      </li>
+      <% end %>
+
+      <% if scope == "birthday" %>
+      <li>
+        <strong>誕生日</strong> (<%= @current_account.birthday %>)<br />
+        <small>ANYURのアカウントに登録された誕生日です。</small>
+      </li>
+      <% end %>
+
       <% if scope == "subscription" %>
       <li>
         <strong>サブスクリプション</strong> (契約の状態・種別・期間など)<br />
-        <small>ANYURのアカウントで契約されたサブスクリプションの状況を提供します。</small>
+        <small>ANYURのアカウントで契約されたサブスクリプションの状況です。</small>
       </li>
       <% end %>
     <% end %>

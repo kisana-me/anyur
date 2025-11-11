@@ -7,6 +7,8 @@ class AccountsController < ApplicationController
     account_aid = params[:selected_account_aid]
     if change_account(account_aid)
       redirect_to account_path, notice: "アカウントを切り替えました"
+    elsif account_aid == @current_account.aid
+      redirect_to account_path, alert: "現在のアカウントです"
     else
       redirect_to account_path, alert: "アカウントを切り替えられませんでした"
     end

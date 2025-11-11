@@ -30,7 +30,7 @@
       <tr>
         <th>ID</th>
         <th>StripeサブスクリプションID</th>
-        <th>StripeプランID</th>
+        <th>プラン</th>
         <th>現在の期間開始日時</th>
         <th>現在の期間終了日時</th>
         <th>期間終了時にキャンセル</th>
@@ -45,7 +45,17 @@
       <tr>
         <td><%= subscription.aid %></td>
         <td><%= subscription.stripe_subscription_id %></td>
-        <td><%= subscription.stripe_plan_id %></td>
+        <td>
+          <% if subscription.stripe_plan_id == ENV.fetch("ANYUR_PLUS_STRIPE_PRICE_ID") %>
+            ANYUR PLUS
+          <% elsif subscription.stripe_plan_id == ENV.fetch("ANYUR_PREMIUM_STRIPE_PRICE_ID") %>
+            ANYUR PREMIUM
+          <% elsif subscription.stripe_plan_id == ENV.fetch("ANYUR_LUXURY_STRIPE_PRICE_ID") %>
+            ANYUR LUXURY
+          <% else %>
+            不明なID: <%= subscription.stripe_plan_id %>
+          <% end %>
+        </td>
         <td><%= subscription.current_period_start&.strftime("%Y-%m-%d %H:%M:%S") %></td>
         <td><%= subscription.current_period_end&.strftime("%Y-%m-%d %H:%M:%S") %></td>
         <td><%= subscription.cancel_at_period_end ? 'はい' : 'いいえ' %></td>

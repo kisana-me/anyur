@@ -20,12 +20,12 @@ class Api::ResourcesController < Api::ApplicationController
   def index
     permitted_data = {}
 
-    if @current_persona.scopes.include?("id")
-      permitted_data[:id] = @current_persona.aid
-    end
-
     if @current_persona.scopes.include?("anyur_aid")
       permitted_data[:anyur_aid] = @current_persona.account.aid
+    end
+
+    if @current_persona.scopes.include?("persona_aid")
+      permitted_data[:persona_aid] = @current_persona.aid
     end
 
     if @current_persona.scopes.include?("email")
@@ -40,14 +40,18 @@ class Api::ResourcesController < Api::ApplicationController
       permitted_data[:name_id] = @current_persona.account.name_id
     end
 
+    if @current_persona.scopes.include?("description")
+      permitted_data[:description] = @current_persona.account.description
+    end
+
+    if @current_persona.scopes.include?("birthday")
+      permitted_data[:birthday] = @current_persona.account.birthday
+    end
+
     if @current_persona.scopes.include?("subscription")
       permitted_data[:subscription] = @current_persona.account.active_subscription&.as_json(only: [ :current_period_start, :current_period_end, :subscription_status ]) || { subscription_status: "none" }
       permitted_data[:subscription][:plan] = @current_persona.account.subscription_plan
     end
-
-    # if @current_persona.scopes.include?("profile")
-    #   permitted_data[:profile] = @current_persona.account.profile
-    # end
 
     render json: {
       status: "success",
@@ -66,7 +70,7 @@ class Api::ResourcesController < Api::ApplicationController
 
     token = auth_header.split(" ").last
 
-    persona = Persona.find_by_token("access_token", token)
+    persona = Persona.findby_token(token, "access_token")
 
     if persona.nil?
       return render_unauthorized("Invalid or expired token")

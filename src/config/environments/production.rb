@@ -28,7 +28,7 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: "anyur.com" }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    user_name: Rails.application.credentials.dig(:smtp, :username),
+    user_name: Rails.application.credentials.dig(:smtp, :user_name),
     password: Rails.application.credentials.dig(:smtp, :password),
     domain: "anyur.com",
     address: "smtp.gmail.com",

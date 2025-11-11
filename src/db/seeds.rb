@@ -16,7 +16,7 @@ Service.create!(
   description: "![アイコン](https://kisana.me/images/amiverse/amiverse-1.png)\n## Amiverse 新しいSNS\nリアクションをつけたり、フェディバースに繋がったり、たくさんの機能があります。",
   host: "amiverse.net",
   redirect_uris: [ "https://amiverse.net/oauth/callback", "http://localhost:3000/oauth/callback" ],
-  scopes: [ "anyur_id", "id", "email", "name", "name_id", "description", "birthday", "subscription" ]
+  scopes: [ "anyur_aid", "persona_aid", "email", "name", "name_id", "description", "birthday", "subscription" ]
 )
 Service.create!(
   aid: "00000000000002",
@@ -26,7 +26,7 @@ Service.create!(
   description: "![アイコン](https://kisana.me/images/ivecolor/ivecolor-1.png)\n## IVECOLORで記事を読もう\n沢山の魅力的な記事があります。最新情報を発信中！",
   host: "ivecolor.com",
   redirect_uris: [ "https://ivecolor.com/oauth/callback", "http://localhost:3000/oauth/callback" ],
-  scopes: [ "anyur_id", "id", "email", "name", "name_id", "description", "birthday", "subscription" ]
+  scopes: [ "anyur_aid", "persona_aid", "email", "name", "name_id", "description", "birthday", "subscription" ]
 )
 Service.create!(
   aid: "00000000000003",
@@ -36,7 +36,7 @@ Service.create!(
   description: "![アイコン](https://kisana.me/images/kisana/kisana-1.png)\n## KISANA:ME どんな人？\nkisanaのプロフィール情報があります。",
   host: "kisana.me",
   redirect_uris: [ "https://kisana.me/oauth/callback", "http://localhost:3000/oauth/callback" ],
-  scopes: [ "anyur_id", "id", "email", "name", "name_id", "description", "birthday", "subscription" ]
+  scopes: [ "anyur_aid", "persona_aid", "email", "name", "name_id", "description", "birthday", "subscription" ]
 )
 Service.create!(
   aid: "00000000000004",
@@ -46,7 +46,7 @@ Service.create!(
   description: "![アイコン](https://kisana.me/images/bealive/bealive-1.png)\n## Be Alive. 生存確認しあおう\n任意の相手にURLを送りつけて写真を撮ってもらおう！",
   host: "bealive.amiverse.net",
   redirect_uris: [ "https://bealive.amiverse.net/oauth/callback", "http://localhost:3000/oauth/callback" ],
-  scopes: [ "anyur_id", "id", "email", "name", "name_id", "description", "birthday", "subscription" ]
+  scopes: [ "anyur_aid", "persona_aid", "email", "name", "name_id", "description", "birthday", "subscription" ]
 )
 Service.create!(
   aid: "00000000000005",
@@ -56,7 +56,7 @@ Service.create!(
   description: "![アイコン](https://kisana.me/images/x/x-1.png)\n## 得句巣 独英字漢字世界\nエクスでは英字と漢字しか使えません！新たなコミュニケーション形態のSNSです！",
   host: "x.amiverse.net",
   redirect_uris: [ "https://x.amiverse.net/oauth/callback", "http://localhost:3000/oauth/callback" ],
-  scopes: [ "anyur_id", "id", "email", "name", "name_id", "description", "birthday", "subscription" ]
+  scopes: [ "anyur_aid", "persona_aid", "email", "name", "name_id", "description", "birthday", "subscription" ]
 )
 Document.create!(
   aid: "00000000000001",

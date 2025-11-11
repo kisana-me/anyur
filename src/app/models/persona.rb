@@ -19,8 +19,8 @@ class Persona < ApplicationRecord
   private
 
   def initialize_tokens
-    generate_token("authorization_code")
-    generate_token("access_token")
-    generate_token("refresh_token")
+    generate_token(0, "authorization_code")
+    generate_token(0, "access_token")
+    generate_token(0, "refresh_token")
   end
 end

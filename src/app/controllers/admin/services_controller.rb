@@ -16,7 +16,7 @@ class Admin::ServicesController < Admin::ApplicationController
   end
 
   def create_client_secret
-    @client_secret = @service.generate_token("client_secret", params[:expires_in])
+    @client_secret = @service.generate_token(params[:expires_in].to_i, "client_secret")
     if @service.save
       # 画面表示
     else
