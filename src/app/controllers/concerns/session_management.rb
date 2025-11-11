@@ -51,7 +51,7 @@ module SessionManagement
     tokens = get_tokens
     return false unless (token = tokens.shift)
 
-    db_session = Session.isnt_deleted.find_by(token: token)
+    db_session = Session.isnt_deleted.from_not_deleted_accounts.findby_token(token)
     db_session&.update(status: :deleted)
 
     if tokens.empty?

@@ -4,7 +4,7 @@ class SignupController < ApplicationController
   # アカウント作成
 
   def index
-    @account = Account.new(session[:new_account] || {})
+    @account = Account.new(session[:signup_account_params] || {})
   end
 
   def page_1
@@ -17,27 +17,20 @@ class SignupController < ApplicationController
       @account.errors.add(:base, :require_agreed)
       return render :index, status: :unprocessable_entity
     end
-    if @account.valid?()
-      session[:new_account] ||= {}
-      session[:new_account].merge!(
-        name: params[:account][:name],
-        name_id: params[:account][:name_id],
-        email: params[:account][:email],
-        password: params[:account][:password]
-      )
-    else
-      render :index
+    unless @account.valid?
+      return render :index, status: :unprocessable_entity
     end
+    session[:signup_account_params] = account_params.except("password_confirmation")
   end
 
   def page_2
-    @account = Account.new(session[:new_account].to_h.merge(account_params))
+    @account = Account.new((session[:signup_account_params] || {}).merge(account_params.slice("password_confirmation")))
     unless verify_turnstile(params["cf-turnstile-response"])
       @account.errors.add(:base, :failed_captcha)
       return render :page_1, status: :unprocessable_entity
     end
     if @account.save
-      session.delete(:new_account)
+      session.delete(:signup_account_params)
       sign_in(@account)
       @current_account = @account
       flash.now[:notice] = "アカウントを作成しました"

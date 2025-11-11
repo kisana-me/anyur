@@ -5,7 +5,11 @@ Rails.application.routes.draw do
   resources :documents, param: :name_id, only: %i[ index show ]
   resources :services, param: :name_id, only: %i[ index show ]
   # resources :personas, except: %i[ index show ]
-  resources :inquiries, only: %i[ new create ]
+  resources :inquiries, only: %i[ new create ] do
+    collection do
+      post "confirm"
+    end
+  end
 
   # oauth
   get "oauth/authorize" => "oauth#authorize"
