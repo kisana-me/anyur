@@ -4,7 +4,6 @@ class ApplicationRecord < ActiveRecord::Base
   include ImageTools
   include TokenTools
   include Paginatable
-  include Loggable
 
   private
 

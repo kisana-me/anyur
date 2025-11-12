@@ -2,13 +2,13 @@
   <%= render "shared/error_messages", instead: document %>
 
   <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+    <%= form.label :name_id, style: "display: block" %>
+    <%= form.text_field :name_id %>
   </div>
 
   <div>
-    <%= form.label :name_id, style: "display: block" %>
-    <%= form.text_field :name_id %>
+    <%= form.label :title, style: "display: block" %>
+    <%= form.text_field :title %>
   </div>
 
   <div>
@@ -24,6 +24,11 @@
   <div>
     <%= form.label :published_at, style: "display: block" %>
     <%= form.datetime_field :published_at %>
+  </div>
+
+  <div>
+    <%= form.label :edited_at, style: "display: block" %>
+    <%= form.datetime_field :edited_at %>
   </div>
 
   <div>

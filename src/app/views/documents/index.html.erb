@@ -4,7 +4,7 @@
 
 <div id="documents">
   <% @documents.each do |document| %>
-    <%= document.name %>
+    <%= document.title %>
     <p>
       <%= link_to "詳細へ", document_path(document.name_id) %>
     </p>

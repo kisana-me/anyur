@@ -18,6 +18,7 @@ class Admin::ServicesController < Admin::ApplicationController
   def create_client_secret
     @client_secret = @service.generate_token(params[:expires_in].to_i, "client_secret")
     if @service.save
+      flash[:notice] = "client_secretを発行しました"
       # 画面表示
     else
       flash.now[:alert] = "client_secretの発行に失敗しました"
@@ -54,12 +55,22 @@ class Admin::ServicesController < Admin::ApplicationController
   end
 
   def service_params
-    service_parameters = params.require(:service).permit(
-      :name, :name_id, :summary, :description,
-      :host, :redirect_uris, :scopes, :meta, :status
+    result = params.expect(
+      service: [
+        :aid,
+        :name,
+        :name_id,
+        :overview,
+        :description,
+        :host,
+        :redirect_uris,
+        :scopes,
+        :meta,
+        :status
+      ]
     )
-    service_parameters[:scopes] = JSON.parse(service_parameters[:scopes]) if service_parameters[:scopes].is_a?(String)
-    service_parameters[:redirect_uris] = JSON.parse(service_parameters[:redirect_uris]) if service_parameters[:redirect_uris].is_a?(String)
-    service_parameters
+    result[:scopes] = JSON.parse(result[:scopes]) if result[:scopes].is_a?(String)
+    result[:redirect_uris] = JSON.parse(result[:redirect_uris]) if result[:redirect_uris].is_a?(String)
+    result
   end
 end

@@ -1,5 +1,8 @@
+<h1>Document Details</h1>
 
 <%= render @document %>
+
+<hr />
 
 <div>
   <%= link_to "Edit this document", edit_admin_document_path(@document) %> |
@@ -7,3 +10,7 @@
 
   <%= button_to "Destroy this document", admin_document_path(@document), method: :delete %>
 </div>
+
+<hr />
+
+<%= md_render @document.content %>

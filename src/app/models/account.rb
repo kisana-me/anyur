@@ -1,4 +1,6 @@
 class Account < ApplicationRecord
+  include Loggable
+
   has_many :sessions
   has_many :subscriptions
   has_many :activity_logs

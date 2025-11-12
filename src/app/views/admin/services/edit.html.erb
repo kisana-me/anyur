@@ -4,22 +4,22 @@
 
 <%= render "form", service: @service %>
 
-<br>
+<br />
 
 <div>
-<%= form_with url: create_client_secret_admin_service_path, method: :post, data: { turbo: false } do |f| %>
-  <div>
-    <%= label_tag :expires_in, "有効期限（秒）" %>
-    <%= number_field_tag :expires_in, 0, min: 0 %>
-  </div>
+  <%= form_with url: create_client_secret_admin_service_path, method: :post, data: { turbo: false } do |f| %>
+    <div>
+      <%= label_tag :expires_in, "有効期限（秒）" %>
+      <%= number_field_tag :expires_in, 999999999, min: 0 %>
+    </div>
 
-  <div>
-    <%= submit_tag "作成" %>
-  </div>
-<% end %>
+    <div>
+      <%= submit_tag "作成" %>
+    </div>
+  <% end %>
 </div>
 
-<br>
+<br />
 
 <div>
   <%= link_to "Show this service", admin_service_path(@service) %> |

@@ -1,31 +1,9 @@
 <div id="<%= dom_id document %>">
-  <p>
-    <strong>Name:</strong>
-    <%= document.name %>
-  </p>
-
-  <p>
-    <strong>Name:</strong>
-    <%= document.name_id %>
-  </p>
-
-<div class="markdown-body">
-  <%= raw document.content %>
-</div>
-
-  <p>
-    <strong>Content:</strong>
-    <%= document.content %>
-  </p>
-
-  <p>
-    <strong>Visibility:</strong>
-    <%= document.visibility %>
-  </p>
-
-  <p>
-    <strong>Sutatus:</strong>
-    <%= document.status %>
-  </p>
-
+  <strong>Title:</strong> <%= document.title %>
+  <br />
+  <strong>NameId:</strong> <%= document.name_id %>
+  <br />
+  <strong>Visibility:</strong> <%= document.visibility %>
+  <br />
+  <strong>Sutatus:</strong> <%= document.status %>
 </div>

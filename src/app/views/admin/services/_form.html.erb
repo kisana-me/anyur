@@ -12,13 +12,13 @@
   </div>
 
   <div>
-    <%= form.label :summary, style: "display: block" %>
-    <%= form.textarea :summary %>
+    <%= form.label :overview, style: "display: block" %>
+    <%= form.text_area :overview %>
   </div>
 
   <div>
     <%= form.label :description, style: "display: block" %>
-    <%= form.textarea :description %>
+    <%= form.text_area :description %>
   </div>
 
   <div>
@@ -28,12 +28,12 @@
 
   <div>
     <%= form.label :redirect_uris, style: "display: block" %>
-    <%= form.textarea :redirect_uris, value: JSON.pretty_generate(service.redirect_uris) %>
+    <%= form.text_area :redirect_uris, value: JSON.pretty_generate(service.redirect_uris) %>
   </div>
 
   <div>
     <%= form.label :scopes, style: "display: block" %>
-    <%= form.textarea :scopes, value: JSON.pretty_generate(service.scopes) %>
+    <%= form.text_area :scopes, value: JSON.pretty_generate(service.scopes) %>
   </div>
 
   <div>

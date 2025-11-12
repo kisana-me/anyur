@@ -1,8 +1,17 @@
-<% content_for :title, @document.name %>
+<% content_for :title, @document.title %>
 
-<h1><%= @document.name %></h1>
+<h1><%= @document.title %></h1>
+
 <div>
-  <%= raw @document.content %>
+  <strong>ID:</strong> <%= @document.name_id %>
+  <br />
+  <strong>公開日:</strong> <%= @document.created_at.strftime("%Y-%m-%d") %>
+  <br />
+  <strong>更新日:</strong> <%= @document.updated_at.strftime("%Y-%m-%d") %>
+</div>
+
+<div>
+  <%= md_render @document.content %>
 </div>
 
 <div>

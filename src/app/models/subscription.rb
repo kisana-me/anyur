@@ -1,4 +1,6 @@
 class Subscription < ApplicationRecord
+  include Loggable
+
   belongs_to :account
 
   attribute :meta, :json, default: -> { {} }

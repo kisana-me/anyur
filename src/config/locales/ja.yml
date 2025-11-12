@@ -2,56 +2,124 @@ ja:
   activerecord:
     models:
       account: "アカウント"
+      session: "セッション"
+      image: "画像"
       document: "文書"
-      inquiry: "お問い合わせ"
       service: "サービス"
       persona: "ペルソナ"
+      inquiry: "お問い合わせ"
+      subscription: "サブスクリプション"
     attributes:
       account:
         aid: "固有ID"
         name: "名前"
         name_id: "ID"
-        email: "メール"
+        description: "説明"
+        birthdate: "生年月日"
+        email: "Eメールアドレス"
+        visibility: "公開状態"
         password: "パスワード"
         password_confirmation: "パスワード(確認)"
-      document:
+        status: "状態"
+      session:
         aid: "固有ID"
         name: "名前"
-        name_id: "ID"
-        content: "内容"
-        visibility: "公開状態"
-        deleted: "削除"
-      inquiry:
-        service_aid: "サービス"
-        subject: "件名"
-        summary: "概要"
-        content: "内容"
+        status: "状態"
+      image:
+        aid: "固有ID"
         name: "名前"
-        email: "メール"
-        account: "アカウント"
+        description: "説明"
+        visibility: "公開状態"
+        status: "状態"
+      document:
+        aid: "固有ID"
+        name_id: "ID"
+        title: "タイトル"
+        summary: "要約"
+        content: "内容"
+        published_at: "公開日時"
+        edited_at: "編集日時"
+        visibility: "公開状態"
+        status: "状態"
       service:
         aid: "固有ID"
         name: "名前"
         name_id: "ID"
-        summary: "概要"
+        overview: "概要"
         description: "説明"
         host: "ホスト"
         redirect_uris: "リダイレクトURI配列"
         scopes: "スコープ配列"
+        status: "状態"
       persona:
         aid: "固有ID"
-        account_aid: "アカウント固有ID"
-        service_aid: "サービス固有ID"
         name: "名前"
         scopes: "スコープ配列"
+        status: "状態"
+      inquiry:
+        aid: "固有ID"
+        subject: "件名"
+        content: "内容"
+        name: "名前"
+        email: "Eメールアドレス"
+        status: "状態"
+      subscription:
+        aid: "固有ID"
+        status: "状態"
     enums:
+      account:
+        visibility:
+          closed: "非公開"
+          limited: "限定公開"
+          opened: "公開"
+        status:
+          normal: "通常"
+          locked: "停止中"
+          deleted: "削除済み"
+      session:
+        status:
+          normal: "通常"
+          locked: "停止中"
+          deleted: "削除済み"
+      image:
+        visibility:
+          closed: "非公開"
+          limited: "限定公開"
+          opened: "公開"
+        status:
+          normal: "通常"
+          locked: "停止中"
+          deleted: "削除済み"
       document:
         visibility:
-          draft: "下書き"
-          unlisted: "限定公開"
+          closed: "非公開"
+          limited: "限定公開"
+          opened: "公開"
+        status:
+          normal: "通常"
+          locked: "停止中"
+          deleted: "削除済み"
           specific: "特定用途"
-          published: "公開"
+      service:
+        status:
+          normal: "通常"
+          locked: "停止中"
+          deleted: "削除済み"
+      persona:
+        status:
+          normal: "通常"
+          locked: "停止中"
+          deleted: "削除済み"
+      inquiry:
+        status:
+          normal: "通常"
+          locked: "停止中"
+          deleted: "削除済み"
       subscription:
+        status:
+          normal: "通常"
+          locked: "停止中"
+          deleted: "削除済み"
         subscription_status:
           incomplete: "未完了"
           incomplete_expired: "未完了(期限切れ)"

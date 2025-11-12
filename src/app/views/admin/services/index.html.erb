@@ -2,13 +2,15 @@
 
 <h1>Services</h1>
 
+<p>
+  <%= link_to "New service", new_admin_service_path %>
+</p>
+
 <div id="services">
   <% @services.each do |service| %>
-    <%= render service %>
     <p>
+      <%= render service %>
       <%= link_to "Show this service", admin_service_path(service) %>
     </p>
   <% end %>
 </div>
-
-<%= link_to "New service", new_admin_service_path %>

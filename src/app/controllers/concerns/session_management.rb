@@ -6,7 +6,7 @@ module SessionManagement
   # Accountに必要なカラム(名前 型)
   # - status enum { normal: 0, locked: 1, deleted: 2 }
 
-  COOKIE_NAME = "ivecolor".freeze
+  COOKIE_NAME = "anyur".freeze
   COOKIE_EXPIRES_IN = 6.months
   TOKEN_EXPIRES_IN = 6.months
 

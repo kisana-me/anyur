@@ -44,8 +44,8 @@ class Api::ResourcesController < Api::ApplicationController
       permitted_data[:description] = @current_persona.account.description
     end
 
-    if @current_persona.scopes.include?("birthday")
-      permitted_data[:birthday] = @current_persona.account.birthday
+    if @current_persona.scopes.include?("birthdate")
+      permitted_data[:birthdate] = @current_persona.account.birthdate
     end
 
     if @current_persona.scopes.include?("subscription")
