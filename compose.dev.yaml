@@ -12,6 +12,7 @@ services:
       - 3000:3000
     depends_on:
       - db
+      - minio
     command: >
       bash -c "rm -f /app/tmp/pids/server.pid &&
       rm -rf /app/public/assets &&

@@ -16,7 +16,7 @@ ActiveRecord::Schema[8.0].define(version: 99) do
     t.string "name", null: false
     t.string "name_id", null: false
     t.text "description", default: "", null: false
-    t.datetime "birthday"
+    t.datetime "birthdate"
     t.string "email"
     t.boolean "email_verified", default: false, null: false
     t.integer "visibility", limit: 1, default: 0, null: false

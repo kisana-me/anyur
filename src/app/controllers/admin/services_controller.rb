@@ -18,7 +18,7 @@ class Admin::ServicesController < Admin::ApplicationController
   def create_client_secret
     @client_secret = @service.generate_token(params[:expires_in].to_i, "client_secret")
     if @service.save
-      flash[:notice] = "client_secretを発行しました"
+      flash.now[:notice] = "client_secretを発行しました"
       # 画面表示
     else
       flash.now[:alert] = "client_secretの発行に失敗しました"

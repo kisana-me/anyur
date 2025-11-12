@@ -1,7 +1,7 @@
 <% content_for :title, "特定商取引法に基づく表記" %>
 
 <% if @document %>
-  <h1><%= @document.name %></h1>
+  <h1><%= @document.title %></h1>
   <%= md_render @document.content %>
 <% else %>
   <h1>特定商取引法に基づく表記</h1>
