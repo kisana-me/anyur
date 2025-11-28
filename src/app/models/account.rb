@@ -104,18 +104,19 @@ class Account < ApplicationRecord
   # ===== BEGIN OF EMAIL FLOWS ===== #
   #
 
-  ### EVC = Email Verification by Code
+  ### EVC = Email Verification by Code # これに統一予定
 
-  def start_EVC(send_email: true, evc_for: "verify_email")
-    meta["use_email"] = meta["use_email"].to_i + 1 if send_email
-    code = "%06d" % SecureRandom.random_number(1_000_000)
+  def start_EVC(evc_for: "verify_email", evc_content: "", evc_email: self.email)
+    meta["use_email"] = meta["use_email"].to_i + 1 if evc_email.present?
+    evc_code = "%06d" % SecureRandom.random_number(1_000_000)
     meta["EVC"] ||= {}
-    meta["EVC"]["code"] = code
+    meta["EVC"]["code"] = evc_code
     meta["EVC"]["for"] = evc_for
+    meta["EVC"]["content"] = evc_content
     meta["EVC"]["started_at"] = Time.current
     meta["EVC"]["failed_times"] = 0
     save
-    AccountMailer.authentication_code(self.email, code).deliver_now if send_email
+    AccountMailer.authentication_code(evc_email, evc_code).deliver_now if evc_email.present?
   end
 
   ### change email
