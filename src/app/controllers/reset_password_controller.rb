@@ -1,6 +1,4 @@
 class ResetPasswordController < ApplicationController
-  skip_before_action :require_signin
-
   def get_request
     @email_form = EmailForm.new()
   end

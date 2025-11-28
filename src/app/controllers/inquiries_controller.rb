@@ -1,6 +1,4 @@
 class InquiriesController < ApplicationController
-  skip_before_action :require_signin
-
   def new
     @inquiry = Inquiry.new((session[:inquiry_params] || {}).to_h.except("link_account"))
     @services = Service.is_normal

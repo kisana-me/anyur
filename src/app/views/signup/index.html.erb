@@ -23,13 +23,7 @@
   <small>
     5~20字の英字(大文字小文字区別せず)・数字・_(アンダーバー)を使用できます
   </small>
-  <br />
-  <%= f.label :email, "メール", class: "" %>
-  <%= f.email_field :email, class: "" %>
-  <br />
-  <small>
-    利用開始するにはメール認証が必須です
-  </small>
+
   <br />
   <%= f.label :password, "パスワード", class: "" %>
   <%= f.password_field :password, value: @account.password, class: "" %>

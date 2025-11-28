@@ -1,4 +1,5 @@
 class SubscriptionsController < ApplicationController
+  before_action :require_signin
   before_action :redirect_if_already_subscribed, only: [ :create ]
 
   def index

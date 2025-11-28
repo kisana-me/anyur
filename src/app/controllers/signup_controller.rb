@@ -1,5 +1,4 @@
 class SignupController < ApplicationController
-  skip_before_action :require_signin
 
   # アカウント作成
 

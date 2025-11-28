@@ -27,7 +27,7 @@ class Account < ApplicationRecord
     allow_blank: true,
     length: { in: 1..500 }
   validates :email,
-    presence: true,
+    allow_nil: true,
     uniqueness: { case_sensitive: false, message: :exists_email, allow_blank: true },
     length: { in: 5..120, allow_blank: true },
     format: { with: VALID_EMAIL_REGEX, message: :invalid_email_format, allow_blank: true }

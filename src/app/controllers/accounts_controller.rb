@@ -1,4 +1,6 @@
 class AccountsController < ApplicationController
+  before_action :require_signin
+
   def index
     @accounts = signed_in_accounts()
   end
