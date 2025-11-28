@@ -1,6 +1,5 @@
 class VerifyEmailController < ApplicationController
-  skip_before_action :require_signin
-  before_action :require_signin_without_email_verified
+  before_action :require_signin
 
   def index
   end
@@ -44,15 +43,6 @@ class VerifyEmailController < ApplicationController
   end
 
   private
-
-  def require_signin_without_email_verified
-    if @current_account&.email_verified
-      redirect_to account_path, alert: "メール認証済みです"
-    elsif @current_account
-    else
-      redirect_to signin_path, alert: "サインインしてください"
-    end
-  end
 
   def change_email_params
     params.expect(account: [ :email ])

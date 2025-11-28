@@ -4,7 +4,6 @@ class ApplicationController < ActionController::Base
   include TurnstileManagement
 
   before_action :current_account
-  before_action :require_signin# 個別に設定すべき
   before_action :set_current_attributes
 
   helper_method :email_verified?, :admin?
@@ -16,13 +15,9 @@ class ApplicationController < ActionController::Base
   private
 
   def require_signin
-    return if @current_account&.email_verified
-    if @current_account
-      redirect_to verify_email_path, alert: "メール認証してください"
-    else
-      store_location
-      redirect_to signin_path, alert: "サインインしてください"
-    end
+    return if @current_account
+    store_location
+    redirect_to signin_path, alert: "サインインしてください"
   end
 
   def require_admin

@@ -1,6 +1,4 @@
 class DocumentsController < ApplicationController
-  skip_before_action :require_signin
-
   def index
     @documents = Document.is_normal.is_opened
   end

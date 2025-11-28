@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_action :require_signin
+  before_action :require_signin, only: :signout
 
   def signin
     @account = Account.new

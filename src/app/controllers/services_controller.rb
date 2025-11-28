@@ -1,6 +1,4 @@
 class ServicesController < ApplicationController
-  skip_before_action :require_signin
-
   def index
     @services = Service.is_normal
   end

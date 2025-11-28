@@ -1,6 +1,6 @@
 class OauthController < ApplicationController
-  skip_before_action :verify_authenticity_token
-  skip_before_action :require_signin, only: :token
+  skip_before_action :verify_authenticity_token, only: :token
+  before_action :require_signin, except: :token
 
 
 
