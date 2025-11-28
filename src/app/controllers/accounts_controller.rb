@@ -102,7 +102,8 @@ class AccountsController < ApplicationController
       return render :edit_password, status: :unprocessable_entity
     end
 
-    if @current_account.update(params.expect(account: [ :password, :password_confirmation ]))
+    @current_account.assign_attributes(params.expect(account: [ :password, :password_confirmation ]))
+    if @current_account.save(context: :password_save)
       redirect_to account_path, notice: "パスワードを更新しました"
     else
       flash.now[:alert] = "パスワードを更新できませんでした"

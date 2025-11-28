@@ -16,7 +16,7 @@ class SignupController < ApplicationController
       @account.errors.add(:base, :require_agreed)
       return render :index, status: :unprocessable_entity
     end
-    unless @account.valid?
+    unless @account.valid?(:password_save)
       return render :index, status: :unprocessable_entity
     end
     session[:signup_account_params] = account_params.except("password_confirmation")
@@ -28,7 +28,7 @@ class SignupController < ApplicationController
       @account.errors.add(:base, :failed_captcha)
       return render :page_1, status: :unprocessable_entity
     end
-    if @account.save
+    if @account.save(context: :password_save)
       session.delete(:signup_account_params)
       sign_in(@account)
       @current_account = @account

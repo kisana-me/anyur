@@ -33,7 +33,8 @@ class Account < ApplicationRecord
   validates :password,
     presence: true,
     length: { in: 8..30, allow_blank: true },
-    confirmation: true
+    confirmation: true,
+    on: :password_save
 
   scope :is_normal, -> { where(status: :normal) }
   scope :isnt_deleted, -> { where.not(status: :deleted) }

@@ -39,7 +39,8 @@ class ResetPasswordController < ApplicationController
       .find_by(email: params.dig(:account, :email), email_verified: true)
 
     if @account && @account.flow_valid?("reset_password") && @account.authenticate_reset_password(params[:account][:reset_password_token])
-      if @account.update(account_update_password_params)
+      @account.assign_attributes(account_update_password_params)
+      if @account.save(context: :password_save)
         @account.end_flow("reset_password")
         return redirect_to root_path, notice: "パスワードを更新しました"
       end
