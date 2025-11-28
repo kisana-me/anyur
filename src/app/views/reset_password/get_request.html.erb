@@ -10,11 +10,11 @@
 <div data-controller="turnstile"
      data-turnstile-environment-value="<%= Rails.env %>"
      data-turnstile-sitekey-value="<%= ENV.fetch("CLOUDFLARE_TURNSTILE_SITE_KEY") %>">
-<%= form_with model: @account, url: account_reset_password_path, method: :post, data: { turbo: false } do |form| %>
+<%= form_with model: @account, url: account_reset_password_path, method: :post, class: "ctmf", data: { turbo: false } do |form| %>
   <%= render "shared/error_messages", instead: @account %>
 
   <div>
-    <%= form.label :email %><br>
+    <%= form.label :email %>
     <%= form.email_field :email %>
   </div>
 

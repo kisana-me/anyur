@@ -66,6 +66,8 @@ ja:
         name: "名前"
         email: "メールアドレス"
         status: "状態"
+        service_aid: "サービス固有ID"
+        link_account: "アカウントを紐づける"
       subscription:
         aid: "固有ID"
         status: "状態"

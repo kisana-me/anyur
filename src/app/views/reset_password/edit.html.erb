@@ -5,20 +5,20 @@
 <div data-controller="turnstile"
      data-turnstile-environment-value="<%= Rails.env %>"
      data-turnstile-sitekey-value="<%= ENV.fetch("CLOUDFLARE_TURNSTILE_SITE_KEY") %>">
-<%= form_with(model: @account, url: account_reset_password_update_path, method: :patch, data: { turbo: false }) do |form| %>
+<%= form_with(model: @account, url: account_reset_password_update_path, method: :patch, class: "ctmf", data: { turbo: false }) do |form| %>
   <%= render "shared/error_messages", instead: @account %>
 
   <%= form.hidden_field :email, value: params.dig(:email) || params.dig(:account, :email) %>
   <%= form.hidden_field :reset_password_token, value: params.dig(:token) || params.dig(:account, :reset_password_token) %>
 
   <div>
-    <%= form.label :password, style: "display: block" %>
-    <%= form.password_field :password, value: params.dig(:account, :password) %>
+    <%= form.label :password %>
+    <%= form.password_field :password, value: params.dig(:account, :password), data: { controller: "ctmf-password" } %>
   </div>
 
   <div>
-    <%= form.label :password_confirmation, style: "display: block" %>
-    <%= form.password_field :password_confirmation, value: params.dig(:account, :password_confirmation) %>
+    <%= form.label :password_confirmation %>
+    <%= form.password_field :password_confirmation, value: params.dig(:account, :password_confirmation), data: { controller: "ctmf-password" } %>
   </div>
 
   <div class="cf-turnstile" data-turnstile-target="widget"></div>

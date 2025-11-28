@@ -1,21 +1,22 @@
 <% content_for :title, "登録情報を変更" %>
 
 <h1>登録情報を変更</h1>
-<%= form_with(model: @current_account, url: account_edit_path, data: { turbo: false }) do |form| %>
+
+<%= form_with(model: @current_account, url: account_edit_path, class: "ctmf", data: { turbo: false }) do |form| %>
   <%= render "shared/error_messages", instead: @current_account %>
 
   <div>
-    <%= form.label :aid, style: "display: block" %>
+    <%= form.label :aid %>
     <%= form.text_field :aid, disabled: true %>
   </div>
 
   <div>
-    <%= form.label :name, style: "display: block" %>
+    <%= form.label :name %>
     <%= form.text_field :name %>
   </div>
 
   <div>
-    <%= form.label :name_id, style: "display: block" %>
+    <%= form.label :name_id %>
     <%= form.text_field :name_id %>
   </div>
 

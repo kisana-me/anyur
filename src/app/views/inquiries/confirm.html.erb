@@ -3,41 +3,46 @@
 <h1>お問い合わせ</h1>
 <p style="color: red;">確定前に今一度ご確認ください</p>
 
-<%= form_with model: @inquiry, url: inquiries_path, data: { turbo: false } do |f| %>
+<%= form_with model: @inquiry, url: inquiries_path, class: "ctmf", data: { turbo: false } do |f| %>
   <%= render "shared/error_messages", instead: @inquiry %>
+
   <div>
     <%= f.label :service_aid %>
     <%= f.collection_select :service_aid, @services, :aid, :name, {include_blank: "選択しない"}, {disabled: true} %>
   </div>
+
   <div>
     <%= f.label :subject %>
     <%= f.text_field :subject, disabled: true %>
   </div>
+
   <div>
     <%= f.label :content %>
     <%= f.text_area :content, disabled: true %>
   </div>
+  
   <% if @current_account %>
     <div>
       <%= f.label :link_account %>
-      <%= f.checkbox :link_account, checked: session[:inquiry_params].to_h["link_account"], disabled: true %>
-      <br />
+      <%= f.check_box :link_account, checked: session[:inquiry_params].to_h["link_account"], disabled: true %>
       <small>サインイン中のアカウントをお問い合わせに紐づけます</small>
-      <br />
       <small>紐づけた場合は以下の名前は不要です</small>
     </div>
   <% end %>
+
   <div>
     <%= f.label :name %>
     <%= f.text_field :name, disabled: true %>
   </div>
+
   <div>
     <%= f.label :email %>
     <%= f.email_field :email, disabled: true %>
   </div>
+
   <div>
     <%= f.submit "確定" %>
   </div>
 <% end %>
-  <%= button_to "戻る", new_inquiry_path, method: :get, data: { turbo: false } %>
-</div>
+
+<%= button_to "戻る", new_inquiry_path, method: :get, data: { turbo: false } %>
