@@ -1,18 +1,25 @@
 class ResetPasswordController < ApplicationController
   def get_request
-    @email_form = EmailForm.new()
+    @account = Account.new()
   end
 
   def post_request
-    @email_form = EmailForm.new(email_form_params)
+    @account = Account.new(params.expect(account: :email))
+
     unless verify_turnstile(params["cf-turnstile-response"])
-      @email_form.errors.add(:base, :failed_captcha)
+      @account.errors.add(:base, :failed_captcha)
       return render :get_request, status: :unprocessable_entity
     end
-    return render :get_request if !@email_form.valid?
-    account = Account.find_by(email: @email_form.email)
-    return if !account
-    return if !account.email_verified
+
+    unless @account.email =~ VALID_EMAIL_REGEX
+      @account.errors.add(:email, :invalid_email_format)
+      return render :get_request, status: :unprocessable_entity
+    end
+
+    account = Account
+      .is_normal
+      .find_by(email: @account.email, email_verified: true)
+
     account.start_reset_password if account
   end
 
@@ -26,9 +33,12 @@ class ResetPasswordController < ApplicationController
       @account.errors.add(:base, :failed_captcha)
       return render :edit, status: :unprocessable_entity
     end
-    @account = Account.find_by(email: params.dig(:account, :email))
+
+    @account = Account
+      .is_normal
+      .find_by(email: params.dig(:account, :email), email_verified: true)
+
     if @account && @account.flow_valid?("reset_password") && @account.authenticate_reset_password(params[:account][:reset_password_token])
-      @account.check_password = true
       if @account.update(account_update_password_params)
         @account.end_flow("reset_password")
         return redirect_to root_path, notice: "パスワードを更新しました"
@@ -41,10 +51,6 @@ class ResetPasswordController < ApplicationController
   end
 
   private
-
-  def email_form_params
-    params.expect(email_form: [ :email ])
-  end
 
   def account_update_password_params
     params.expect(account: [ :password, :password_confirmation ])

@@ -3,15 +3,15 @@
 
 <h1>パスワードリセットリクエスト</h1>
 
-<p>登録中の認証済みメールを入力してください。</p>
-<p>メールにパスワード変更リンクを送信します。</p>
-<p>メール認証が完了しておらず、パスワードを使ってメールを変更することが出来ない場合はお問い合わせください。</p>
+<p>登録中の認証済みメールアドレスを入力してください。</p>
+<p>パスワード変更リンクを送信します。</p>
+<p>メールアドレス認証が完了しておらず、パスワードを使ってメールアドレスを変更することが出来ない場合はお問い合わせください。</p>
 
 <div data-controller="turnstile"
      data-turnstile-environment-value="<%= Rails.env %>"
      data-turnstile-sitekey-value="<%= ENV.fetch("CLOUDFLARE_TURNSTILE_SITE_KEY") %>">
-<%= form_with model: @email_form, url: account_reset_password_path, data: { turbo: false } do |form| %>
-  <%= render "shared/error_messages", instead: @email_form %>
+<%= form_with model: @account, url: account_reset_password_path, method: :post, data: { turbo: false } do |form| %>
+  <%= render "shared/error_messages", instead: @account %>
 
   <div>
     <%= form.label :email %><br>

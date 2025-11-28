@@ -16,12 +16,12 @@ ja:
         name_id: "ID"
         description: "説明"
         birthdate: "生年月日"
-        email: "Eメールアドレス"
+        email: "メールアドレス"
         visibility: "公開状態"
         password: "パスワード"
         password_confirmation: "パスワード(確認)"
         status: "状態"
-        next_email: "新しいEメールアドレス"
+        next_email: "新しいメールアドレス"
         current_password: "現在のパスワード"
         authentication_code: "認証コード"
       session:
@@ -64,7 +64,7 @@ ja:
         subject: "件名"
         content: "内容"
         name: "名前"
-        email: "Eメールアドレス"
+        email: "メールアドレス"
         status: "状態"
       subscription:
         aid: "固有ID"
