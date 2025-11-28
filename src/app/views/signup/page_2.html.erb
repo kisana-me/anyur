@@ -3,5 +3,11 @@
 <h1>Signed up to ANYUR</h1>
 <p>アカウントを作成しました。</p>
 
-<p>メール認証に進んでください。</p>
+<% if session[:forwarding_url] %>
+  <br /><br />
+  <p><%= link_to "サインイン前にアクセスしたかったページへ", session.delete(:forwarding_url) %></p>
+  <br /><br />
+<% end %>
+
+<p><%= link_to "アカウントページへ", account_path %></p>
 <p><%= link_to "メール認証に進む", verify_email_path %></p>
