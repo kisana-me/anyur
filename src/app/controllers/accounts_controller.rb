@@ -54,6 +54,12 @@ class AccountsController < ApplicationController
       return render :edit_email, status: :unprocessable_entity
     end
 
+    if Account.exists?(email: params.dig("account", "next_email"))
+      @current_account.errors.add(:base, :exists_next_email)
+      flash.now[:alert] = "入力が正しくありません"
+      return render :edit_email, status: :unprocessable_entity
+    end
+
     @current_account.start_change_email(params.dig("account", "next_email"))
   end
 
