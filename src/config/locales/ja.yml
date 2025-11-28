@@ -23,6 +23,7 @@ ja:
         status: "状態"
         next_email: "新しいEメールアドレス"
         current_password: "現在のパスワード"
+        authentication_code: "認証コード"
       session:
         aid: "固有ID"
         name: "名前"
@@ -147,7 +148,8 @@ ja:
         invalid_singin: "IDまたはパスワードが間違っています"
         singin_locked: "サインインがロックされています、お問い合わせください"
         wrong_current_password: "現在のパスワードが間違っています"
-        invalid_next_email_format: "新しいEメールアドレスの形式が正しくありません"
+        invalid_next_email_format: "新しいメールアドレスの形式が正しくありません"
+        exists_next_email: "新しいメールアドレスは使用できません"
         failed_captcha: "CAPTCHAの認証に失敗しました"
         require_agreed: "同意が必要です"
   general:
