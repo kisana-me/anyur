@@ -14,6 +14,9 @@ class ApplicationController < ActionController::Base
 
   private
 
+  NAME_ID_REGEX = /\A[a-zA-Z0-9_]+\z/
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+
   def require_signin
     return if @current_account
     store_location

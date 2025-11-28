@@ -23,74 +23,83 @@ class AccountsController < ApplicationController
   end
 
   def update
-    if @current_account.update(account_update_params)
+    if @current_account.update(params.expect(account: [ :name, :name_id ]))
       redirect_to account_path, notice: "更新しました"
     else
+      flash.now[:alert] = "更新できませんでした"
       render :edit, status: :unprocessable_entity
     end
   end
 
+  #
+  # ===== メールアドレス変更 =====
+  # メールアドレスの変更には下記が必要
+  # ・現在のパスワード
+  # ・新しいメールアドレスで認証コード受け取り
+  #
+
   def edit_email
-    @ep_form = EmailPasswordForm.new()
   end
 
   def check_email
-    @ep_form = EmailPasswordForm.new(params.expect(email_password_form: [ :password, :email ]))
-    unless @current_account.authenticate(@ep_form.password)
-      @ep_form.errors.add(:password, :wrong_password)
+    unless @current_account.authenticate(params.dig("account", "current_password"))
+      @current_account.errors.add(:base, :wrong_current_password)
+      flash.now[:alert] = "パスワードが違います"
       return render :edit_email, status: :unprocessable_entity
     end
-    return render :edit_email if !@ep_form.valid?
-    @current_account.start_change_email(@ep_form.email)
+
+    unless params.dig("account", "next_email") =~ VALID_EMAIL_REGEX
+      @current_account.errors.add(:base, :invalid_next_email_format)
+      flash.now[:alert] = "入力が正しくありません"
+      return render :edit_email, status: :unprocessable_entity
+    end
+
+    @current_account.start_change_email(params.dig("account", "next_email"))
   end
 
   def update_email
-    @ep_form = EmailPasswordForm.new()
-    if @current_account.flow_valid?("change_email")
-      if @current_account.meta.dig("change_email", "code") == params.dig("email_password_form", "authentication_code")
-        if @current_account.update(email: @current_account.meta.dig("change_email", "next_email"))
-          @current_account.end_flow("change_email")
-          redirect_to account_path, notice: "メールを更新しました"
-        else
-          @ep_form.errors.add(:base, "メールを更新できませんでした")
-          render :check_email, alert: "メールを更新できませんでした"
-        end
-      else
-      failed_flow("change_email")
-      @ep_form.errors.add(:base, "認証失敗")
-      render :check_email, alert: "認証失敗"
-      end
+    unless @current_account.flow_valid?("change_email")
+      @current_account.errors.add(:base, "失敗回数が多いか時間切れです")
+      flash.now[:alert] = "無効な操作です"
+      return render :check_email, status: :unprocessable_entity
+    end
+
+    unless @current_account.meta.dig("change_email", "code") == params.dig("account", "authentication_code")
+      @current_account.failed_flow("change_email")
+      @current_account.errors.add(:base, "認証コードが異なります")
+      flash.now[:alert] = "認証に失敗しました"
+      return render :check_email, status: :unprocessable_entity
+    end
+
+    if @current_account.update(email: @current_account.meta.dig("change_email", "next_email"), email_verified: true)
+      @current_account.end_flow("change_email")
+      redirect_to account_path, notice: "メールを更新しました"
     else
-      @ep_form.errors.add(:base, "無効")
-      render :check_email, alert: "無効"
+      @current_account.errors.add(:base, "メールを更新できませんでした")
+      flash.now[:alert] = "メールを更新できませんでした"
+      render :check_email, status: :unprocessable_entity
     end
   end
 
+  #
+  # ===== パスワード変更 =====
+  # 現在のパスワード入力が必須
+  #
+
   def edit_password
-    if @current_account.email_verified
-      @current_account.start_EVC(evc_for: "change_password")
-      flash.now[:notice] = "認証コードを送信しました"
-    end
-    @account = Account.new
   end
 
   def update_password
-    flag = (@current_account.meta.dig("EVC", "for").to_s == "change_password") && (@current_account.meta.dig("EVC", "code").to_s == params.dig("account", "verification_code").to_s)
-    if @current_account.flow_valid?("EVC") && flag
-      # 次へ進む
-    elsif !@current_account.flow_valid?("EVC") && flag
-      @current_account.errors.add(:base, "認証コードが無効です、再発行してください")
-      return render :edit_password
-    else
-      @current_account.errors.add(:base, "認証できませんでした")
-      return render :edit_password
+    unless @current_account.authenticate(params.dig('account', 'current_password'))
+      @current_account.errors.add(:base, :wrong_current_password)
+      flash.now[:alert] = "パスワードが違います"
+      return render :edit_password, status: :unprocessable_entity
     end
 
-    @current_account.check_password = true
-    if @current_account.update(account_update_password_params)
-      @current_account.end_flow("EVC")
+    if @current_account.update(params.expect(account: [ :password, :password_confirmation ]))
       redirect_to account_path, notice: "パスワードを更新しました"
     else
+      flash.now[:alert] = "パスワードを更新できませんでした"
       render :edit_password, status: :unprocessable_entity
     end
   end
@@ -102,23 +111,5 @@ class AccountsController < ApplicationController
     @current_account.update(status: :deleted)
     sign_out()
     redirect_to root_path, status: :see_other, notice: "アカウントを削除しました"
-  end
-
-  private
-
-  def account_update_params
-    params.expect(account: [ :name, :name_id ])
-  end
-
-  def account_update_email_params
-    params.expect(account: [ :email ])
-  end
-
-  def account_update_password_params
-    params.expect(account: [ :password, :password_confirmation ])
-  end
-
-  def email_form_params
-    params.expect(email_form: [ :email ])
   end
 end

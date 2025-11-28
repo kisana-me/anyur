@@ -19,17 +19,19 @@
   </p>
 
   <p>
-    <strong>メール:</strong>
-    <%= @current_account.email %>
-    <br />
+    <strong>メールアドレス:</strong>
+    <%= @current_account.email.present? ? @current_account.email : "未登録" %>
+  </p>
+  <p>
+    <strong>メールアドレス認証:</strong>
     <% if @current_account.email_verified %>
       ✅メール認証済み
     <% else %>
-      ❎メール認証していません<br />
-      <%= link_to "🔢メール認証する", verify_email_path %>
+      ❎メール認証していません <%= link_to "🔢メール認証する", account_email_edit_path %>
     <% end %>
   </p>
 </div>
+
 <div>
   <%= link_to "登録情報を変更", account_edit_path %>
   <br /><br />

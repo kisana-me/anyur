@@ -21,6 +21,8 @@ ja:
         password: "パスワード"
         password_confirmation: "パスワード(確認)"
         status: "状態"
+        next_email: "新しいEメールアドレス"
+        current_password: "現在のパスワード"
       session:
         aid: "固有ID"
         name: "名前"
@@ -139,12 +141,13 @@ ja:
         invalid: "は正しい形式で入力してください"
         not_a_number: "は数値で入力してください"
         # custom
-        invalid_email_format: "はメールの形式で入力してください"
+        invalid_email_format: "の形式が正しくありません"
         invalid_name_id_format: "は英字(大文字小文字区別せず)、数字、_(アンダーバー)、のみで入力してください"
         exists_email: "は使用できません"
         invalid_singin: "IDまたはパスワードが間違っています"
         singin_locked: "サインインがロックされています、お問い合わせください"
-        wrong_password: "パスワードが間違っています"
+        wrong_current_password: "現在のパスワードが間違っています"
+        invalid_next_email_format: "新しいEメールアドレスの形式が正しくありません"
         failed_captcha: "CAPTCHAの認証に失敗しました"
         require_agreed: "同意が必要です"
   general:

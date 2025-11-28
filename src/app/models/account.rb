@@ -9,11 +9,10 @@ class Account < ApplicationRecord
   enum :visibility, { closed: 0, limited: 1, opened: 2 }
   enum :status, { normal: 0, locked: 1, deleted: 2 }
 
+  before_validation :nilify_blank_attributes
   before_create :set_aid
   after_update :sync_name_with_stripe, if: :saved_change_to_name?
   after_update :sync_email_with_stripe, if: :saved_change_to_email?
-
-  attr_accessor :check_password
 
   validates :name,
     presence: true,
@@ -27,7 +26,6 @@ class Account < ApplicationRecord
     allow_blank: true,
     length: { in: 1..500 }
   validates :email,
-    allow_nil: true,
     uniqueness: { case_sensitive: false, message: :exists_email, allow_blank: true },
     length: { in: 5..120, allow_blank: true },
     format: { with: VALID_EMAIL_REGEX, message: :invalid_email_format, allow_blank: true }
@@ -73,6 +71,10 @@ class Account < ApplicationRecord
     end
   end
 
+  def admin?
+    self.meta["roles"]&.include?("admin")
+  end
+
   def self.find_by_sci(str)
     is_normal.find_by(stripe_customer_id: str)
   end
@@ -98,7 +100,11 @@ class Account < ApplicationRecord
     meta["failed_signin"].to_i >= MAX_FAILED_ATTEMPTS
   end
 
-  # EVC = Email Verification by Code
+  #
+  # ===== BEGIN OF EMAIL FLOWS ===== #
+  #
+
+  ### EVC = Email Verification by Code
 
   def start_EVC(send_email: true, evc_for: "verify_email")
     meta["use_email"] = meta["use_email"].to_i + 1 if send_email
@@ -112,7 +118,7 @@ class Account < ApplicationRecord
     AccountMailer.authentication_code(self.email, code).deliver_now if send_email
   end
 
-  # change email
+  ### change email
 
   def start_change_email(next_email)
     meta["use_email"] = meta["use_email"].to_i + 1
@@ -126,7 +132,7 @@ class Account < ApplicationRecord
     AccountMailer.authentication_code(next_email, code).deliver_now
   end
 
-  # reset password
+  ### reset password
 
   def start_reset_password
     meta["use_email"] = meta["use_email"].to_i + 1
@@ -149,10 +155,10 @@ class Account < ApplicationRecord
     false
   end
 
-  # flow
-
-  def start_flow(str)
-  end
+  ### general methods for flows
+  ### # "EVC":                      ["code", "for", "started_at", "failed_times"]
+  ### # "change_email":      ["code", "next_email", "started_at", "failed_times"]
+  ### # "reset_password":          ["token_digest", "started_at", "failed_times"]
 
   def end_flow(str)
     meta.delete(str)
@@ -173,13 +179,15 @@ class Account < ApplicationRecord
     false
   end
 
-  # ===== #
-
-  def admin?
-    self.meta["roles"]&.include?("admin")
-  end
+  #
+  # ===== END OF EMAIL FLOWS ===== #
+  #
 
   private
+
+  def nilify_blank_attributes
+    self.email = email.presence
+  end
 
   def sync_name_with_stripe
     return if stripe_customer_id.blank?
