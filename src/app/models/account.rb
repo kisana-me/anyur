@@ -31,8 +31,8 @@ class Account < ApplicationRecord
     format: { with: VALID_EMAIL_REGEX, message: :invalid_email_format, allow_blank: true }
   has_secure_password validations: false
   validates :password,
-    allow_blank: true,
-    length: { in: 8..30 },
+    presence: true,
+    length: { in: 8..30, allow_blank: true },
     confirmation: true
 
   scope :is_normal, -> { where(status: :normal) }
