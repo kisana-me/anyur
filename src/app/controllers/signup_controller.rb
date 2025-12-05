@@ -31,8 +31,12 @@ class SignupController < ApplicationController
     if @account.save(context: :password_save)
       session.delete(:signup_account_params)
       sign_in(@account)
-      @current_account = @account
-      flash.now[:notice] = "アカウントを作成しました"
+      flash[:notice] = "アカウントを作成しました"
+      if session[:forwarding_url]
+        redirect_to session.delete(:forwarding_url)
+      else
+        redirect_to account_path
+      end
     else
       render :page_1, status: :unprocessable_entity
     end
