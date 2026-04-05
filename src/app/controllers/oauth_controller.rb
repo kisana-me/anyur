@@ -97,6 +97,10 @@ class OauthController < ApplicationController
 
 
   def handle_authorization_code
+    unless require_token_params(%i[client_id code redirect_uri])
+      return
+    end
+
     service = authenticate_client
     unless service
       return render json: { error: "invalid_client" }, status: 401
@@ -105,7 +109,7 @@ class OauthController < ApplicationController
     # redirect_uriチェック
     begin
       input_uri = URI.parse(params[:redirect_uri])
-    rescue URI::InvalidURIError
+    rescue URI::InvalidURIError, TypeError, ArgumentError
       return render json: { error: "invalid_redirect_uri" }, status: 401
     end
     unless input_uri.host == service.host || input_uri.host == "localhost"
@@ -160,6 +164,10 @@ class OauthController < ApplicationController
     # refresh_token "refresh_token"
     # undefinedだと500エラーでhtml帰る
 
+    unless require_token_params(%i[client_id refresh_token])
+      return
+    end
+
     service = authenticate_client
     unless service
       return render json: { error: "invalid_client" }, status: 401
@@ -209,9 +217,14 @@ class OauthController < ApplicationController
     end
 
     # 3. redirect_uri の構文と host チェック
+    if params[:redirect_uri].blank?
+      @error = "invalid_redirect_uri"
+      return
+    end
+
     begin
       input_uri = URI.parse(params[:redirect_uri])
-    rescue URI::InvalidURIError
+    rescue URI::InvalidURIError, TypeError, ArgumentError
       @error = "invalid_redirect_uri"
       return
     end
@@ -274,6 +287,19 @@ class OauthController < ApplicationController
     end
 
     service
+  end
+
+  def require_token_params(required_keys)
+    missing_keys = required_keys.filter_map do |key|
+      key if params[key].blank?
+    end
+    return true if missing_keys.empty?
+
+    render json: {
+      error: "invalid_request",
+      error_description: "missing required parameter: #{missing_keys.first}"
+    }, status: 400
+    false
   end
 
   def valid_pkce_code?(value)
