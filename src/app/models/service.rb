@@ -19,6 +19,10 @@ class Service < ApplicationRecord
   scope :is_normal, -> { where(status: :normal) }
   scope :isnt_deleted, -> { where.not(status: :deleted) }
 
+  def confidential_client?
+    !public_client?
+  end
+
   private
 
   def initialize_tokens
