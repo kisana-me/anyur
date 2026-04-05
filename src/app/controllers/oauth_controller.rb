@@ -64,6 +64,7 @@ class OauthController < ApplicationController
     end
     authorization_code = @persona.generate_token(10.minutes, "authorization_code")
     @persona.scopes = (params[:scope] || "").split(" ")
+    bind_authorization_redirect_uri(@persona, params[:redirect_uri])
     @persona.with_challenge(params[:code_challenge].to_s, params[:code_challenge_method].to_s)
     unless @persona.save
       @error = "連携を保存できません"
@@ -122,6 +123,9 @@ class OauthController < ApplicationController
     unless persona.service_id == service.id
       return render json: { error: "invalid_code" }, status: 401
     end
+    unless authorization_redirect_uri_matches?(persona, params[:redirect_uri])
+      return render json: { error: "invalid_grant" }, status: 401
+    end
     unless verify_pkce_for_persona(persona, service)
       return render json: { error: "invalid_grant" }, status: 401
     end
@@ -130,6 +134,7 @@ class OauthController < ApplicationController
     access_token = persona.generate_token(10.minutes, "access_token")
     refresh_token = persona.generate_token(30.days, "refresh_token")
     persona.authorization_code_expires_at = Time.current
+    clear_authorization_redirect_uri(persona)
     persona.with_challenge(nil, nil)
     unless persona.save
       return render json: { error: "server_error" }, status: 401
@@ -292,6 +297,36 @@ class OauthController < ApplicationController
 
     expected = Base64.urlsafe_encode64(Digest::SHA256.digest(code_verifier), padding: false)
     ActiveSupport::SecurityUtils.secure_compare(expected, challenge["code_challenge"].to_s)
+  end
+
+  def bind_authorization_redirect_uri(persona, redirect_uri)
+    persona.meta = {} unless persona.meta.is_a?(Hash)
+    oauth = persona.meta["oauth"]
+    oauth = {} unless oauth.is_a?(Hash)
+    oauth["authorization_redirect_uri"] = redirect_uri.to_s
+    persona.meta["oauth"] = oauth
+  end
+
+  def authorization_redirect_uri_matches?(persona, redirect_uri)
+    oauth = if persona.meta.is_a?(Hash)
+      persona.meta["oauth"]
+    end
+    return false unless oauth.is_a?(Hash)
+
+    stored_redirect_uri = oauth["authorization_redirect_uri"].to_s
+    return false if stored_redirect_uri.blank?
+
+    stored_redirect_uri == redirect_uri.to_s
+  end
+
+  def clear_authorization_redirect_uri(persona)
+    return unless persona.meta.is_a?(Hash)
+
+    oauth = persona.meta["oauth"]
+    return unless oauth.is_a?(Hash)
+
+    oauth.delete("authorization_redirect_uri")
+    persona.meta["oauth"] = oauth
   end
 
   def build_redirect_with_params(redirect_uri, code:, state:)
