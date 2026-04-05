@@ -18,7 +18,7 @@ class OauthController < ApplicationController
     )
     @persona = Persona.new
 
-    render :authorize, status: :unprocessable_entity
+    render :authorize
   end
 
 
@@ -110,28 +110,28 @@ class OauthController < ApplicationController
     begin
       input_uri = URI.parse(params[:redirect_uri])
     rescue URI::InvalidURIError, TypeError, ArgumentError
-      return render json: { error: "invalid_redirect_uri" }, status: 401
+      return render json: { error: "invalid_redirect_uri" }, status: 400
     end
     unless input_uri.host == service.host || input_uri.host == "localhost"
-      return render json: { error: "redirect_uri_host_mismatch" }, status: 401
+      return render json: { error: "redirect_uri_host_mismatch" }, status: 400
     end
     unless service.redirect_uris.include?(params[:redirect_uri])
-      return render json: { error: "invalid_redirect_uri" }, status: 401
+      return render json: { error: "invalid_redirect_uri" }, status: 400
     end
 
     # personaを探す
     persona = Persona.findby_token(params[:code], "authorization_code")
     unless persona
-      return render json: { error: "invalid_code" }, status: 401
+      return render json: { error: "invalid_code" }, status: 400
     end
     unless persona.service_id == service.id
-      return render json: { error: "invalid_code" }, status: 401
+      return render json: { error: "invalid_code" }, status: 400
     end
     unless authorization_redirect_uri_matches?(persona, params[:redirect_uri])
-      return render json: { error: "invalid_grant" }, status: 401
+      return render json: { error: "invalid_grant" }, status: 400
     end
     unless verify_pkce_for_persona(persona, service)
-      return render json: { error: "invalid_grant" }, status: 401
+      return render json: { error: "invalid_grant" }, status: 400
     end
 
     # token発行
@@ -141,7 +141,7 @@ class OauthController < ApplicationController
     clear_authorization_redirect_uri(persona)
     persona.with_challenge(nil, nil)
     unless persona.save
-      return render json: { error: "server_error" }, status: 401
+      return render json: { error: "server_error" }, status: 500
     end
 
     # 返却
@@ -176,18 +176,17 @@ class OauthController < ApplicationController
     # personaを探す
     persona = Persona.findby_token(params[:refresh_token], "refresh_token")
     unless persona
-      return render json: { error: "invalid_refresh_token" }, status: 401
+      return render json: { error: "invalid_refresh_token" }, status: 400
     end
     unless persona.service_id == service.id
-      return render json: { error: "invalid_refresh_token" }, status: 401
+      return render json: { error: "invalid_refresh_token" }, status: 400
     end
 
     # token発行
     access_token = persona.generate_token(10.minutes, "access_token")
     refresh_token = persona.generate_token(30.days, "refresh_token")
-    persona.authorization_code_expires_at = Time.current
     unless persona.save
-      return render json: { error: "server_error" }, status: 401
+      return render json: { error: "server_error" }, status: 500
     end
 
     # 返却
