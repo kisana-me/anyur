@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 99) do
+ActiveRecord::Schema[8.0].define(version: 11) do
   create_table "accounts", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "aid", limit: 14, null: false
     t.string "name", null: false
@@ -161,6 +161,7 @@ ActiveRecord::Schema[8.0].define(version: 99) do
     t.integer "status", limit: 1, default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "public_client", default: false, null: false
     t.index ["aid"], name: "index_services_on_aid", unique: true
     t.index ["client_secret_lookup"], name: "index_services_on_client_secret_lookup", unique: true
     t.index ["name_id"], name: "index_services_on_name_id", unique: true
