@@ -74,6 +74,8 @@
     <%= hidden_field_tag :state, params[:state] %>
     <%= hidden_field_tag :scope, params[:scope] %>
     <%= hidden_field_tag :response_type, params[:response_type] %>
+    <%= hidden_field_tag :code_challenge, params[:code_challenge] %>
+    <%= hidden_field_tag :code_challenge_method, params[:code_challenge_method] %>
 
     <% if @personas.size == 0 %>
     <div>

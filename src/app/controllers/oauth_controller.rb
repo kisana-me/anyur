@@ -112,9 +112,6 @@ class OauthController < ApplicationController
     rescue URI::InvalidURIError, TypeError, ArgumentError
       return render json: { error: "invalid_redirect_uri" }, status: 400
     end
-    unless input_uri.host == service.host || input_uri.host == "localhost"
-      return render json: { error: "redirect_uri_host_mismatch" }, status: 400
-    end
     unless service.redirect_uris.include?(params[:redirect_uri])
       return render json: { error: "invalid_redirect_uri" }, status: 400
     end
@@ -125,13 +122,16 @@ class OauthController < ApplicationController
       return render json: { error: "invalid_code" }, status: 400
     end
     unless persona.service_id == service.id
-      return render json: { error: "invalid_code" }, status: 400
+      return render json: { error: "invalid_service" }, status: 400
     end
     unless authorization_redirect_uri_matches?(persona, params[:redirect_uri])
-      return render json: { error: "invalid_grant" }, status: 400
+      return render json: { error: "invalid_redirect_uri" }, status: 400
     end
-    unless verify_pkce_for_persona(persona, service)
-      return render json: { error: "invalid_grant" }, status: 400
+    unless redirect_uri_scheme_allowed_for_persona?(input_uri, persona)
+      return render json: { error: "invalid_redirect_uri" }, status: 400
+    end
+    unless verify_pkce_for_persona(persona)
+      return render json: { error: "invalid_verifier" }, status: 400
     end
 
     # token発行
@@ -228,11 +228,6 @@ class OauthController < ApplicationController
       return
     end
 
-    unless input_uri.host == service.host || input_uri.host == "localhost"
-      @error = "redirect_uri_host_mismatch"
-      return
-    end
-
     # 4. redirect_uri が許可リストに含まれているか
     unless service.redirect_uris.include?(params[:redirect_uri])
       @error = "redirect_uri_not_allowed"
@@ -249,13 +244,14 @@ class OauthController < ApplicationController
     # 6. code_challenge と code_challenge_method を確認(PKCE)
     code_challenge = params[:code_challenge].to_s
     code_challenge_method = params[:code_challenge_method].to_s
+    has_code_challenge = code_challenge.present?
 
-    if service.public_client? && code_challenge.blank?
-      @error = "invalid_code_challenge"
+    unless redirect_uri_scheme_allowed_for_authorize?(input_uri, has_code_challenge)
+      @error = "invalid_redirect_uri"
       return
     end
 
-    if code_challenge.present?
+    if has_code_challenge
       unless code_challenge_method == "S256"
         @error = "invalid_code_challenge_method"
         return
@@ -277,13 +273,11 @@ class OauthController < ApplicationController
     service = Service.is_normal.find_by(name_id: client_id)
     return nil unless service
 
-    if service.confidential_client?
-      client_secret = params[:client_secret].to_s
-      return nil if client_secret.blank?
+    client_secret = params[:client_secret].to_s
+    return service if client_secret.blank?
 
-      secret_owner = Service.findby_token(client_secret, "client_secret")
-      return nil unless secret_owner && secret_owner.id == service.id
-    end
+    secret_owner = Service.findby_token(client_secret, "client_secret")
+    return nil unless secret_owner && secret_owner.id == service.id
 
     service
   end
@@ -305,13 +299,9 @@ class OauthController < ApplicationController
     value.match?(/\A[A-Za-z0-9\-._~]{43,128}\z/)
   end
 
-  def verify_pkce_for_persona(persona, service)
+  def verify_pkce_for_persona(persona)
     challenge = if persona.meta.is_a?(Hash)
       persona.meta["challenge"]
-    end
-
-    if service.public_client?
-      return false unless challenge.is_a?(Hash)
     end
 
     return true unless challenge.is_a?(Hash)
@@ -342,6 +332,35 @@ class OauthController < ApplicationController
     return false if stored_redirect_uri.blank?
 
     stored_redirect_uri == redirect_uri.to_s
+  end
+
+  def redirect_uri_scheme_allowed_for_authorize?(uri, has_code_challenge)
+    if has_code_challenge
+      deep_link_scheme?(uri)
+    else
+      http_or_https_scheme?(uri)
+    end
+  end
+
+  def redirect_uri_scheme_allowed_for_persona?(uri, persona)
+    challenge = if persona.meta.is_a?(Hash)
+      persona.meta["challenge"]
+    end
+
+    if challenge.is_a?(Hash)
+      deep_link_scheme?(uri)
+    else
+      http_or_https_scheme?(uri)
+    end
+  end
+
+  def deep_link_scheme?(uri)
+    scheme = uri.scheme.to_s.downcase
+    scheme.present? && !http_or_https_scheme?(uri)
+  end
+
+  def http_or_https_scheme?(uri)
+    %w[http https].include?(uri.scheme.to_s.downcase)
   end
 
   def clear_authorization_redirect_uri(persona)
