@@ -16,6 +16,19 @@ class Persona < ApplicationRecord
   scope :is_normal, -> { where(status: :normal) }
   scope :isnt_deleted, -> { where.not(status: :deleted) }
 
+  def with_challenge(code_challenge, code_challenge_method)
+    # self.meta ||= {}
+    if code_challenge.blank? || code_challenge_method.blank?
+      self.meta.delete("challenge")
+    else
+      challenge = {
+        code_challenge: code_challenge,
+        code_challenge_method: code_challenge_method
+      }
+      self.meta["challenge"] = challenge
+    end
+  end
+
   private
 
   def initialize_tokens
