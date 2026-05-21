@@ -1,8 +1,7 @@
 <header>
-  <%= link_to(@current_account ? home_path : root_path) do %>
-    <div class="header-logo">
-      ANYUR
-    </div>
+  <%= link_to(@current_account ? home_path : root_path, class: "header-logo") do %>
+    <img src="/icon.svg" alt="ANYUR icon" />
+    <span>ANYUR</span>
   <% end %>
   <nav>
     <%= link_to(@current_account ? account_path : signin_path) do %>
