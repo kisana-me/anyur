@@ -51,6 +51,20 @@
   display: inline-block;
 }
 
+/* date field */
+
+.ctmf input[type="date"], .ctmf-datefield {
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+  color: #000;
+  background: #fff;
+  border: none;
+  padding: 7px;
+  border-radius: 7px;
+  box-shadow: inset 0 1px 3px 2px #0002;
+}
+
 /* small */
 
 .ctmf small, .ctmf-small {

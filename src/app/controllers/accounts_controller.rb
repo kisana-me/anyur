@@ -23,7 +23,7 @@ class AccountsController < ApplicationController
   end
 
   def update
-    if @current_account.update(params.expect(account: [ :name, :name_id ]))
+    if @current_account.update(params.expect(account: [ :name, :name_id, :description, :birthdate ]))
       redirect_to account_path, notice: "更新しました"
     else
       flash.now[:alert] = "更新できませんでした"

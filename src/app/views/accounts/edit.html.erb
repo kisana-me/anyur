@@ -21,6 +21,16 @@
   </div>
 
   <div>
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.label :birthdate %>
+    <%= form.date_field :birthdate %>
+  </div>
+
+  <div>
     <%= form.submit %>
   </div>
 <% end %>
