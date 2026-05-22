@@ -37,18 +37,9 @@
     <main>
       <%= yield %>
     </main>
-    <% flash.each do |message_type, message| %>
-      <div class="<%= message_type %>"
-        style="position: fixed;
-                bottom: 100px;
-                right: 80px;
-                padding: 4px 6px;
-                border-radius: 6px;
-                background: <%= message_type == "notice" ? "#bbd4f9" : "#ff9eb6" %>;"
-      >
-        <%= message %>
-      </div>
-    <% end %>
+    <div id="flash">
+      <%= render "shared/flash" %>
+    </div>
     <%= render "layouts/footer" %>
   </body>
 </html>
